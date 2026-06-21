@@ -1,0 +1,23 @@
+[
+  {
+    "icon": "🍳",
+    "title": "Website Trung tâm sửa chữa nhà bếp Quang Nga",
+    "desc": "Thiết kế và triển khai website dịch vụ: trang chủ, blog, hệ quản trị nội dung cho người không rành kỹ thuật tự đăng bài. Tối ưu SEO để tìm thấy trên Google.",
+    "stack": ["Eleventy", "Decap CMS", "Netlify", "SEO"],
+    "link": ""
+  },
+  {
+    "icon": "🤖",
+    "title": "Hệ thống tự động hóa quy trình",
+    "desc": "Xây dựng các luồng tự động giảm thao tác thủ công, kết nối công cụ và thông báo, tiết kiệm thời gian vận hành cho đội nhóm.",
+    "stack": ["Automation", "Tích hợp API", "Quy trình"],
+    "link": ""
+  },
+  {
+    "icon": "💬",
+    "title": "Telegram Bot hỗ trợ công việc",
+    "desc": "Bot tự động gửi thông báo, tổng hợp dữ liệu và hỗ trợ ra quyết định nhanh cho đội nhóm.",
+    "stack": ["Telegram API", "Node.js"],
+    "link": ""
+  }
+]

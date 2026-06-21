@@ -1,0 +1,69 @@
+---
+layout: base.njk
+title: false
+---
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <div class="role">{{ site.authorTitle }}</div>
+      <h1>Xin chào, tôi là {{ site.authorName }}</h1>
+      <p>{{ site.tagline }}</p>
+      <a href="/bai-viet/" class="btn">Đọc bài viết</a>
+      <a href="/ve-toi/" class="btn outline">Về tôi</a>
+    </div>
+    <div class="avatar">{{ site.authorName | first }}</div>
+  </div>
+</section>
+
+<!-- CHUYÊN MỤC -->
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Chủ đề tôi viết</h2>
+    <p class="section-sub">Giao điểm giữa quản lý con người và năng lực công nghệ</p>
+    <div class="cat-grid">
+      <a class="cat-card" href="/bai-viet/?cat=quan-ly">
+        <div class="ico">🧭</div><h3>Quản lý & Lãnh đạo</h3>
+        <p>Quản lý đội nhóm, ra quyết định, xây quy trình và văn hóa.</p>
+      </a>
+      <a class="cat-card" href="/bai-viet/?cat=cong-nghe">
+        <div class="ico">💡</div><h3>Công nghệ cho người quản lý</h3>
+        <p>Hiểu công nghệ vừa đủ để dẫn dắt: AI, automation, công cụ.</p>
+      </a>
+      <a class="cat-card" href="/bai-viet/?cat=chuyen-doi-so">
+        <div class="ico">⚙️</div><h3>Chuyển đổi số & Vận hành</h3>
+        <p>Số hóa quy trình, tối ưu hiệu suất, case thực tế.</p>
+      </a>
+      <a class="cat-card" href="/bai-viet/?cat=su-nghiep">
+        <div class="ico">🌱</div><h3>Góc nhìn & Sự nghiệp</h3>
+        <p>Bài học, định hướng phát triển, review sách hay.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BÀI VIẾT MỚI -->
+<section style="background:var(--bg-soft)">
+  <div class="wrap">
+    <h2 class="section-title">Bài viết mới nhất</h2>
+    <p class="section-sub">Những điều tôi đang nghĩ và học gần đây</p>
+    <div class="post-grid">
+      {% for post in collections.post | reverse %}
+        {% if loop.index <= 3 %}
+        <a class="post-card" href="{{ post.url }}">
+          <div class="thumb">{% if post.data.cover %}<img src="{{ post.data.cover }}" alt="" style="height:100%;width:100%;object-fit:cover">{% else %}📝{% endif %}</div>
+          <div class="body">
+            <span class="cat-pill">{{ post.data.category | catLabel }}</span>
+            <h3>{{ post.data.title }}</h3>
+            <div class="meta">🗓 {{ post.date | dateVi }} · ⏱ {{ post.templateContent | readingTime }} phút</div>
+            <p>{{ post.data.excerpt or (post.templateContent | excerptFallback) }}</p>
+            <span class="more">Đọc tiếp →</span>
+          </div>
+        </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <p class="center" style="margin-top:28px"><a href="/bai-viet/" class="btn">Xem tất cả bài viết</a></p>
+  </div>
+</section>

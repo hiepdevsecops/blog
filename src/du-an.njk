@@ -1,0 +1,24 @@
+---
+layout: base.njk
+title: "Dự án"
+description: "Các dự án và sản phẩm tôi đã thực hiện — bằng chứng năng lực thực tế."
+permalink: "/du-an/index.html"
+---
+<section>
+  <div class="wrap prose">
+    <h1 class="section-title" style="font-size:2.1rem">Dự án</h1>
+    <p class="section-sub">Những sản phẩm và dự án tôi đã trực tiếp tham gia hoặc dẫn dắt.</p>
+
+    {% for d in duan %}
+    <div class="project">
+      <div class="pico">{{ d.icon }}</div>
+      <div>
+        <h3>{{ d.title }}</h3>
+        <p>{{ d.desc }}</p>
+        {% if d.stack %}<div class="stack">{% for s in d.stack %}<span>{{ s }}</span>{% endfor %}</div>{% endif %}
+        {% if d.link %}<p style="margin-top:8px"><a href="{{ d.link }}" target="_blank" rel="noopener">Xem chi tiết →</a></p>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>

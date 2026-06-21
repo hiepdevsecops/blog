@@ -1,0 +1,70 @@
+---
+layout: base.njk
+---
+<section>
+  <div class="wrap">
+    <article class="article">
+      <a class="back" href="/bai-viet/">← Tất cả bài viết</a>
+      <h1>{{ title }}</h1>
+      <div class="meta">
+        <span>🗓 {{ page.date | dateVi }}</span>
+        <span>⏱ {{ content | readingTime }} phút đọc</span>
+        {% if category %}<span>📂 {{ category | catLabel }}</span>{% endif %}
+      </div>
+      {% if seo.keywords %}
+      <div class="tags">{% for k in seo.keywords %}<span class="tag">#{{ k }}</span>{% endfor %}</div>
+      {% endif %}
+      {% if cover %}<img class="cover" src="{{ cover }}" alt="{{ title }}">{% endif %}
+
+      <div class="toc">
+        <b>📑 Nội dung bài viết</b>
+        <div class="toc-list"></div>
+      </div>
+
+      <div class="content">
+        {{ content | safe }}
+      </div>
+
+      <div class="share">
+        <span>Chia sẻ:</span>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url }}" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" target="_blank" rel="noopener">Facebook</a>
+      </div>
+
+      {% set related = collections.post | byCategory(category) %}
+      {% if related.length > 1 %}
+      <div class="related">
+        <h3 class="section-title" style="font-size:1.3rem">Bài viết liên quan</h3>
+        <div class="post-grid">
+          {% set count = 0 %}
+          {% for p in related | reverse %}
+            {% if p.url != page.url and count < 2 %}
+              {% set count = count + 1 %}
+              <a class="post-card" href="{{ p.url }}">
+                <div class="thumb">{% if p.data.cover %}<img src="{{ p.data.cover }}" alt="" style="height:100%;width:100%;object-fit:cover">{% else %}📝{% endif %}</div>
+                <div class="body">
+                  <span class="cat-pill">{{ p.data.category | catLabel }}</span>
+                  <h3>{{ p.data.title }}</h3>
+                  <div class="meta">🗓 {{ p.date | dateVi }}</div>
+                </div>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </article>
+  </div>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ (seo.metaTitle or title) | dump | safe }},
+  "description": {{ (seo.metaDescription or excerpt or title) | dump | safe }},
+  "datePublished": "{{ page.date | dateISO }}",
+  "author": { "@type": "Person", "name": {{ site.authorName | dump | safe }} },
+  "publisher": { "@type": "Person", "name": {{ site.authorName | dump | safe }} },
+  "mainEntityOfPage": {{ (site.url + page.url) | dump | safe }}
+}
+</script>

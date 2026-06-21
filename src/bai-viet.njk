@@ -1,0 +1,54 @@
+---
+layout: base.njk
+title: "Bài viết"
+description: "Tất cả bài viết về quản lý, lãnh đạo, công nghệ và chuyển đổi số."
+permalink: "/bai-viet/index.html"
+---
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Tất cả bài viết</h2>
+    <p class="section-sub">Lọc theo chủ đề bạn quan tâm</p>
+
+    <div class="filter">
+      <button data-cat="" class="active">Tất cả</button>
+      <button data-cat="quan-ly">Quản lý & Lãnh đạo</button>
+      <button data-cat="cong-nghe">Công nghệ</button>
+      <button data-cat="chuyen-doi-so">Chuyển đổi số</button>
+      <button data-cat="su-nghiep">Sự nghiệp</button>
+    </div>
+
+    <div class="post-grid" id="ds-bai">
+      {% if collections.post.length == 0 %}
+        <p class="empty">Chưa có bài viết nào. Hãy đăng bài trong trang quản trị <a href="/admin/">/admin</a>.</p>
+      {% endif %}
+      {% for post in collections.post | reverse %}
+        <a class="post-card" href="{{ post.url }}" data-cat="{{ post.data.category }}">
+          <div class="thumb">{% if post.data.cover %}<img src="{{ post.data.cover }}" alt="" style="height:100%;width:100%;object-fit:cover">{% else %}📝{% endif %}</div>
+          <div class="body">
+            <span class="cat-pill">{{ post.data.category | catLabel }}</span>
+            <h3>{{ post.data.title }}</h3>
+            <div class="meta">🗓 {{ post.date | dateVi }} · ⏱ {{ post.templateContent | readingTime }} phút</div>
+            <p>{{ post.data.excerpt or (post.templateContent | excerptFallback) }}</p>
+            <span class="more">Đọc tiếp →</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+// Lọc bài theo chuyên mục (chạy ngay trên trình duyệt, không cần tải lại)
+(function () {
+  const btns = document.querySelectorAll(".filter button");
+  const cards = document.querySelectorAll("#ds-bai .post-card");
+  function apply(cat) {
+    cards.forEach(c => { c.style.display = (!cat || c.dataset.cat === cat) ? "" : "none"; });
+    btns.forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+  }
+  btns.forEach(b => b.addEventListener("click", () => apply(b.dataset.cat)));
+  // Nếu vào từ link ?cat=... ở trang chủ thì lọc sẵn
+  const q = new URLSearchParams(location.search).get("cat");
+  if (q) apply(q);
+})();
+</script>

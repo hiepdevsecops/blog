@@ -1,0 +1,95 @@
+# ===== Cấu hình Decap CMS (trang soạn bài /admin) =====
+# Sau khi deploy lên Netlify, bật Identity + Git Gateway thì đăng nhập được.
+backend:
+  name: git-gateway
+  branch: main
+
+locale: vi
+
+# Đường dẫn bài viết: bỏ dấu tiếng Việt cho chuẩn SEO
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+media_folder: "src/uploads"
+public_folder: "/uploads"
+
+# Đổi thành tên miền thật sau khi deploy (cho nút "Xem trước")
+site_url: https://blog-cua-ban.netlify.app
+
+collections:
+  # ----- BÀI VIẾT -----
+  - name: "baiviet"
+    label: "Bài viết"
+    label_singular: "Bài viết"
+    folder: "src/posts"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Tiêu đề", name: "title", widget: "string" }
+      - { label: "Ngày đăng", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - label: "Chuyên mục"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Quản lý & Lãnh đạo", value: "quan-ly" }
+          - { label: "Công nghệ cho người quản lý", value: "cong-nghe" }
+          - { label: "Chuyển đổi số & Vận hành", value: "chuyen-doi-so" }
+          - { label: "Góc nhìn & Sự nghiệp", value: "su-nghiep" }
+      - { label: "Tóm tắt ngắn", name: "excerpt", widget: "string", required: false, hint: "1–2 câu hiện ở danh sách bài viết" }
+      - { label: "Ảnh đại diện", name: "cover", widget: "image", required: false }
+      - label: "SEO (tùy chọn – giúp lên Google)"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields:
+          - { label: "Tiêu đề SEO", name: "metaTitle", widget: "string", required: false, hint: "~50–60 ký tự, chứa từ khóa chính. Để trống sẽ dùng tiêu đề bài." }
+          - { label: "Mô tả SEO", name: "metaDescription", widget: "text", required: false, hint: "~150 ký tự, hiện dưới tiêu đề trên Google." }
+          - { label: "Từ khóa / Thẻ", name: "keywords", widget: "list", required: false, hint: "Mỗi từ khóa gõ rồi Enter." }
+      - { label: "Nội dung", name: "body", widget: "markdown" }
+
+  # ----- DỰ ÁN -----
+  - name: "duan"
+    label: "Dự án"
+    label_singular: "Dự án"
+    files:
+      - name: "duan"
+        label: "Danh sách dự án"
+        file: "src/_data/duan.json"
+        fields:
+          - label: "Dự án"
+            name: "duan"
+            widget: "list"
+            label_singular: "Dự án"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string", default: "🛠️" }
+              - { label: "Tên dự án", name: "title", widget: "string" }
+              - { label: "Mô tả", name: "desc", widget: "text" }
+              - { label: "Công nghệ", name: "stack", widget: "list", required: false }
+              - { label: "Link (nếu có)", name: "link", widget: "string", required: false }
+
+  # ----- GHI CHÚ -----
+  - name: "ghichu"
+    label: "Ghi chú"
+    label_singular: "Ghi chú"
+    files:
+      - name: "ghichu"
+        label: "Danh sách ghi chú"
+        file: "src/_data/ghichu.json"
+        fields:
+          - label: "Ghi chú"
+            name: "ghichu"
+            widget: "list"
+            label_singular: "Ghi chú"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Ngày", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+              - { label: "Tiêu đề", name: "title", widget: "string" }
+              - { label: "Nội dung", name: "body", widget: "text" }
+# Lưu ý: tên hiển thị, chức danh, tagline nằm trong file src/_data/site.js
+# (sửa trực tiếp trong file đó, không sửa qua trang admin được).

@@ -1,0 +1,22 @@
+---
+layout: base.njk
+title: "Ghi chú"
+description: "Những ghi chú ngắn: mẹo, công cụ, sách hay và suy ngẫm hằng ngày."
+permalink: "/ghi-chu/index.html"
+---
+<section>
+  <div class="wrap prose">
+    <h1 class="section-title" style="font-size:2.1rem">Ghi chú</h1>
+    <p class="section-sub">Những mẩu ngắn: mẹo, công cụ đang dùng, sách hay và suy ngẫm.</p>
+
+    <div class="timeline">
+      {% for n in ghichu %}
+      <div class="item">
+        <div class="when">🗓 {{ n.date | dateVi }}</div>
+        <b>{{ n.title }}</b>
+        <p>{{ n.body }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
