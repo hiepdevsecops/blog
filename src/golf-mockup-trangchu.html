@@ -9,8 +9,8 @@ permalink: "golf-mockup-trangchu.html"
 <title>VGAID — Trang chủ (mockup từ đề án)</title>
 <style>
   :root {
-    --green: #1c4b3a;
-    --green-dark: #123527;
+    --green: #0a6a36;
+    --green-dark: #0f4a2c;
     --gold: #c9a44c;
     --text: #1f2420;
     --muted: #6b7268;
@@ -45,10 +45,10 @@ permalink: "golf-mockup-trangchu.html"
   .btn-primary { background: var(--green); color: #fff; }
   .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
 
-  /* Hero — nền SÁNG (đúng bản gốc PDF), không phải nền xanh đậm */
-  .hero { background: #fff; color: var(--text); padding: 40px 0; }
-  .hero-row { display: flex; gap: 32px; align-items: center; }
-  .hero-text { flex: 1.1; }
+  /* Hero — nền SÁNG bên trái, ảnh full-bleed bên phải, card đè lên ảnh (đúng bản gốc PDF trang 21) */
+  .hero { background: #fff; color: var(--text); overflow: hidden; }
+  .hero-row { display: flex; align-items: stretch; max-width: 1200px; margin: 0 auto; height: 400px; }
+  .hero-text { flex: 0 0 44%; padding: 40px 28px 40px 20px; display: flex; flex-direction: column; justify-content: center; }
   .hero-eyebrow { font-weight: 800; font-size: 15px; letter-spacing: .04em; color: var(--green); }
   .hero-title { font-size: 32px; font-weight: 800; line-height: 1.2; margin: 4px 0 14px; color: var(--green); }
   .hero-desc { color: var(--muted); margin-bottom: 22px; max-width: 40ch; font-size: 14.5px; }
@@ -57,11 +57,15 @@ permalink: "golf-mockup-trangchu.html"
   .btn-white:hover { background: var(--green-dark); transform: translateY(-1px); }
   .btn-ghost { border: 1px solid var(--border); color: var(--text); background: transparent; }
   .btn-ghost:hover { border-color: var(--green); color: var(--green); background: var(--bg); }
-  .hero-photo { flex: 1; height: 230px; border-radius: 10px; }
-  .hero-card { flex: .8; background: linear-gradient(150deg, var(--green) 0%, var(--green-dark) 100%); color: #fff; border-radius: 10px; padding: 18px 20px; }
+  .hero-media { flex: 1; position: relative; overflow: hidden; }
+  .hero-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-card { position: absolute; top: 26px; right: 26px; width: 250px; background: rgba(12,22,17,.6); backdrop-filter: blur(2px); color: #fff; border-radius: 10px; padding: 18px 20px; }
   .hero-card h4 { font-size: 12.5px; letter-spacing: .05em; margin-bottom: 12px; color: var(--gold); }
   .hero-card ul { list-style: none; display: grid; gap: 9px; font-size: 13px; }
   .hero-card li::before { content: "✓ "; color: var(--gold); font-weight: 700; }
+  .hero-dots { position: absolute; bottom: 16px; right: 26px; display: flex; gap: 6px; }
+  .hero-dots span { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); display: block; }
+  .hero-dots span.active { background: #fff; width: 16px; border-radius: 3px; }
 
   /* Quick actions */
   .quick { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: -1px; }
@@ -133,11 +137,13 @@ permalink: "golf-mockup-trangchu.html"
     .header-actions span { display: none; }
     .btn { padding: 8px 12px; font-size: 12.5px; }
 
-    .hero { padding: 28px 0; }
-    .hero-row { flex-direction: column; align-items: stretch; }
+    .hero-row { flex-direction: column; align-items: stretch; height: auto; }
+    .hero-text { padding: 24px 14px; flex: none; }
     .hero-title { font-size: 26px; }
-    .hero-photo { height: 160px !important; }
-    .hero-card { padding: 16px; }
+    .hero-media { overflow: visible; }
+    .hero-photo { height: 200px; }
+    .hero-card { position: static; width: auto; margin: 14px; background: var(--green-dark); backdrop-filter: none; }
+    .hero-dots { display: none; }
 
     .quick { grid-template-columns: repeat(3, 1fr); }
     .quick a { font-size: 11.5px; padding: 12px 4px; }
@@ -196,7 +202,7 @@ permalink: "golf-mockup-trangchu.html"
 </header>
 
 <div class="hero">
-  <div class="wrap hero-row">
+  <div class="hero-row">
     <div class="hero-text">
       <div class="hero-eyebrow">VGAID</div>
       <div class="hero-title">CỔNG HỘI VIÊN SỐ VGA</div>
@@ -206,16 +212,19 @@ permalink: "golf-mockup-trangchu.html"
         <a href="#" class="btn btn-ghost">▶ Tìm hiểu thêm</a>
       </div>
     </div>
-    <img class="hero-photo" style="flex:1;width:100%;height:230px;border-radius:10px;object-fit:cover;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Golfer_in_Golf_Links_1.jpg/960px-Golfer_in_Golf_Links_1.jpg" alt="Golfer đánh bóng">
-    <div class="hero-card">
-      <h4>HỘI VIÊN LIÊN KẾT VGA</h4>
-      <ul>
-        <li>Một mã định danh duy nhất (VGA ID)</li>
-        <li>Đặt sân golf ưu đãi toàn quốc</li>
-        <li>Quyền lợi đặc biệt từ đối tác VGA</li>
-        <li>Tham gia giải đấu phong trào &amp; chuyên nghiệp</li>
-        <li>Cập nhật Handicap &amp; Ranking chính thức</li>
-      </ul>
+    <div class="hero-media">
+      <img class="hero-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Golfer_in_Golf_Links_1.jpg/960px-Golfer_in_Golf_Links_1.jpg" alt="Golfer đánh bóng">
+      <div class="hero-card">
+        <h4>HỘI VIÊN LIÊN KẾT VGA</h4>
+        <ul>
+          <li>Một mã định danh duy nhất (VGA ID)</li>
+          <li>Đặt sân golf ưu đãi toàn quốc</li>
+          <li>Quyền lợi đặc biệt từ đối tác VGA</li>
+          <li>Tham gia giải đấu phong trào &amp; chuyên nghiệp</li>
+          <li>Cập nhật Handicap &amp; Ranking chính thức</li>
+        </ul>
+      </div>
+      <div class="hero-dots"><span class="active"></span><span></span><span></span></div>
     </div>
   </div>
 </div>
