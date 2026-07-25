@@ -1,0 +1,187 @@
+---
+permalink: "golf-mockup-dangnhap.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Đăng nhập / Đăng ký (mockup)</title>
+<style>
+  :root {
+    --green: #1c4b3a; --green-dark: #123527; --gold: #c9a44c;
+    --text: #1f2420; --muted: #6b7268; --bg: #f6f5f0; --card: #ffffff; --border: #e4e1d6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  header { border-bottom: 1px solid var(--border); background: #fff; }
+  .header-row { display: flex; align-items: center; gap: 18px; padding: 14px 0; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--green); text-decoration: none; white-space: nowrap; }
+  .logo .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--green); display:inline-block; }
+  .logo small { font-weight: 400; color: var(--muted); font-size: 10px; display:block; }
+  .back { margin-left: auto; font-size: 13px; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--green); }
+
+  .note {
+    background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px;
+    padding: 10px 16px; text-align: center;
+  }
+
+  .stage { min-height: calc(100vh - 110px); display: flex; align-items: center; justify-content: center; padding: 40px 16px; }
+  .auth-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    box-shadow: 0 10px 34px rgba(28,75,58,.1); padding: 34px 32px; width: 100%; max-width: 420px;
+  }
+  .auth-tabs { display: flex; background: var(--bg); border-radius: 8px; padding: 4px; margin-bottom: 24px; }
+  .auth-tabs a { flex: 1; text-align: center; padding: 9px; border-radius: 6px; font-size: 13.5px; font-weight: 600; text-decoration: none; color: var(--muted); }
+  .auth-tabs a.active { background: var(--green); color: #fff; }
+  .auth-tabs a:not(.active):hover { color: var(--green); }
+
+  .auth-card h2 { font-size: 20px; margin-bottom: 6px; }
+  .auth-card .sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; }
+
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; }
+  .field input, .field select { width: 100%; padding: 11px 12px; border-radius: 8px; border: 1px solid var(--border); font-size: 14px; }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(28,75,58,.12); }
+  .field-otp { display: flex; gap: 8px; }
+  .field-otp input { flex: 1; }
+  .btn-send-otp {
+    padding: 0 14px; border-radius: 8px; border: 1px solid var(--green); background: #fff; color: var(--green);
+    font-size: 12.5px; font-weight: 700; cursor: pointer; white-space: nowrap;
+  }
+  .btn-send-otp:hover { background: var(--green); color: #fff; }
+  .btn-send-otp:disabled { opacity: .5; cursor: not-allowed; }
+
+  .btn-submit {
+    width: 100%; padding: 12px; border-radius: 8px; border: none; background: var(--green); color: #fff;
+    font-size: 14.5px; font-weight: 700; cursor: pointer; margin-top: 6px;
+  }
+  .btn-submit:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(28,75,58,.25); }
+
+  .hint { font-size: 11.5px; color: var(--muted); margin-top: 8px; }
+  .divider { text-align: center; color: var(--muted); font-size: 11.5px; margin: 20px 0; position: relative; }
+  .divider::before, .divider::after { content: ""; position: absolute; top: 50%; width: 40%; height: 1px; background: var(--border); }
+  .divider::before { left: 0; } .divider::after { right: 0; }
+
+  .switch-mode { text-align: center; font-size: 13px; color: var(--muted); margin-top: 18px; }
+  .switch-mode a { color: var(--green); font-weight: 700; text-decoration: none; }
+  .switch-mode a:hover { text-decoration: underline; }
+
+  .otp-timer { font-size: 11.5px; color: var(--gold); font-weight: 700; }
+
+  #register-fields { display: none; }
+  body.mode-register #register-fields { display: block; }
+  body.mode-register #login-only { display: none; }
+  body.mode-register .auth-tabs a[data-mode="login"] { background: transparent; color: var(--muted); }
+  body.mode-register .auth-tabs a[data-mode="register"] { background: var(--green); color: #fff; }
+  body:not(.mode-register) .auth-tabs a[data-mode="login"] { background: var(--green); color: #fff; }
+  body:not(.mode-register) .auth-tabs a[data-mode="register"] { background: transparent; color: var(--muted); }
+
+  @media (max-width: 480px) {
+    .auth-card { padding: 26px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup luồng Đăng nhập/Đăng ký OTP — theo mô tả SRS trang 23 đề án, chưa có backend thật.</div>
+
+<header>
+  <div class="wrap header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGA <span class="dot"></span> VGAID<small>CỔNG HỘI VIÊN SỐ</small></a>
+    <a href="golf-mockup-trangchu.html" class="back">← Về trang chủ</a>
+  </div>
+</header>
+
+<div class="stage">
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <a href="golf-mockup-dangnhap.html" data-mode="login">Đăng nhập</a>
+      <a href="golf-mockup-dangnhap.html?mode=register" data-mode="register">Đăng ký hội viên</a>
+    </div>
+
+    <div id="login-only">
+      <h2>Chào mừng trở lại</h2>
+      <p class="sub">Đăng nhập bằng số điện thoại đã đăng ký VGA ID</p>
+    </div>
+    <div id="register-fields-title">
+      <h2>Tạo tài khoản VGA ID</h2>
+      <p class="sub">Đăng ký hội viên chỉ với vài bước, xác thực bằng OTP</p>
+    </div>
+
+    <form onsubmit="return false;">
+      <div id="register-fields">
+        <div class="field">
+          <label>Họ và tên</label>
+          <input type="text" placeholder="Nguyễn Văn A">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Số điện thoại</label>
+        <input type="tel" placeholder="09xxxxxxxx" value="0987654321">
+      </div>
+
+      <div class="field">
+        <label>Mã OTP</label>
+        <div class="field-otp">
+          <input type="text" placeholder="Nhập mã 6 số" maxlength="6">
+          <button type="button" class="btn-send-otp" onclick="sendOtp(this)">Gửi mã OTP</button>
+        </div>
+        <div class="hint" id="otp-hint">Chưa gửi mã — bấm "Gửi mã OTP" để nhận mã qua SMS</div>
+      </div>
+
+      <button type="submit" class="btn-submit" onclick="window.location.href='golf-mockup-hoso.html'">
+        <span id="submit-label">Đăng nhập</span>
+      </button>
+    </form>
+
+    <div class="divider">hoặc</div>
+    <p class="switch-mode" id="switch-to-register">
+      Chưa có tài khoản? <a href="golf-mockup-dangnhap.html?mode=register">Đăng ký hội viên</a>
+    </p>
+    <p class="switch-mode" id="switch-to-login" style="display:none;">
+      Đã có tài khoản? <a href="golf-mockup-dangnhap.html">Đăng nhập</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  // Đọc query ?mode=register để chuyển giao diện — chỉ để demo mockup, không phải logic thật
+  const params = new URLSearchParams(window.location.search);
+  const isRegister = params.get('mode') === 'register';
+  if (isRegister) {
+    document.body.classList.add('mode-register');
+    document.getElementById('login-only').style.display = 'none';
+    document.getElementById('register-fields-title').style.display = 'block';
+    document.getElementById('submit-label').textContent = 'Đăng ký hội viên';
+    document.getElementById('switch-to-register').style.display = 'none';
+    document.getElementById('switch-to-login').style.display = 'block';
+  } else {
+    document.getElementById('register-fields-title').style.display = 'none';
+  }
+
+  let otpSeconds = 0, otpTimer = null;
+  function sendOtp(btn) {
+    btn.disabled = true;
+    otpSeconds = 30;
+    tick();
+    function tick() {
+      document.getElementById('otp-hint').innerHTML = 'Đã gửi mã tới số điện thoại — <span class="otp-timer">gửi lại sau ' + otpSeconds + 's</span>';
+      if (otpSeconds <= 0) {
+        document.getElementById('otp-hint').textContent = 'Chưa nhận được mã? Bấm "Gửi mã OTP" để gửi lại.';
+        btn.disabled = false;
+        clearInterval(otpTimer);
+        return;
+      }
+      otpSeconds--;
+    }
+    otpTimer = setInterval(tick, 1000);
+  }
+</script>
+
+</body>
+</html>

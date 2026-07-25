@@ -1,0 +1,212 @@
+---
+permalink: "golf-mockup-timsan.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Tìm &amp; Đặt sân golf (mockup)</title>
+<style>
+  :root {
+    --green: #1c4b3a; --green-dark: #123527; --gold: #c9a44c;
+    --text: #1f2420; --muted: #6b7268; --bg: #f6f5f0; --card: #ffffff; --border: #e4e1d6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+  header { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top:0; z-index:10; }
+  .header-row { display: flex; align-items: center; gap: 18px; padding: 14px 0; max-width:1000px; margin:0 auto; padding-left:20px; padding-right:20px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--green); text-decoration: none; white-space: nowrap; }
+  .logo .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--green); display:inline-block; }
+  .back { margin-left:auto; font-size: 13px; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--green); }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  .result-head { padding: 20px 0 6px; }
+  .result-head h1 { font-size: 18px; }
+  .result-head .meta { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+
+  .toolbar { display: flex; gap: 10px; padding: 14px 0; flex-wrap: wrap; }
+  .chip-btn { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); background: #fff; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+  .chip-btn:hover { border-color: var(--green); color: var(--green); }
+
+  .filter-tabs { display: flex; gap: 8px; padding-bottom: 14px; flex-wrap: wrap; }
+  .filter-tabs button { padding: 7px 14px; border-radius: 20px; border: 1px solid var(--border); background: #fff; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--muted); }
+  .filter-tabs button.active { background: var(--green); color: #fff; border-color: var(--green); }
+  .filter-tabs button:not(.active):hover { border-color: var(--green); color: var(--green); }
+
+  .count { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .count b { color: var(--text); }
+
+  .results { display: grid; gap: 14px; padding-bottom: 40px; }
+  .result-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    display: grid; grid-template-columns: 190px 1fr; text-decoration: none; color: inherit;
+  }
+  .result-card:hover { box-shadow: 0 10px 26px rgba(28,75,58,.14); transform: translateY(-2px); border-color: var(--green); }
+  .result-card .thumb-wrap { position: relative; }
+  .result-card .thumb { width: 100%; height: 100%; object-fit: cover; display:block; min-height: 140px; }
+  .promo-tag { position: absolute; top: 10px; left: 10px; background: #d94e3f; color:#fff; font-size:11px; font-weight:700; padding: 3px 9px; border-radius: 6px; }
+  .result-body { padding: 14px 16px; position: relative; }
+  .fav { position: absolute; top: 12px; right: 14px; font-size: 16px; color: var(--muted); cursor:pointer; }
+  .result-body .name { font-size: 15px; font-weight: 800; margin-bottom: 3px; padding-right: 26px; }
+  .result-body .loc { font-size: 12px; color: var(--muted); margin-bottom: 5px; }
+  .result-body .rate { font-size: 12px; color: #b8860b; margin-bottom: 5px; }
+  .result-body .specs { font-size: 11.5px; color: var(--muted); margin-bottom: 10px; }
+  .result-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
+  .price-block .old { font-size: 11px; color: var(--muted); text-decoration: line-through; }
+  .price-block .now { font-size: 16px; font-weight: 800; color: var(--green); }
+  .tee-info { font-size: 11px; color: var(--muted); text-align: right; }
+  .tee-info b { display:block; color: var(--text); font-size:11.5px; }
+  .btn-book {
+    background: var(--green); color: #fff; border: none; padding: 9px 18px; border-radius: 7px;
+    font-size: 12.5px; font-weight: 700; cursor: pointer; white-space: nowrap;
+  }
+  .btn-book:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 6px 14px rgba(28,75,58,.25); }
+
+  .load-more { display:block; width:100%; padding: 12px; text-align:center; border-radius:8px; border:1px solid var(--border); background:#fff; font-size:13px; font-weight:700; color:var(--green); cursor:pointer; margin-top: 6px; }
+  .load-more:hover { background: var(--green); color:#fff; }
+
+  @media (max-width: 640px) {
+    .result-card { grid-template-columns: 1fr; }
+    .result-card .thumb { min-height: 160px; }
+    .result-foot { align-items: center; }
+    .toolbar, .filter-tabs { overflow-x: auto; flex-wrap: nowrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 34 đề án PDF (Booking Golf Quốc gia — kết quả tìm kiếm) — dữ liệu là placeholder.</div>
+
+<header>
+  <div class="header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGA <span class="dot"></span> VGAID</a>
+    <a href="golf-mockup-trangchu.html" class="back">← Về trang chủ</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="result-head">
+    <h1>Kết quả tìm kiếm</h1>
+    <div class="meta">25/05/2026 · 4 golfer · Tất cả giờ chơi</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="chip-btn">⚙️ Bộ lọc</button>
+    <button class="chip-btn">Sắp xếp: Đề xuất ▾</button>
+    <button class="chip-btn">🗺️ Bản đồ</button>
+  </div>
+  <div class="filter-tabs">
+    <button class="active">Tất cả</button>
+    <button>Dưới 2 triệu</button>
+    <button>2 – 3 triệu</button>
+    <button>Trên 3 triệu</button>
+  </div>
+
+  <div class="count">Tìm thấy <b>36</b> sân golf</div>
+
+  <div class="results">
+    <a class="result-card" href="golf-mockup-hoso.html">
+      <div class="thumb-wrap">
+        <span class="promo-tag">Ưu đãi 40%</span>
+        <img class="thumb" src="https://picsum.photos/seed/golf1/400/320" alt="">
+      </div>
+      <div class="result-body">
+        <span class="fav">♡</span>
+        <div class="name">FLC Hạ Long Golf Club</div>
+        <div class="loc">📍 Hạ Long, Quảng Ninh</div>
+        <div class="rate">★ 4.7 (256 đánh giá)</div>
+        <div class="specs">⛳ 18 hố · Par 72 · 7124 yards</div>
+        <div class="result-foot">
+          <div class="price-block"><div class="old">2.750.000đ</div><div class="now">1.650.000đ</div></div>
+          <div class="tee-info">Tee time trống<b>07:00 – 17:00</b></div>
+          <button class="btn-book" onclick="event.preventDefault();alert('Mockup — chưa nối booking thật')">Đặt sân</button>
+        </div>
+      </div>
+    </a>
+
+    <a class="result-card" href="golf-mockup-hoso.html">
+      <div class="thumb-wrap">
+        <span class="promo-tag">Ưu đãi 25%</span>
+        <img class="thumb" src="https://picsum.photos/seed/golf2/400/320" alt="">
+      </div>
+      <div class="result-body">
+        <span class="fav">♡</span>
+        <div class="name">BRG Kings Island Golf Resort</div>
+        <div class="loc">📍 Đồng Mô, Sơn Tây, Hà Nội</div>
+        <div class="rate">★ 4.6 (198 đánh giá)</div>
+        <div class="specs">⛳ 54 hố · Par 72 · 7400 yards</div>
+        <div class="result-foot">
+          <div class="price-block"><div class="old">2.600.000đ</div><div class="now">1.950.000đ</div></div>
+          <div class="tee-info">Tee time trống<b>06:30 – 18:00</b></div>
+          <button class="btn-book" onclick="event.preventDefault();alert('Mockup — chưa nối booking thật')">Đặt sân</button>
+        </div>
+      </div>
+    </a>
+
+    <a class="result-card" href="golf-mockup-hoso.html">
+      <div class="thumb-wrap">
+        <img class="thumb" src="https://picsum.photos/seed/golf5/400/320" alt="">
+      </div>
+      <div class="result-body">
+        <span class="fav">♡</span>
+        <div class="name">Tam Đảo Golf &amp; Resort</div>
+        <div class="loc">📍 Tam Đảo, Vĩnh Phúc</div>
+        <div class="rate">★ 4.5 (152 đánh giá)</div>
+        <div class="specs">⛳ 18 hố · Par 71 · 6686 yards</div>
+        <div class="result-foot">
+          <div class="price-block"><div class="now">2.200.000đ</div></div>
+          <div class="tee-info">Tee time trống<b>06:00 – 17:30</b></div>
+          <button class="btn-book" onclick="event.preventDefault();alert('Mockup — chưa nối booking thật')">Đặt sân</button>
+        </div>
+      </div>
+    </a>
+
+    <a class="result-card" href="golf-mockup-hoso.html">
+      <div class="thumb-wrap">
+        <span class="promo-tag">Ưu đãi 20%</span>
+        <img class="thumb" src="https://picsum.photos/seed/golf6/400/320" alt="">
+      </div>
+      <div class="result-body">
+        <span class="fav">♡</span>
+        <div class="name">Vinpearl Golf Hải Phòng</div>
+        <div class="loc">📍 Thủy Nguyên, Hải Phòng</div>
+        <div class="rate">★ 4.7 (186 đánh giá)</div>
+        <div class="specs">⛳ 36 hố · Par 72 · 7300 yards</div>
+        <div class="result-foot">
+          <div class="price-block"><div class="old">3.000.000đ</div><div class="now">2.400.000đ</div></div>
+          <div class="tee-info">Tee time trống<b>06:30 – 18:30</b></div>
+          <button class="btn-book" onclick="event.preventDefault();alert('Mockup — chưa nối booking thật')">Đặt sân</button>
+        </div>
+      </div>
+    </a>
+
+    <a class="result-card" href="golf-mockup-hoso.html">
+      <div class="thumb-wrap">
+        <img class="thumb" src="https://picsum.photos/seed/golf7/400/320" alt="">
+      </div>
+      <div class="result-body">
+        <span class="fav">♡</span>
+        <div class="name">Long Biên Golf Course</div>
+        <div class="loc">📍 Long Biên, Hà Nội</div>
+        <div class="rate">★ 4.4 (120 đánh giá)</div>
+        <div class="specs">⛳ 27 hố · Par 72 · 6980 yards</div>
+        <div class="result-foot">
+          <div class="price-block"><div class="now">1.800.000đ</div></div>
+          <div class="tee-info">Tee time trống<b>06:00 – 17:00</b></div>
+          <button class="btn-book" onclick="event.preventDefault();alert('Mockup — chưa nối booking thật')">Đặt sân</button>
+        </div>
+      </div>
+    </a>
+
+    <button class="load-more">Xem thêm sân golf</button>
+  </div>
+</div>
+
+</body>
+</html>

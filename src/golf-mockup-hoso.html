@@ -1,0 +1,199 @@
+---
+permalink: "golf-mockup-hoso.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Hồ sơ VGA ID (mockup)</title>
+<style>
+  :root {
+    --green: #1c4b3a; --green-dark: #123527; --gold: #c9a44c;
+    --text: #1f2420; --muted: #6b7268; --bg: #f6f5f0; --card: #ffffff; --border: #e4e1d6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  header { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top:0; z-index:10; }
+  .header-row { display: flex; align-items: center; gap: 18px; padding: 14px 0; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--green); text-decoration: none; white-space: nowrap; }
+  .logo .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--green); display:inline-block; }
+  nav { display: flex; gap: 16px; flex: 1; font-size: 13.5px; color: #333; white-space: nowrap; overflow-x:auto; }
+  nav a { text-decoration: none; color: inherit; }
+  nav a:hover { color: var(--green); }
+  .user-chip { margin-left:auto; display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; white-space:nowrap; }
+  .user-chip img { width:30px; height:30px; border-radius:50%; object-fit:cover; }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 24px 0 50px; align-items: start; }
+  .side { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 10px; position: sticky; top: 74px; }
+  .side a { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 7px; font-size: 13.5px; text-decoration: none; color: var(--text); margin-bottom: 2px; }
+  .side a:hover { background: var(--bg); }
+  .side a.active { background: var(--green); color: #fff; font-weight: 600; }
+
+  h1.page-title { font-size: 19px; margin-bottom: 16px; }
+
+  .profile-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 22px; display: grid; grid-template-columns: auto 1fr auto; gap: 20px; align-items: center; }
+  .avatar { width: 74px; height: 74px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold); }
+  .profile-name { font-size: 17px; font-weight: 800; display:flex; align-items:center; gap:6px; }
+  .verified { color: var(--green); font-size: 13px; }
+  .profile-id { font-size: 13px; color: var(--muted); margin: 4px 0; }
+  .profile-contact { font-size: 12.5px; color: var(--muted); }
+  .rank-box { background: linear-gradient(135deg,#fff7e6,#fdeecb); border: 1px solid #f0dba8; border-radius: 10px; padding: 12px 18px; text-align: center; }
+  .rank-box .lbl { font-size: 10.5px; color: #a17c1f; letter-spacing:.05em; }
+  .rank-box .rank { font-size: 15px; font-weight: 800; color: #8a6415; }
+  .rank-box .exp { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 18px 0; }
+  .stat-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .stat-card .lbl { font-size: 10.5px; color: var(--muted); letter-spacing:.04em; text-transform:uppercase; margin-bottom:6px; }
+  .stat-card .val { font-size: 17px; font-weight: 800; color: var(--green); }
+  .stat-card .sub { font-size: 11px; color: var(--muted); margin-top:2px; }
+
+  .tabs { display: flex; gap: 22px; border-bottom: 1px solid var(--border); margin: 22px 0 16px; font-size: 13.5px; }
+  .tabs a { padding-bottom: 10px; text-decoration: none; color: var(--muted); border-bottom: 2px solid transparent; }
+  .tabs a.active { color: var(--green); font-weight: 700; border-color: var(--green); }
+  .tabs a:hover { color: var(--green); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .panel { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .panel h3 { font-size: 13.5px; margin-bottom: 10px; display:flex; justify-content:space-between; align-items:baseline; }
+  .panel h3 a { font-size:11.5px; color:var(--green); font-weight:600; text-decoration:none; }
+
+  .row-item { display: flex; gap: 10px; padding: 9px 6px; border-bottom: 1px solid var(--border); align-items:center; text-decoration:none; color:inherit; border-radius:6px; }
+  .row-item:last-child { border-bottom: none; }
+  .row-item:hover { background: var(--bg); }
+  .row-item img { width: 46px; height: 36px; border-radius: 6px; object-fit: cover; flex-shrink:0; }
+  .row-item .t { font-size: 12.5px; font-weight: 600; }
+  .row-item .d { font-size: 11px; color: var(--muted); }
+  .row-item .amt { margin-left:auto; font-size:12.5px; font-weight:700; color: var(--green); white-space:nowrap; }
+  .badge { font-size: 10px; padding: 2px 7px; border-radius: 20px; background: #e6f3ec; color: #1c7a4a; font-weight: 700; white-space:nowrap; margin-left:auto; }
+
+  .benefit-strip { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+  .benefit-chip { background:#fff; border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:11.5px; font-weight:600; text-align:center; flex:1; min-width:110px; }
+  .benefit-chip:hover { border-color: var(--green); box-shadow:0 6px 14px rgba(28,75,58,.12); transform:translateY(-2px); }
+
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .side { position: static; display:flex; overflow-x:auto; gap:4px; }
+    .side a { white-space:nowrap; margin-bottom:0; }
+    .profile-card { grid-template-columns: auto 1fr; }
+    .rank-box { grid-column: 1 / -1; }
+    .stat-row { grid-template-columns: repeat(2,1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 25 đề án PDF (Hồ sơ VGA ID) — dữ liệu là placeholder.</div>
+
+<header>
+  <div class="wrap header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGA <span class="dot"></span> VGAID</a>
+    <nav>
+      <a href="golf-mockup-trangchu.html">Trang chủ</a>
+      <a href="golf-mockup-timsan.html">Booking Golf</a>
+      <a href="golf-mockup-timsan.html">Sân golf</a>
+      <a href="#">Giải đấu</a>
+      <a href="#">Quyền lợi</a>
+    </nav>
+    <a class="user-chip" href="golf-mockup-hoso.html">
+      <img src="https://i.pravatar.cc/60?img=12" alt="">
+      Nguyễn Văn A
+    </a>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <aside class="side">
+    <a href="golf-mockup-hoso.html" class="active">👤 Hồ sơ VGA ID</a>
+    <a href="golf-mockup-timsan.html">📅 Booking của tôi</a>
+    <a href="#">🏆 Giải đấu của tôi</a>
+    <a href="#">🎖️ Quyền lợi của tôi</a>
+    <a href="#">💳 Hội phí của tôi</a>
+    <a href="#">🧾 Lịch sử thanh toán</a>
+    <a href="#">🔔 Thông báo</a>
+    <a href="golf-mockup-dangnhap.html">🚪 Đăng xuất</a>
+  </aside>
+
+  <div>
+    <h1 class="page-title">Hồ sơ VGA ID</h1>
+
+    <div class="profile-card">
+      <img class="avatar" src="https://i.pravatar.cc/150?img=12" alt="Nguyễn Văn A">
+      <div>
+        <div class="profile-name">Nguyễn Văn A <span class="verified">✔</span></div>
+        <div class="profile-id">VGA ID: <b>VGAID123456</b> · Ngày sinh 15/05/1990</div>
+        <div class="profile-contact">📞 098 xxxx 123 &nbsp;·&nbsp; ✉️ nguyenvana@gmail.com &nbsp;·&nbsp; 📍 123 Phố Golf, Cầu Giấy, Hà Nội</div>
+      </div>
+      <div class="rank-box">
+        <div class="lbl">HỘI VIÊN CHÍNH THỨC</div>
+        <div class="rank">💎 Kim Cương</div>
+        <div class="exp">Hiệu lực đến 31/12/2026 · còn 218 ngày</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="lbl">CLB Golf</div><div class="val">Thăng Long GC</div><div class="sub">Hội viên từ 20/03/2023</div></div>
+      <div class="stat-card"><div class="lbl">Handicap</div><div class="val">12.6</div><div class="sub">Index ngày 20/05/2026</div></div>
+      <div class="stat-card"><div class="lbl">Ranking quốc gia</div><div class="val">Hạng 1.245</div><div class="sub">Bảng Nam nghiệp dư</div></div>
+      <div class="stat-card"><div class="lbl">Điểm thưởng</div><div class="val">3.250 điểm</div><div class="sub">Đổi quà tại Proshop</div></div>
+    </div>
+
+    <div class="tabs">
+      <a href="#" class="active">Tổng quan</a>
+      <a href="golf-mockup-timsan.html">Lịch sử Golf</a>
+      <a href="#">Lịch sử thanh toán</a>
+      <a href="#">Lịch sử giải đấu</a>
+      <a href="#">Quyền lợi</a>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <h3>Booking gần đây <a href="golf-mockup-timsan.html">Xem tất cả →</a></h3>
+        <a class="row-item" href="golf-mockup-timsan.html">
+          <img src="https://picsum.photos/seed/golf1/100/80" alt="">
+          <div><div class="t">FLC Hạ Long Golf Club</div><div class="d">25/05/2026 · 07:00 · 4 golfer</div></div>
+          <span class="badge">Đã xác nhận</span>
+        </a>
+        <a class="row-item" href="golf-mockup-timsan.html">
+          <img src="https://picsum.photos/seed/golf2/100/80" alt="">
+          <div><div class="t">BRG Kings Island Resort</div><div class="d">18/05/2026 · 12:30 · 4 golfer</div></div>
+          <span class="badge" style="background:#fdeecb;color:#8a6415;">Đã chơi</span>
+        </a>
+        <a class="row-item" href="golf-mockup-timsan.html">
+          <img src="https://picsum.photos/seed/golf3/100/80" alt="">
+          <div><div class="t">Tam Đảo Golf &amp; Resort</div><div class="d">10/05/2026 · 06:30 · 3 golfer</div></div>
+          <span class="badge" style="background:#fde3e3;color:#a13a3a;">Đã hủy</span>
+        </a>
+      </div>
+
+      <div class="panel">
+        <h3>Lịch sử thanh toán gần đây <a href="#">Xem tất cả →</a></h3>
+        <div class="row-item"><div><div class="t">Thanh toán Booking – FLC Hạ Long</div><div class="d">25/05/2026</div></div><span class="amt">2.400.000đ</span></div>
+        <div class="row-item"><div><div class="t">Hội phí năm 2026</div><div class="d">20/03/2026</div></div><span class="amt">1.000.000đ</span></div>
+        <div class="row-item"><div><div class="t">Thanh toán Booking – Kings Island</div><div class="d">18/05/2026</div></div><span class="amt">3.200.000đ</span></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:18px;">
+      <h3>Quyền lợi đang sử dụng <a href="#">Xem tất cả →</a></h3>
+      <div class="benefit-strip">
+        <div class="benefit-chip">⛳<br>Ưu đãi sân golf<br><span style="color:var(--green)">giảm đến 30%</span></div>
+        <div class="benefit-chip">🛡️<br>Bảo hiểm HIO<br><span style="color:var(--green)">Quyền lợi 1 tỷ VND</span></div>
+        <div class="benefit-chip">✈️<br>Vietnam Airlines<br><span style="color:var(--green)">Ưu đãi đặc biệt</span></div>
+        <div class="benefit-chip">🏨<br>Khách sạn &amp; Resort<br><span style="color:var(--green)">Giảm 20%</span></div>
+        <div class="benefit-chip">🏪<br>Proshop<br><span style="color:var(--green)">Giảm đến 15%</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
