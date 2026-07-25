@@ -45,10 +45,13 @@ permalink: "golf-mockup-trangchu.html"
   .btn-primary { background: var(--green); color: #fff; }
   .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
 
-  /* Hero — nền SÁNG bên trái, ảnh full-bleed bên phải, card đè lên ảnh (đúng bản gốc PDF trang 21) */
-  .hero { background: #fff; color: var(--text); overflow: hidden; }
-  .hero-row { display: flex; align-items: stretch; max-width: 1200px; margin: 0 auto; height: 400px; }
-  .hero-text { flex: 0 0 44%; padding: 40px 28px 40px 20px; display: flex; flex-direction: column; justify-content: center; }
+  /* Hero — ẢNH PHỦ TOÀN BỘ (full-bleed cả trái lẫn phải), chữ tiêu đề + card đều đè lên ảnh (đúng bản gốc PDF trang 21) */
+  .hero { position: relative; color: var(--text); overflow: hidden; min-height: 420px; display: flex; align-items: center; }
+  .hero-bg { position: absolute; inset: 0; z-index: 0; }
+  .hero-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-fade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.9) 26%, rgba(255,255,255,.42) 48%, rgba(255,255,255,0) 64%); }
+  .hero-row { position: relative; z-index: 1; display: flex; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; padding: 40px 20px; }
+  .hero-text { flex: 0 0 460px; }
   .hero-eyebrow { font-weight: 800; font-size: 15px; letter-spacing: .04em; color: var(--green); }
   .hero-title { font-size: 32px; font-weight: 800; line-height: 1.2; margin: 4px 0 14px; color: var(--green); }
   .hero-desc { color: var(--muted); margin-bottom: 22px; max-width: 40ch; font-size: 14.5px; }
@@ -57,13 +60,11 @@ permalink: "golf-mockup-trangchu.html"
   .btn-white:hover { background: var(--green-dark); transform: translateY(-1px); }
   .btn-ghost { border: 1px solid var(--border); color: var(--text); background: transparent; }
   .btn-ghost:hover { border-color: var(--green); color: var(--green); background: var(--bg); }
-  .hero-media { flex: 1; position: relative; overflow: hidden; }
-  .hero-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .hero-card { position: absolute; top: 26px; right: 26px; width: 250px; background: rgba(12,22,17,.6); backdrop-filter: blur(2px); color: #fff; border-radius: 10px; padding: 18px 20px; }
+  .hero-card { margin-left: auto; align-self: flex-start; margin-top: 8px; width: 250px; background: rgba(12,22,17,.6); backdrop-filter: blur(2px); color: #fff; border-radius: 10px; padding: 18px 20px; }
   .hero-card h4 { font-size: 12.5px; letter-spacing: .05em; margin-bottom: 12px; color: var(--gold); }
   .hero-card ul { list-style: none; display: grid; gap: 9px; font-size: 13px; }
   .hero-card li::before { content: "✓ "; color: var(--gold); font-weight: 700; }
-  .hero-dots { position: absolute; bottom: 16px; right: 26px; display: flex; gap: 6px; }
+  .hero-dots { position: absolute; z-index: 2; bottom: 16px; right: max(20px, calc((100% - 1200px) / 2 + 20px)); display: flex; gap: 6px; }
   .hero-dots span { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); display: block; }
   .hero-dots span.active { background: #fff; width: 16px; border-radius: 3px; }
 
@@ -137,13 +138,13 @@ permalink: "golf-mockup-trangchu.html"
     .header-actions span { display: none; }
     .btn { padding: 8px 12px; font-size: 12.5px; }
 
-    .hero-row { flex-direction: column; align-items: stretch; height: auto; }
-    .hero-text { padding: 24px 14px; flex: none; }
+    .hero { min-height: 0; }
+    .hero-fade { background: linear-gradient(180deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.94) 42%, rgba(255,255,255,.55) 68%, rgba(255,255,255,.12) 100%); }
+    .hero-row { flex-direction: column; align-items: stretch; padding: 24px 14px 50px; }
+    .hero-text { padding: 0; flex: none; }
     .hero-title { font-size: 26px; }
-    .hero-media { overflow: visible; }
-    .hero-photo { height: 200px; }
-    .hero-card { position: static; width: auto; margin: 14px; background: var(--green-dark); backdrop-filter: none; }
-    .hero-dots { display: none; }
+    .hero-card { margin: 16px 0 0; align-self: stretch; width: auto; }
+    .hero-dots { right: 14px; }
 
     .quick { grid-template-columns: repeat(3, 1fr); }
     .quick a { font-size: 11.5px; padding: 12px 4px; }
@@ -202,6 +203,10 @@ permalink: "golf-mockup-trangchu.html"
 </header>
 
 <div class="hero">
+  <div class="hero-bg">
+    <img class="hero-photo" src="https://www.performancegolf.com/wp-content/uploads/2024/11/golf-for-beginners-1-blog.webp" alt="Golfer đánh driver">
+    <div class="hero-fade"></div>
+  </div>
   <div class="hero-row">
     <div class="hero-text">
       <div class="hero-eyebrow">VGAID</div>
@@ -212,21 +217,18 @@ permalink: "golf-mockup-trangchu.html"
         <a href="#" class="btn btn-ghost">▶ Tìm hiểu thêm</a>
       </div>
     </div>
-    <div class="hero-media">
-      <img class="hero-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Golfer_in_Golf_Links_1.jpg/960px-Golfer_in_Golf_Links_1.jpg" alt="Golfer đánh bóng">
-      <div class="hero-card">
-        <h4>HỘI VIÊN LIÊN KẾT VGA</h4>
-        <ul>
-          <li>Một mã định danh duy nhất (VGA ID)</li>
-          <li>Đặt sân golf ưu đãi toàn quốc</li>
-          <li>Quyền lợi đặc biệt từ đối tác VGA</li>
-          <li>Tham gia giải đấu phong trào &amp; chuyên nghiệp</li>
-          <li>Cập nhật Handicap &amp; Ranking chính thức</li>
-        </ul>
-      </div>
-      <div class="hero-dots"><span class="active"></span><span></span><span></span></div>
+    <div class="hero-card">
+      <h4>HỘI VIÊN LIÊN KẾT VGA</h4>
+      <ul>
+        <li>Một mã định danh duy nhất (VGA ID)</li>
+        <li>Đặt sân golf ưu đãi toàn quốc</li>
+        <li>Quyền lợi đặc biệt từ đối tác VGA</li>
+        <li>Tham gia giải đấu phong trào &amp; chuyên nghiệp</li>
+        <li>Cập nhật Handicap &amp; Ranking chính thức</li>
+      </ul>
     </div>
   </div>
+  <div class="hero-dots"><span class="active"></span><span></span><span></span></div>
 </div>
 
 <div class="quick wrap">
