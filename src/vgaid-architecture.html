@@ -833,6 +833,29 @@ ul.plain li, ol.plain li { margin-bottom: 8px; max-width: 64ch; }
 .node--satellite { min-width: 128px; }
 .node--external { font-size: 0.8rem; color: var(--ink-soft); border-style: dashed; background: transparent; }
 
+/* ---- Architecture diagram (SVG) ---- */
+.diagram-svg-wrap {
+  background: var(--paper-raised);
+  border: 1px solid var(--paper-border);
+  border-radius: 12px;
+  padding: 18px 14px 14px;
+  box-shadow: var(--shadow);
+  margin: 6px 0 32px;
+}
+.diagram-svg { width: 100%; height: auto; display: block; }
+.diagram-svg text { fill: var(--ink); font-family: var(--font-body); }
+.diagram-svg .dg-mono { font-family: var(--font-mono); }
+.diagram-svg .dg-t { font-size: 13.5px; font-weight: 600; }
+.diagram-svg .dg-s { font-size: 10.5px; fill: var(--ink-soft); }
+.diagram-svg .dg-t-core { font-size: 16px; font-weight: 700; fill: var(--on-fairway); text-anchor: middle; }
+.diagram-svg .dg-s-core { font-size: 10.5px; fill: var(--fairway-tint); text-anchor: middle; opacity: 0.9; }
+.diagram-svg .dg-t-small { font-size: 11px; font-weight: 600; }
+.diagram-svg .dg-s-tiny { font-size: 8.6px; fill: var(--ink-soft); }
+.diagram-svg .dg-boundary-label { font-size: 10px; letter-spacing: 0.05em; fill: var(--ink-soft); }
+.diagram-svg .dg-bus { font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; fill: var(--amber); }
+.diagram-svg .dg-ext { font-size: 11px; fill: var(--ink-soft); }
+.diagram-svg .dg-legend { font-size: 10.5px; fill: var(--ink-soft); }
+
 /* ---- Service cards (fuller detail below diagram) ---- */
 .service-list { display: grid; gap: 14px; margin-top: 30px; }
 .service-card {
@@ -1035,48 +1058,105 @@ footer.colophon .rule {
       <h2><span class="num">03</span> Kiến trúc 5 service</h2>
     </div>
 
-    <div class="diagram" role="img" aria-label="Sơ đồ kiến trúc: người dùng qua nginx vào Core, Core giao tiếp bất đồng bộ qua RabbitMQ với Payment, BookingBridge, Notification, Reconciliation; mỗi dịch vụ có phụ thuộc ngoài riêng.">
-      <div class="diagram-row">
-        <div class="node node--client">Web (React) · App di động — Giai đoạn 3</div>
-      </div>
-      <div class="diagram-arrow">↓</div>
-      <div class="diagram-row">
-        <div class="node node--proxy">nginx — cửa ngõ duy nhất ra internet</div>
-      </div>
-      <div class="diagram-arrow">↓</div>
-      <div class="diagram-row">
-        <div class="node node--core">
-          <span class="node-title">Core</span>
-          <span class="node-sub">identity · membership · benefits · admin</span>
-        </div>
-      </div>
+    <div class="diagram-svg-wrap">
+    <svg class="diagram-svg" viewBox="0 0 960 680" role="img" xmlns="http://www.w3.org/2000/svg"
+      aria-label="Sơ đồ kiến trúc: golfer vào qua nginx đến Core (dùng chung PostgreSQL); Core phát sự kiện bất đồng bộ qua RabbitMQ tới 4 service vệ tinh Payment, BookingBridge, Notification, Reconciliation, nằm trong ranh giới hạ tầng tự vận hành; mỗi service vệ tinh gọi ra một phụ thuộc bên ngoài ranh giới đó.">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"></path>
+        </marker>
+      </defs>
 
-      <div class="bus-rail"><span class="bus-label">RabbitMQ — giao tiếp bất đồng bộ</span></div>
+      <!-- Client -->
+      <rect x="330" y="16" width="300" height="50" rx="8" fill="var(--paper-raised)" stroke="var(--paper-border)"></rect>
+      <text x="480" y="37" text-anchor="middle" class="dg-t dg-mono">Web (React) · App di động</text>
+      <text x="480" y="54" text-anchor="middle" class="dg-s dg-mono">— giai đoạn 3</text>
 
-      <div class="diagram-row">
-        <div class="node node--satellite">
-          <span class="node-title">Payment</span>
-          <span class="node-sub">IPN bất đồng bộ</span>
-        </div>
-        <div class="node node--satellite">
-          <span class="node-title">BookingBridge</span>
-          <span class="node-sub">slot_hold + bulkhead</span>
-        </div>
-        <div class="node node--satellite">
-          <span class="node-title">Notification</span>
-          <span class="node-sub">email · SMS · OTP</span>
-        </div>
-        <div class="node node--satellite">
-          <span class="node-title">Reconciliation</span>
-          <span class="node-sub">batch job định kỳ</span>
-        </div>
-      </div>
-      <div class="diagram-row">
-        <div class="node node--external">Cổng thanh toán</div>
-        <div class="node node--external">wGroup (email thủ công)</div>
-        <div class="node node--external">SMS / email gateway</div>
-        <div class="node node--external">Export Excel</div>
-      </div>
+      <line x1="480" y1="66" x2="480" y2="96" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+
+      <!-- nginx -->
+      <rect x="330" y="98" width="300" height="38" rx="8" fill="none" stroke="var(--paper-border)" stroke-dasharray="4 3"></rect>
+      <text x="480" y="122" text-anchor="middle" class="dg-t dg-mono">nginx — cửa ngõ duy nhất ra internet</text>
+
+      <line x1="480" y1="136" x2="480" y2="168" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+
+      <!-- Trust boundary -->
+      <rect x="30" y="170" width="900" height="312" rx="14" fill="none" stroke="var(--paper-border)" stroke-dasharray="6 5" stroke-width="1.3"></rect>
+      <text x="54" y="194" class="dg-boundary-label dg-mono">HẠ TẦNG TỰ VẬN HÀNH — VPS + DOCKER COMPOSE (GIAI ĐOẠN 1)</text>
+
+      <!-- Core -->
+      <rect x="380" y="207" width="200" height="70" rx="10" fill="var(--fairway)" stroke="var(--fairway)"></rect>
+      <text x="480" y="238" text-anchor="middle" class="dg-t-core">Core</text>
+      <text x="480" y="256" text-anchor="middle" class="dg-s-core">identity · membership · benefits · admin</text>
+
+      <!-- shared DB cylinder -->
+      <ellipse cx="705" cy="217" rx="55" ry="10" fill="var(--paper-raised)" stroke="var(--paper-border)"></ellipse>
+      <rect x="650" y="217" width="110" height="42" fill="var(--paper-raised)" stroke="none"></rect>
+      <line x1="650" y1="217" x2="650" y2="259" stroke="var(--paper-border)"></line>
+      <line x1="760" y1="217" x2="760" y2="259" stroke="var(--paper-border)"></line>
+      <ellipse cx="705" cy="259" rx="55" ry="10" fill="var(--paper-raised)" stroke="var(--paper-border)"></ellipse>
+      <text x="705" y="238" text-anchor="middle" class="dg-t-small">PostgreSQL</text>
+      <text x="705" y="249" text-anchor="middle" class="dg-s-tiny">dùng chung, pool giới hạn</text>
+      <text x="705" y="285" text-anchor="middle" class="dg-s-tiny">(mọi service vệ tinh cùng</text>
+      <text x="705" y="295" text-anchor="middle" class="dg-s-tiny">đọc/ghi qua Core)</text>
+
+      <line x1="580" y1="240" x2="648" y2="240" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+
+      <line x1="480" y1="277" x2="480" y2="316" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"></line>
+
+      <!-- RabbitMQ bus -->
+      <rect x="60" y="318" width="840" height="34" rx="17" fill="var(--brass-tint)" stroke="var(--brass)"></rect>
+      <text x="480" y="340" text-anchor="middle" class="dg-bus dg-mono">RABBITMQ — GIAO TIẾP BẤT ĐỒNG BỘ</text>
+
+      <!-- bus -> satellites -->
+      <line x1="165" y1="352" x2="165" y2="372" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"></line>
+      <line x1="375" y1="352" x2="375" y2="372" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"></line>
+      <line x1="585" y1="352" x2="585" y2="372" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"></line>
+      <line x1="795" y1="352" x2="795" y2="372" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"></line>
+
+      <!-- Satellites -->
+      <rect x="80" y="372" width="170" height="76" rx="10" fill="var(--paper-raised)" stroke="var(--paper-border)"></rect>
+      <text x="165" y="402" text-anchor="middle" class="dg-t">Payment</text>
+      <text x="165" y="420" text-anchor="middle" class="dg-s">IPN bất đồng bộ</text>
+
+      <rect x="290" y="372" width="170" height="76" rx="10" fill="var(--paper-raised)" stroke="var(--paper-border)"></rect>
+      <text x="375" y="402" text-anchor="middle" class="dg-t">BookingBridge</text>
+      <text x="375" y="420" text-anchor="middle" class="dg-s">slot_hold + bulkhead</text>
+
+      <rect x="500" y="372" width="170" height="76" rx="10" fill="var(--paper-raised)" stroke="var(--paper-border)"></rect>
+      <text x="585" y="402" text-anchor="middle" class="dg-t">Notification</text>
+      <text x="585" y="420" text-anchor="middle" class="dg-s">email · SMS · OTP</text>
+
+      <rect x="710" y="372" width="170" height="76" rx="10" fill="var(--paper-raised)" stroke="var(--paper-border)"></rect>
+      <text x="795" y="402" text-anchor="middle" class="dg-t">Reconciliation</text>
+      <text x="795" y="420" text-anchor="middle" class="dg-s">batch job định kỳ</text>
+
+      <!-- satellites -> externals (leaving trust boundary) -->
+      <line x1="165" y1="448" x2="165" y2="534" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+      <line x1="375" y1="448" x2="375" y2="534" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+      <line x1="585" y1="448" x2="585" y2="534" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+      <line x1="795" y1="448" x2="795" y2="534" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+
+      <!-- Externals (outside boundary) -->
+      <rect x="80" y="536" width="170" height="52" rx="8" fill="none" stroke="var(--paper-border)" stroke-dasharray="4 3"></rect>
+      <text x="165" y="566" text-anchor="middle" class="dg-ext">Cổng thanh toán</text>
+
+      <rect x="290" y="536" width="170" height="52" rx="8" fill="none" stroke="var(--paper-border)" stroke-dasharray="4 3"></rect>
+      <text x="375" y="558" text-anchor="middle" class="dg-ext">wGroup</text>
+      <text x="375" y="572" text-anchor="middle" class="dg-s-tiny">(email thủ công)</text>
+
+      <rect x="500" y="536" width="170" height="52" rx="8" fill="none" stroke="var(--paper-border)" stroke-dasharray="4 3"></rect>
+      <text x="585" y="566" text-anchor="middle" class="dg-ext">SMS / email gateway</text>
+
+      <rect x="710" y="536" width="170" height="52" rx="8" fill="none" stroke="var(--paper-border)" stroke-dasharray="4 3"></rect>
+      <text x="795" y="566" text-anchor="middle" class="dg-ext">Export Excel</text>
+
+      <!-- legend -->
+      <line x1="590" y1="622" x2="626" y2="622" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+      <text x="634" y="626" class="dg-s-tiny dg-legend">đồng bộ (HTTP/API, DB)</text>
+      <line x1="590" y1="644" x2="626" y2="644" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"></line>
+      <text x="634" y="648" class="dg-s-tiny dg-legend">bất đồng bộ (qua RabbitMQ)</text>
+    </svg>
     </div>
 
     <div class="service-list">
