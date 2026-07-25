@@ -1,0 +1,181 @@
+---
+permalink: "golf-mockup-checkin.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — QR Booking &amp; Check-in (mockup)</title>
+<style>
+  :root {
+    --navy: #0f1f3d; --navy2: #16294f; --gold: #c9a44c; --green: #0a6a36;
+    --text: #1c2430; --muted: #6b7280; --bg: #f3f5f8; --card: #ffffff; --border: #e2e6ec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  header { background: var(--navy); color: #fff; }
+  .header-row { display: flex; align-items: center; gap: 16px; padding: 12px 20px; max-width: 1180px; margin: 0 auto; }
+  .logo { font-weight: 800; color: var(--gold); letter-spacing: .03em; text-decoration: none; }
+  .sys-name { font-size: 12px; color: rgba(255,255,255,.7); border-left: 1px solid rgba(255,255,255,.25); padding-left: 14px; }
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: 16px; font-size: 12.5px; color: rgba(255,255,255,.85); }
+  .header-actions .user { display: flex; align-items: center; gap: 8px; }
+  .header-actions .avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: var(--navy); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; }
+
+  .body-layout { display: grid; grid-template-columns: 200px 1fr; gap: 0; align-items: start; }
+  .side-nav { background: #fff; border-right: 1px solid var(--border); min-height: 100%; padding: 18px 10px; }
+  .side-nav a { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 7px; font-size: 12.5px; color: var(--text); text-decoration: none; margin-bottom: 2px; }
+  .side-nav a:hover { background: var(--bg); }
+  .side-nav a.active { background: var(--navy); color: #fff; }
+  .support-box { margin-top: 16px; background: #fff8e6; border: 1px solid #ffe08a; border-radius: 8px; padding: 12px; font-size: 11.5px; text-align: center; }
+
+  .main { padding: 20px; }
+  .crumbs { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  h1 { font-size: 19px; margin-bottom: 14px; }
+
+  .success-bar { background: #eafaf0; border: 1px solid #b6ecc8; color: #17703a; font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; }
+
+  .layout2 { display: grid; grid-template-columns: 1fr 300px; gap: 16px; margin-bottom: 16px; align-items: start; }
+  .panel { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+  .panel h3 { font-size: 13px; text-transform: uppercase; color: var(--navy); margin-bottom: 14px; letter-spacing: .03em; }
+
+  .qr-panel { display: grid; grid-template-columns: 190px 1fr; gap: 20px; }
+  .qr-img2 { width: 170px; height: 170px; background:
+      repeating-linear-gradient(45deg,#1c2430 0 6px,#fff 6px 12px),
+      repeating-linear-gradient(-45deg,#1c2430 0 6px, transparent 6px 12px);
+      border: 8px solid #fff; outline: 1px solid var(--border); border-radius: 6px; position: relative; }
+  .qr-img2::after { content: "VGAID"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.85); color: var(--navy); font-weight: 800; font-size: 12px; width: 60px; height: 60px; margin: auto; border-radius: 6px; }
+  .qr-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .qr-actions button { border: 1px solid var(--border); background: #fff; border-radius: 6px; padding: 7px 10px; font-size: 11px; font-weight: 700; cursor: pointer; }
+
+  .bk-code { font-size: 20px; font-weight: 800; color: var(--navy); }
+  .kv { display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0; border-bottom: 1px dashed var(--border); }
+  .kv:last-child { border: none; }
+  .kv span:first-child { color: var(--muted); }
+  .status-chip { background: #eafaf0; color: #17703a; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 12px; }
+
+  table.golfers { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.golfers th { text-align: left; font-size: 10.5px; text-transform: uppercase; color: var(--muted); padding: 7px; border-bottom: 1px solid var(--border); }
+  table.golfers td { padding: 8px 7px; border-bottom: 1px solid var(--border); }
+  .rank-chip { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; color: #fff; }
+  .rank-chip.platinum { background: #52525b; } .rank-chip.gold { background: var(--gold); color: #4a3a12; }
+  .rank-chip.silver { background: #9aa2ad; } .rank-chip.khach { background: #e2e6ec; color: var(--muted); }
+  .ci-done { color: #2e9e5b; font-size: 11px; } .ci-wait { color: #d9a419; font-size: 11px; }
+
+  .checkin-status { background: #eafaf0; border: 1px solid #b6ecc8; border-radius: 8px; padding: 12px; font-size: 12.5px; color: #17703a; font-weight: 700; margin-bottom: 12px; }
+  .flight-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .flight-row:last-child { border: none; }
+
+  .steps-guide { list-style: none; display: grid; gap: 12px; font-size: 12px; }
+  .steps-guide li { display: flex; gap: 10px; }
+  .steps-guide .n { width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: #fff; font-weight: 800; font-size: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  @media (max-width: 900px) {
+    .body-layout { grid-template-columns: 1fr; }
+    .side-nav { display: flex; overflow-x: auto; gap: 4px; border-right: none; border-bottom: 1px solid var(--border); }
+    .side-nav a { white-space: nowrap; }
+    .layout2 { grid-template-columns: 1fr; }
+    .qr-panel { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    table.golfers { display: block; overflow-x: auto; white-space: nowrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 48 đề án PDF (QR Booking &amp; Check-in) — dữ liệu là placeholder.</div>
+
+<header>
+  <div class="header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGAID</a>
+    <span class="sys-name">HỆ THỐNG BOOKING GOLF QUỐC GIA</span>
+    <div class="header-actions">
+      <span>📞 Tổng đài Golf Quốc gia · 1900 1234</span>
+      <span class="user"><span class="avatar">A</span> Nguyễn Văn A</span>
+    </div>
+  </div>
+</header>
+
+<div class="body-layout">
+  <div class="side-nav">
+    <a href="golf-mockup-trangchu.html">🏠 Tổng quan</a>
+    <a href="#">🗓 Booking của tôi</a>
+    <a href="#" class="active">🔳 QR Booking &amp; Check-in</a>
+    <a href="#">📖 Lịch sử chơi</a>
+    <a href="golf-mockup-hoso.html">👤 Hội viên &amp; Ưu đãi</a>
+    <a href="#">🧾 Hóa đơn &amp; Thanh toán</a>
+    <a href="#">🔔 Thông báo</a>
+    <a href="#">⚙️ Cài đặt tài khoản</a>
+    <div class="support-box">Tổng đài hỗ trợ 24/7<br><b>1900 1234</b></div>
+  </div>
+
+  <div class="main">
+    <div class="crumbs"><a href="golf-mockup-trangchu.html">Trang chủ</a> › <a href="#">Booking của tôi</a> › <a href="golf-mockup-thanhtoan.html">Chi tiết booking</a> › QR Booking &amp; Check-in</div>
+    <h1>QR Booking &amp; Check-in</h1>
+    <div class="success-bar">✅ Booking đã được xác nhận và thanh toán thành công. Vui lòng sử dụng mã QR để check-in tại sân golf.</div>
+
+    <div class="layout2">
+      <div class="panel qr-panel">
+        <div>
+          <div class="qr-img2"></div>
+          <div class="qr-actions">
+            <button>⭳ Lưu QR</button>
+            <button>↗ Chia sẻ</button>
+            <button>🖼 Tải ảnh (PNG)</button>
+            <button>📄 Tải PDF</button>
+          </div>
+        </div>
+        <div>
+          <div class="kv"><span>Mã booking</span><span class="bk-code">BK260525-001</span></div>
+          <div class="kv"><span>Sân golf</span><span>FLC Hạ Long Golf Club</span></div>
+          <div class="kv"><span>Người đại diện</span><span>Nguyễn Văn A</span></div>
+          <div class="kv"><span>Ngày chơi</span><span>25/05/2026 (Thứ 2)</span></div>
+          <div class="kv"><span>SĐT liên hệ</span><span>0912 345 678</span></div>
+          <div class="kv"><span>Tee Time</span><span>07:30</span></div>
+          <div class="kv"><span>Số golfer</span><span>4 người</span></div>
+          <div class="kv"><span>Trạng thái booking</span><span class="status-chip">✓ Đã xác nhận</span></div>
+          <div class="kv"><span>Trạng thái thanh toán</span><span class="status-chip">✓ Đã thanh toán</span></div>
+          <div class="kv"><span>Tổng tiền</span><span style="font-weight:800;color:var(--navy)">8.655.000 VNĐ</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel">
+          <h3>Trạng thái check-in</h3>
+          <div class="checkin-status">✓ Đã check-in 2/4 golfer</div>
+          <div class="flight-row"><span>Flight 1 (4 golfer)</span><span>2/4 đã check-in</span></div>
+        </div>
+        <div class="panel">
+          <h3>Hướng dẫn check-in tại sân golf</h3>
+          <ul class="steps-guide">
+            <li><span class="n">1</span>Đến quầy lễ tân sân golf</li>
+            <li><span class="n">2</span>Đưa mã QR Booking cho nhân viên để quét mã</li>
+            <li><span class="n">3</span>Xác nhận thông tin booking và danh sách golfer</li>
+            <li><span class="n">4</span>Nhận thẻ túi/phiếu đánh bóng và bắt đầu trải nghiệm</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Danh sách golfer (4 người)</h3>
+      <table class="golfers">
+        <thead><tr><th>STT</th><th>Họ tên</th><th>Hạng hội viên</th><th>Trạng thái</th><th>Check-in</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Nguyễn Văn A (Đại diện)</td><td><span class="rank-chip platinum">Platinum</span></td><td>Hợp lệ</td><td><span class="ci-done">● Đã check-in</span></td></tr>
+          <tr><td>2</td><td>Trần Văn B</td><td><span class="rank-chip gold">Gold</span></td><td>Hợp lệ</td><td><span class="ci-done">● Đã check-in</span></td></tr>
+          <tr><td>3</td><td>Lê Văn C</td><td><span class="rank-chip silver">Silver</span></td><td>Hợp lệ</td><td><span class="ci-wait">● Chưa check-in</span></td></tr>
+          <tr><td>4</td><td>Phạm Văn D</td><td><span class="rank-chip khach">Khách</span></td><td>Hợp lệ</td><td><span class="ci-wait">● Chưa check-in</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

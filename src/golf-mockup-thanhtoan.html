@@ -1,0 +1,211 @@
+---
+permalink: "golf-mockup-thanhtoan.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Thanh toán Booking (mockup)</title>
+<style>
+  :root {
+    --navy: #0f1f3d; --navy2: #16294f; --gold: #c9a44c; --green: #0a6a36;
+    --text: #1c2430; --muted: #6b7280; --bg: #f3f5f8; --card: #ffffff; --border: #e2e6ec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button, label { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  header { background: var(--navy); color: #fff; }
+  .header-row { display: flex; align-items: center; gap: 16px; padding: 12px 20px; max-width: 1180px; margin: 0 auto; }
+  .logo { font-weight: 800; color: var(--gold); letter-spacing: .03em; text-decoration: none; }
+  .sys-name { font-size: 12px; color: rgba(255,255,255,.7); border-left: 1px solid rgba(255,255,255,.25); padding-left: 14px; }
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: 16px; font-size: 12.5px; color: rgba(255,255,255,.85); }
+  .header-actions .user { display: flex; align-items: center; gap: 8px; }
+  .header-actions .avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: var(--navy); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; }
+
+  .crumbrow { background: #fff; border-bottom: 1px solid var(--border); }
+  .crumbs { display: flex; align-items: center; gap: 8px; padding: 12px 0; font-size: 12.5px; color: var(--muted); flex-wrap: wrap; }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  .crumbs b { color: var(--navy); }
+  .timer { margin-left: auto; font-size: 12.5px; color: var(--muted); }
+  .timer b { color: #d9483f; font-size: 15px; }
+
+  .layout { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; padding: 20px 0 40px; align-items: start; }
+
+  .panel { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+  .panel h3 { font-size: 13.5px; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 14px; color: var(--navy); }
+
+  .binfo { display: flex; gap: 14px; }
+  .binfo img { width: 110px; height: 80px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+  .binfo .kv { display: flex; justify-content: space-between; gap: 14px; font-size: 12.5px; padding: 3px 0; max-width: 420px; }
+  .binfo .kv span:first-child { color: var(--muted); }
+
+  table.golfers { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.golfers th { text-align: left; font-size: 11px; text-transform: uppercase; color: var(--muted); padding: 8px; border-bottom: 1px solid var(--border); }
+  table.golfers td { padding: 9px 8px; border-bottom: 1px solid var(--border); }
+  .rank-chip { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 10px; color: #fff; }
+  .rank-chip.platinum { background: #52525b; } .rank-chip.gold { background: var(--gold); color: #4a3a12; }
+  .rank-chip.silver { background: #9aa2ad; } .rank-chip.khach { background: #e2e6ec; color: var(--muted); }
+
+  .price-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .price-table td { padding: 6px 0; }
+  .price-table td:last-child { text-align: right; font-weight: 600; }
+  .price-table tr.total td { border-top: 1px dashed var(--border); padding-top: 10px; font-weight: 800; font-size: 15px; color: var(--navy); }
+  .price-table tr.save td:last-child { color: #2e9e5b; }
+
+  .paytabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .paytabs span { padding: 8px 14px; font-size: 12.5px; font-weight: 700; color: var(--muted); border-bottom: 2px solid transparent; cursor: default; }
+  .paytabs span.active { color: var(--navy); border-color: var(--gold); }
+
+  .qr-row { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+  .qr-box { text-align: center; }
+  .qr-box .qr-img { width: 170px; height: 170px; background:
+      repeating-linear-gradient(45deg,#1c2430 0 6px,#fff 6px 12px),
+      repeating-linear-gradient(-45deg,#1c2430 0 6px, transparent 6px 12px);
+      border: 8px solid #fff; outline: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; }
+  .qr-box .brand { font-weight: 800; color: #1a63c4; font-size: 13px; }
+  .bank-info { font-size: 12px; line-height: 1.8; }
+  .bank-info b { display: block; color: var(--text); }
+  .qr-note { font-size: 11.5px; color: var(--muted); background: var(--bg); border-radius: 6px; padding: 8px 10px; margin-top: 10px; }
+
+  .order-summary .kv { display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0; }
+  .order-summary .kv.total { border-top: 1px dashed var(--border); margin-top: 8px; padding-top: 10px; font-weight: 800; font-size: 16px; color: var(--navy); }
+  .checklist { list-style: none; font-size: 12px; color: var(--muted); display: grid; gap: 6px; margin-top: 12px; }
+  .checklist li::before { content: "✓ "; color: #2e9e5b; font-weight: 800; }
+
+  .method-list { display: grid; gap: 8px; margin-bottom: 14px; }
+  .method-list label { display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; cursor: pointer; }
+  .method-list input { margin-right: 8px; }
+  .method-list label.picked { border-color: var(--navy); background: #f7f9fc; }
+
+  .btn-confirm { display: block; width: 100%; text-align: center; text-decoration: none; background: var(--gold); color: #4a3a12; border: none; padding: 14px; border-radius: 8px; font-weight: 800; font-size: 14.5px; cursor: pointer; }
+  .btn-confirm:hover { filter: brightness(1.05); transform: translateY(-1px); }
+  .btn-confirm-sub { text-align: center; font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+  .policy-list { list-style: none; font-size: 12.5px; display: grid; gap: 10px; }
+  .policy-list li { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  .policy-list li:last-child { border: none; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    table.golfers { display: block; overflow-x: auto; white-space: nowrap; }
+    .qr-row { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 44 đề án PDF (Thanh toán Booking) — QR/cổng thanh toán chỉ minh hoạ, không phải giao dịch thật.</div>
+
+<header>
+  <div class="header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGAID</a>
+    <span class="sys-name">HỆ THỐNG BOOKING GOLF QUỐC GIA</span>
+    <div class="header-actions">
+      <span>📞 Tổng đài Golf Quốc gia · 1900 1234</span>
+      <span class="user"><span class="avatar">A</span> Nguyễn Văn A</span>
+    </div>
+  </div>
+</header>
+
+<div class="crumbrow">
+  <div class="wrap crumbs">
+    <a href="golf-mockup-trangchu.html">Trang chủ</a> › <a href="golf-mockup-timsan.html">Booking Golf Quốc gia</a> › <a href="golf-mockup-chontee.html">Chọn Tee Time</a> › <b>Thanh toán Booking</b>
+    <div class="timer">Thời hạn thanh toán còn lại: <b>14:52</b></div>
+  </div>
+</div>
+
+<div class="wrap layout">
+  <div>
+    <div class="panel">
+      <h3>Thông tin booking</h3>
+      <div class="binfo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/VictoriaGolfCourse10.18thFairwayCLubhouseAndPonds.jpg/960px-VictoriaGolfCourse10.18thFairwayCLubhouseAndPonds.jpg" alt="">
+        <div>
+          <div class="kv"><span>Sân golf</span><span><b>FLC Hạ Long Golf Club</b></span></div>
+          <div class="kv"><span>Ngày chơi</span><span>25/05/2026</span></div>
+          <div class="kv"><span>Tee time</span><span>07:30</span></div>
+          <div class="kv"><span>Số golfer</span><span>4 người</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Danh sách golfer (4 người)</h3>
+      <table class="golfers">
+        <thead><tr><th>STT</th><th>Họ tên</th><th>Hạng hội viên</th><th>Giá áp dụng</th><th>Ưu đãi</th><th>Thành tiền</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Nguyễn Văn A</td><td><span class="rank-chip platinum">Platinum</span></td><td>1.950.000</td><td>-390.000</td><td>1.560.000</td></tr>
+          <tr><td>2</td><td>Trần Văn B</td><td><span class="rank-chip gold">Gold</span></td><td>2.150.000</td><td>-430.000</td><td>1.720.000</td></tr>
+          <tr><td>3</td><td>Lê Văn C</td><td><span class="rank-chip silver">Silver</span></td><td>2.350.000</td><td>-470.000</td><td>1.880.000</td></tr>
+          <tr><td>4</td><td>Phạm Văn D</td><td><span class="rank-chip khach">Khách</span></td><td>2.550.000</td><td>-255.000</td><td>2.295.000</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>Bảng tính giá booking</h3>
+      <table class="price-table">
+        <tr><td>Tổng tiền green fee</td><td>9.000.000</td></tr>
+        <tr class="save"><td>Ưu đãi hội viên</td><td>-1.545.000</td></tr>
+        <tr class="save"><td>Voucher</td><td>-1.000.000</td></tr>
+        <tr><td>Dịch vụ đi kèm (xe điện, nước, thuê gậy)</td><td>1.840.000</td></tr>
+        <tr><td>Phí dịch vụ</td><td>360.000</td></tr>
+        <tr class="total"><td>TỔNG THANH TOÁN</td><td>8.655.000 VNĐ</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel">
+      <h3>Phương thức thanh toán</h3>
+      <div class="paytabs">
+        <span class="active">QR Code</span><span>Thẻ ngân hàng</span><span>Thẻ quốc tế</span><span>Ví điện tử</span><span>Chuyển khoản</span>
+      </div>
+      <div class="qr-row">
+        <div class="qr-box">
+          <div class="brand">VNPAY <span style="font-size:9px;vertical-align:top">QR</span></div>
+          <div class="qr-img"></div>
+          <div style="font-size:11px;color:var(--muted)">napas 247</div>
+        </div>
+        <div class="bank-info">
+          <b>Thông tin thanh toán</b>
+          Ngân hàng: Vietnam Joint Stock Commercial Bank for Industry and Trade<br>
+          Số tài khoản: 1234 5678 9999<br>
+          Chủ tài khoản: CÔNG TY CP TẬP ĐOÀN WGHN<br>
+          Nội dung CK: THANH TOAN BOOKING #BK260525-001<br>
+          Số tiền: <b style="color:var(--navy)">8.655.000 VNĐ</b>
+        </div>
+      </div>
+      <div class="qr-note">⏱ QR Code chỉ hiệu lực trong 14:52 phút. Vui lòng hoàn tất thanh toán trước khi hết hạn.</div>
+    </div>
+
+    <div class="panel">
+      <h3>Chọn hình thức thanh toán</h3>
+      <div class="method-list">
+        <label class="picked"><span><input type="radio" name="pm" checked> Thanh toán toàn bộ</span><b>8.655.000đ</b></label>
+        <label><span><input type="radio" name="pm"> Thanh toán theo golfer</span></label>
+        <label><span><input type="radio" name="pm"> Thanh toán một phần (tối thiểu 50%)</span></label>
+      </div>
+      <a class="btn-confirm" href="golf-mockup-checkin.html">🔒 Xác nhận thanh toán</a>
+      <div class="btn-confirm-sub">Bạn sẽ được chuyển đến cổng thanh toán an toàn (mockup)</div>
+    </div>
+
+    <div class="panel order-summary">
+      <h3>Bạn sẽ nhận được sau khi thanh toán</h3>
+      <ul class="checklist">
+        <li>Xác nhận booking qua Email/SMS/Zalo</li>
+        <li>QR Booking để check-in tại sân</li>
+        <li>Thông tin chi tiết lịch chơi</li>
+        <li>Hỗ trợ từ Tổng đài Golf Quốc gia</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

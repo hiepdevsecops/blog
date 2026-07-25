@@ -1,0 +1,196 @@
+---
+permalink: "golf-mockup-chontee.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Chọn Tee Time &amp; Xác nhận Booking (mockup)</title>
+<style>
+  :root {
+    --navy: #0f1f3d; --navy2: #16294f; --gold: #c9a44c; --green: #0a6a36;
+    --text: #1c2430; --muted: #6b7280; --bg: #f3f5f8; --card: #ffffff; --border: #e2e6ec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  header { background: var(--navy); color: #fff; }
+  .header-row { display: flex; align-items: center; gap: 16px; padding: 12px 20px; max-width: 1180px; margin: 0 auto; }
+  .logo { font-weight: 800; color: var(--gold); letter-spacing: .03em; text-decoration: none; }
+  .sys-name { font-size: 12px; color: rgba(255,255,255,.7); border-left: 1px solid rgba(255,255,255,.25); padding-left: 14px; }
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: 16px; font-size: 12.5px; color: rgba(255,255,255,.85); }
+  .header-actions .user { display: flex; align-items: center; gap: 8px; }
+  .header-actions .avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: var(--navy); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; }
+
+  .crumbrow { background: #fff; border-bottom: 1px solid var(--border); }
+  .crumbs { display: flex; align-items: center; gap: 8px; padding: 12px 0; font-size: 12.5px; color: var(--muted); flex-wrap: wrap; }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  .crumbs a:hover { color: var(--navy); }
+  .steps { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .step { display: flex; align-items: center; gap: 6px; }
+  .step .n { width: 20px; height: 20px; border-radius: 50%; background: var(--border); color: var(--muted); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+  .step.active { color: var(--navy); font-weight: 700; }
+  .step.active .n { background: var(--navy); color: #fff; }
+  .steps .sep { color: var(--border); }
+
+  .layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; padding: 20px 0 40px; align-items: start; }
+
+  .panel { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+  .panel h3 { font-size: 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+  .search-row { display: grid; grid-template-columns: 1.4fr 1fr .8fr .8fr auto; gap: 10px; margin-bottom: 16px; }
+  .search-row .f label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .search-row .f select, .search-row .f input { width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border); font-size: 12.5px; }
+  .search-row button { background: var(--navy); color: #fff; border: none; border-radius: 6px; padding: 0 16px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+
+  .tee-legend { font-size: 11.5px; color: var(--muted); margin-bottom: 10px; display: flex; gap: 14px; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+  .dot.ok { background: #2e9e5b; } .dot.low { background: #e0a419; } .dot.full { background: #d9483f; }
+
+  .tee-grid2 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .tee-slot { border: 1px solid var(--border); border-radius: 8px; padding: 10px 6px; text-align: center; cursor: pointer; background: #fff; }
+  .tee-slot .t { font-weight: 800; font-size: 13px; }
+  .tee-slot .a { font-size: 10.5px; color: #2e9e5b; margin: 3px 0; }
+  .tee-slot .p { font-size: 10.5px; color: var(--muted); }
+  .tee-slot.picked { border-color: var(--navy); background: var(--navy); }
+  .tee-slot.picked .t, .tee-slot.picked .a, .tee-slot.picked .p { color: #fff; }
+  .tee-slot.full { opacity: .5; cursor: not-allowed; }
+  .tee-slot.full .a { color: #d9483f; }
+
+  table.golfers { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.golfers th { text-align: left; font-size: 11px; text-transform: uppercase; color: var(--muted); padding: 8px 8px; border-bottom: 1px solid var(--border); }
+  table.golfers td { padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .rank-chip { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 10px; color: #fff; }
+  .rank-chip.platinum { background: #52525b; }
+  .rank-chip.gold { background: var(--gold); color: #4a3a12; }
+  .rank-chip.silver { background: #9aa2ad; }
+  .rank-chip.khach { background: #e2e6ec; color: var(--muted); }
+  .status-ok { color: #2e9e5b; font-size: 11.5px; }
+  .status-warn { color: #d9483f; font-size: 11.5px; }
+  .link-add { color: var(--navy); font-size: 11.5px; font-weight: 700; text-decoration: none; border: 1px solid var(--navy); padding: 4px 8px; border-radius: 6px; }
+  .add-golfer-row { margin-top: 12px; display: flex; gap: 10px; }
+  .add-golfer-row button { border: 1px solid var(--border); background: #fff; border-radius: 6px; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer; }
+
+  .side-box { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .side-box h4 { font-size: 12.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); margin-bottom: 10px; }
+  .kv { display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0; }
+  .kv b { font-weight: 600; }
+  .price-box .kv.total { border-top: 1px dashed var(--border); margin-top: 8px; padding-top: 10px; font-weight: 800; font-size: 15px; color: var(--navy); }
+  .price-box .kv.save b { color: #2e9e5b; }
+
+  .btn-pay { display: block; width: 100%; text-align: center; text-decoration: none; background: var(--gold); color: #4a3a12; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; margin-top: 4px; }
+  .btn-pay:hover { filter: brightness(1.05); transform: translateY(-1px); }
+
+  .foot-actions { display: flex; justify-content: space-between; padding: 16px 0 40px; }
+  .btn-ghost2 { background: #fff; border: 1px solid var(--border); padding: 10px 18px; border-radius: 7px; font-size: 12.5px; font-weight: 700; cursor: pointer; color: var(--text); text-decoration:none; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .search-row { grid-template-columns: 1fr 1fr; }
+    .tee-grid2 { grid-template-columns: repeat(3, 1fr); }
+    table.golfers { display: block; overflow-x: auto; white-space: nowrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 41 đề án PDF (Chọn Tee Time &amp; Xác nhận Booking) — đã rút gọn còn 4 golfer/1 flight để dễ xem, dữ liệu là placeholder.</div>
+
+<header>
+  <div class="header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGAID</a>
+    <span class="sys-name">HỆ THỐNG BOOKING GOLF QUỐC GIA</span>
+    <div class="header-actions">
+      <span>📞 Tổng đài Golf Quốc gia · 1900 1234</span>
+      <span class="user"><span class="avatar">A</span> Nguyễn Văn A</span>
+    </div>
+  </div>
+</header>
+
+<div class="crumbrow">
+  <div class="wrap crumbs">
+    <a href="golf-mockup-trangchu.html">Trang chủ</a> › <a href="golf-mockup-timsan.html">Booking Golf Quốc gia</a> › <span>Chọn Tee Time &amp; Xác nhận Booking</span>
+    <div class="steps">
+      <div class="step active"><span class="n">1</span> Chọn sân &amp; Tee Time</div>
+      <span class="sep">—</span>
+      <div class="step"><span class="n">2</span> Xác nhận Booking</div>
+      <span class="sep">—</span>
+      <div class="step"><span class="n">3</span> Thanh toán</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap layout">
+  <div>
+    <div class="panel">
+      <h3>🔍 Tìm tee time</h3>
+      <div class="search-row">
+        <div class="f"><label>Sân golf</label><select><option>FLC Hạ Long Golf Club</option></select></div>
+        <div class="f"><label>Ngày chơi</label><input type="text" value="25/05/2026"></div>
+        <div class="f"><label>Số golfer</label><select><option>4</option></select></div>
+        <div class="f"><label>Số flight</label><select><option>1</option></select></div>
+        <button>Tìm kiếm</button>
+      </div>
+
+      <div class="tee-legend"><span><span class="dot ok"></span>Còn trống</span><span><span class="dot low"></span>Ít chỗ</span><span><span class="dot full"></span>Hết chỗ</span></div>
+      <div class="tee-grid2">
+        <div class="tee-slot"><div class="t">07:00</div><div class="a">Còn 4</div><div class="p">1.950.000đ</div></div>
+        <div class="tee-slot picked"><div class="t">07:30</div><div class="a">Còn 2</div><div class="p">1.950.000đ</div></div>
+        <div class="tee-slot"><div class="t">08:00</div><div class="a">Còn 4</div><div class="p">1.950.000đ</div></div>
+        <div class="tee-slot"><div class="t">08:30</div><div class="a">Còn 3</div><div class="p">1.950.000đ</div></div>
+        <div class="tee-slot full"><div class="t">09:00</div><div class="a">Hết chỗ</div><div class="p">—</div></div>
+        <div class="tee-slot"><div class="t">09:30</div><div class="a">Còn 4</div><div class="p">1.950.000đ</div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>👥 Danh sách golfer (4 người)</h3>
+      <table class="golfers">
+        <thead><tr><th>STT</th><th>Họ tên</th><th>VGA ID</th><th>Hạng hội viên</th><th>Trạng thái</th><th>Giá áp dụng</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Nguyễn Văn A <span style="color:var(--muted)">(Đại diện)</span></td><td>123456</td><td><span class="rank-chip platinum">Platinum</span></td><td><span class="status-ok">● Hợp lệ</span></td><td>Giá Platinum · 1.950.000đ</td></tr>
+          <tr><td>2</td><td>Trần Văn B</td><td>0987654321</td><td><span class="rank-chip gold">Gold</span></td><td><span class="status-ok">● Hợp lệ</span></td><td>Giá Gold · 2.150.000đ</td></tr>
+          <tr><td>3</td><td>Lê Văn C</td><td>234567</td><td><span class="rank-chip silver">Silver</span></td><td><span class="status-ok">● Hợp lệ</span></td><td>Giá Silver · 2.350.000đ</td></tr>
+          <tr><td>4</td><td>Phạm Văn D</td><td>—</td><td><span class="rank-chip khach">Khách</span></td><td><span class="status-warn">● Chưa có VGA ID</span></td><td>Giá đại lý · 2.550.000đ</td></tr>
+        </tbody>
+      </table>
+      <div class="add-golfer-row">
+        <button>+ Thêm golfer</button>
+        <button>📥 Nhập Excel</button>
+        <button>Chọn từ danh bạ</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="side-box">
+      <h4>Thông tin booking</h4>
+      <div class="kv"><span>Sân golf</span><b>FLC Hạ Long GC</b></div>
+      <div class="kv"><span>Ngày chơi</span><b>25/05/2026</b></div>
+      <div class="kv"><span>Tee time</span><b>07:30</b></div>
+      <div class="kv"><span>Số golfer</span><b>4 người</b></div>
+      <div class="kv"><span>Số flight</span><b>1 flight</b></div>
+    </div>
+    <div class="side-box price-box">
+      <h4>Bảng tính giá chi tiết</h4>
+      <div class="kv"><span>Tổng giá công bố</span><b>13.000.000đ</b></div>
+      <div class="kv save"><span>Ưu đãi hội viên</span><b>-4.480.000đ</b></div>
+      <div class="kv"><span>Phí dịch vụ</span><b>120.000đ</b></div>
+      <div class="kv total"><span>Tổng giá trị booking</span><span>9.000.000đ</span></div>
+    </div>
+    <a class="btn-pay" href="golf-mockup-thanhtoan.html">Tiếp tục thanh toán →</a>
+  </div>
+</div>
+
+<div class="wrap foot-actions">
+  <a class="btn-ghost2" href="golf-mockup-chitietsan.html">← Quay lại</a>
+  <button class="btn-ghost2">🖫 Lưu Booking</button>
+</div>
+
+</body>
+</html>

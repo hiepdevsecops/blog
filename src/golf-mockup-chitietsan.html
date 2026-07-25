@@ -1,0 +1,239 @@
+---
+permalink: "golf-mockup-chitietsan.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Chi tiết sân golf (mockup)</title>
+<style>
+  :root {
+    --green: #0a6a36; --green-dark: #0f4a2c; --gold: #c9a44c;
+    --text: #1f2420; --muted: #6b7268; --bg: #f6f5f0; --card: #ffffff; --border: #e4e1d6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+  header { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top:0; z-index:10; }
+  .header-row { display: flex; align-items: center; gap: 18px; padding: 14px 0; max-width:1180px; margin:0 auto; padding-left:20px; padding-right:20px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--green); text-decoration: none; white-space: nowrap; }
+  .logo .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--green); display:inline-block; }
+  .back { margin-left:auto; font-size: 13px; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--green); }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  .crumbs { font-size: 12px; color: var(--muted); padding: 16px 0 10px; }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  .crumbs a:hover { color: var(--green); }
+
+  .layout { display: grid; grid-template-columns: 1fr 340px; gap: 22px; padding-bottom: 40px; align-items: start; }
+
+  .hero-shot { position: relative; border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .hero-shot img { width: 100%; height: 320px; object-fit: cover; display: block; }
+  .hero-badges { position: absolute; top: 14px; left: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { background: rgba(12,22,17,.6); backdrop-filter: blur(2px); color: #fff; font-size: 11.5px; font-weight: 700; padding: 5px 10px; border-radius: 6px; }
+  .badge.promo { background: #d94e3f; }
+
+  .course-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .course-head h1 { font-size: 24px; margin-bottom: 6px; }
+  .course-head .rate { color: #b8860b; font-size: 13.5px; margin-bottom: 4px; }
+  .course-head .loc { color: var(--muted); font-size: 13px; }
+  .course-head .actions { display: flex; gap: 8px; }
+  .icon-btn { border: 1px solid var(--border); background: #fff; border-radius: 8px; padding: 8px 14px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--text); }
+  .icon-btn:hover { border-color: var(--green); color: var(--green); }
+
+  .tabs { display: flex; gap: 22px; border-bottom: 1px solid var(--border); margin-bottom: 20px; overflow-x: auto; }
+  .tabs a { padding: 10px 2px; font-size: 13.5px; font-weight: 600; color: var(--muted); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; }
+  .tabs a.active { color: var(--green); border-color: var(--green); }
+
+  .section { margin-bottom: 26px; }
+  .section h3 { font-size: 15px; margin-bottom: 10px; }
+  .section p { font-size: 13.5px; color: var(--muted); line-height: 1.6; max-width: 70ch; }
+
+  .amenities { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .amenity { text-align: center; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 14px 6px; font-size: 11.5px; font-weight: 600; }
+  .amenity .ic { font-size: 20px; display: block; margin-bottom: 6px; }
+
+  .promo-banner { background: linear-gradient(120deg, var(--green) 0%, var(--green-dark) 100%); color: #fff; border-radius: 10px; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .promo-banner .t { font-weight: 800; font-size: 14.5px; }
+  .promo-banner .s { font-size: 12.5px; opacity: .85; margin-top: 3px; }
+  .promo-banner button { background: #fff; color: var(--green-dark); border: none; padding: 9px 16px; border-radius: 7px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+
+  .review-summary { display: flex; gap: 24px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 18px; align-items: center; flex-wrap: wrap; }
+  .review-score { text-align: center; }
+  .review-score .n { font-size: 32px; font-weight: 800; color: var(--green); }
+  .review-score .s { font-size: 11px; color: var(--muted); }
+  .review-bars { flex: 1; min-width: 220px; display: grid; gap: 6px; }
+  .review-bars .row { display: grid; grid-template-columns: 70px 1fr 30px; align-items: center; gap: 8px; font-size: 11.5px; color: var(--muted); }
+  .review-bars .bar { height: 6px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .review-bars .bar span { display: block; height: 100%; background: var(--green); }
+
+  /* Sidebar booking widget */
+  .booking-box { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 18px; position: sticky; top: 76px; }
+  .booking-box h4 { font-size: 14px; margin-bottom: 3px; }
+  .booking-box .sub { font-size: 11.5px; color: var(--muted); margin-bottom: 14px; }
+  .bfield { margin-bottom: 12px; }
+  .bfield label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .bfield select, .bfield input { width: 100%; padding: 9px 10px; border-radius: 6px; border: 1px solid var(--border); font-size: 13px; }
+  .brow2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .tee-label { font-size: 11.5px; color: var(--muted); margin: 12px 0 6px; }
+  .tee-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px; }
+  .tee-grid button { padding: 8px 4px; border-radius: 6px; border: 1px solid var(--border); background: #fff; font-size: 12px; font-weight: 700; cursor: pointer; color: var(--text); }
+  .tee-grid button:hover { border-color: var(--green); }
+  .tee-grid button.picked { background: var(--green); color: #fff; border-color: var(--green); }
+  .tee-grid button.full { color: #c7cbc7; border-color: var(--border); background: #f8f8f6; cursor: not-allowed; }
+
+  .price-line { display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0; }
+  .price-line.total { font-weight: 800; font-size: 15px; color: var(--green); border-top: 1px dashed var(--border); margin-top: 6px; padding-top: 10px; }
+  .price-line .old { text-decoration: line-through; color: var(--muted); font-size: 11px; }
+
+  .btn-continue { display: block; width: 100%; text-align: center; background: var(--green); color: #fff; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; margin-top: 14px; text-decoration: none; }
+  .btn-continue:hover { background: var(--green-dark); }
+
+  .insure-box { background: linear-gradient(120deg, var(--green) 0%, var(--green-dark) 100%); color:#fff; border-radius: 10px; padding: 16px; margin-top: 16px; font-size: 12.5px; }
+  .insure-box .t { font-weight: 800; margin-bottom: 4px; }
+  .insure-box button { margin-top: 10px; background: #fff; color: var(--green-dark); border: none; padding: 8px 14px; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .booking-box { position: static; }
+    .amenities { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 36 đề án PDF (Trang chi tiết sân golf) — dữ liệu là placeholder.</div>
+
+<header>
+  <div class="header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGA <span class="dot"></span> VGAID</a>
+    <a href="golf-mockup-trangchu.html" class="back">← Về trang chủ</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumbs"><a href="golf-mockup-timsan.html">Booking Golf Quốc gia</a> &nbsp;›&nbsp; Quảng Ninh &nbsp;›&nbsp; FLC Hạ Long Golf Club</div>
+
+  <div class="layout">
+    <div>
+      <div class="hero-shot">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/VictoriaGolfCourse10.18thFairwayCLubhouseAndPonds.jpg/960px-VictoriaGolfCourse10.18thFairwayCLubhouseAndPonds.jpg" alt="FLC Hạ Long Golf Club">
+        <div class="hero-badges">
+          <span class="badge promo">Ưu đãi 40%</span>
+          <span class="badge">⛳ 18 hố</span>
+          <span class="badge">Par 72</span>
+          <span class="badge">7124 yards</span>
+        </div>
+      </div>
+
+      <div class="course-head">
+        <div>
+          <h1>FLC Hạ Long Golf Club</h1>
+          <div class="rate">★★★★★ 4.7 (256 đánh giá)</div>
+          <div class="loc">📍 Khu đồi Cột 3, P. Hồng Hải, TP. Hạ Long, Quảng Ninh</div>
+        </div>
+        <div class="actions">
+          <button class="icon-btn">♡ Yêu thích</button>
+          <button class="icon-btn">↗ Chia sẻ</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <a class="active" href="#gioithieu">Tổng quan</a>
+        <a href="#">Bảng giá</a>
+        <a href="#">Tee time</a>
+        <a href="#">Ưu đãi</a>
+        <a href="#">Tiện ích</a>
+        <a href="#">Đánh giá (256)</a>
+        <a href="#">Chính sách</a>
+      </div>
+
+      <div class="section" id="gioithieu">
+        <h3>Giới thiệu sân</h3>
+        <p>FLC Hạ Long Golf Club là sân golf 18 hố tiêu chuẩn quốc tế nằm trên đồi cao với tầm nhìn hướng biển tuyệt đẹp. Sân được thiết kế mang đến trải nghiệm golf đẳng cấp giữa thiên nhiên kỳ vĩ, phù hợp cho cả golfer nghiệp dư và chuyên nghiệp.</p>
+      </div>
+
+      <div class="section">
+        <h3>Tiện ích sân golf</h3>
+        <div class="amenities">
+          <div class="amenity"><span class="ic">🍽️</span>Nhà hàng</div>
+          <div class="amenity"><span class="ic">🛍️</span>Pro Shop</div>
+          <div class="amenity"><span class="ic">🔒</span>Locker</div>
+          <div class="amenity"><span class="ic">🚿</span>Phòng thay đồ</div>
+          <div class="amenity"><span class="ic">⛳</span>Driving Range</div>
+          <div class="amenity"><span class="ic">🏌️</span>Thuê gậy</div>
+          <div class="amenity"><span class="ic">🚗</span>Buggy</div>
+          <div class="amenity"><span class="ic">📶</span>Wifi miễn phí</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="promo-banner">
+          <div>
+            <div class="t">Ưu đãi dành cho hội viên VGA — Giảm đến 40% Green fee</div>
+            <div class="s">Áp dụng cho hạng hội viên Kim Cương 2024–2025 và nhiều quyền lợi đặc biệt khác</div>
+          </div>
+          <button>Xem chi tiết</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Đánh giá của golfer</h3>
+        <div class="review-summary">
+          <div class="review-score">
+            <div class="n">4.7</div>
+            <div class="s">★★★★★<br>256 đánh giá</div>
+          </div>
+          <div class="review-bars">
+            <div class="row"><span>Chất lượng sân</span><span class="bar"><span style="width:96%"></span></span><span>4.8</span></div>
+            <div class="row"><span>Dịch vụ</span><span class="bar"><span style="width:92%"></span></span><span>4.6</span></div>
+            <div class="row"><span>Caddie</span><span class="bar"><span style="width:94%"></span></span><span>4.7</span></div>
+            <div class="row"><span>Tiện ích</span><span class="bar"><span style="width:90%"></span></span><span>4.5</span></div>
+            <div class="row"><span>Giá cả</span><span class="bar"><span style="width:88%"></span></span><span>4.4</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="booking-box">
+        <h4>Đặt sân nhanh</h4>
+        <div class="sub">Giá ưu đãi dành cho hội viên Kim Cương</div>
+        <div class="brow2">
+          <div class="bfield"><label>Ngày chơi</label><input type="text" value="25/05/2026"></div>
+          <div class="bfield"><label>Số golfer</label><select><option>4 golfer</option></select></div>
+        </div>
+        <div class="tee-label">Chọn tee time</div>
+        <div class="tee-grid">
+          <button>07:30</button>
+          <button class="picked">08:00</button>
+          <button>08:30</button>
+          <button class="full">09:00</button>
+          <button>09:30</button>
+          <button>10:00</button>
+          <button class="picked-alt" style="border-color:var(--green);color:var(--green)">10:30</button>
+          <button>11:00</button>
+        </div>
+        <div class="price-line"><span>Giá công bố</span><span class="old">3.250.000đ</span></div>
+        <div class="price-line total"><span>Giá hội viên (Kim Cương)</span><span>1.950.000đ</span></div>
+        <div class="price-line"><span style="color:var(--muted)">Phí sân, caddie, xe điện 2 chiều · đã bao gồm VAT</span></div>
+        <a class="btn-continue" href="golf-mockup-chontee.html">Tiếp tục đặt sân →</a>
+      </div>
+
+      <div class="insure-box">
+        <div class="t">🛡️ Bảo hiểm Hole-in-One</div>
+        <div>Quyền lợi lên tới 1 tỷ đồng khi golfer đạt Hole-in-One trong vòng chơi</div>
+        <button>Xem chi tiết</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
