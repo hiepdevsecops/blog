@@ -1,69 +1,388 @@
----
-layout: base.njk
-title: false
----
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Trang chủ (mockup từ đề án)</title>
+<style>
+  :root {
+    --green: #0a6a36;
+    --green-dark: #0f4a2c;
+    --gold: #c9a44c;
+    --text: #1f2420;
+    --muted: #6b7268;
+    --bg: #f6f5f0;
+    --card: #ffffff;
+    --border: #e4e1d6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  img.ph {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg,#e7ede9,#d3ddd6); color: #8a9187;
+    font-size: 12px; text-align: center;
+  }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-<!-- HERO -->
-<section class="hero">
-  <div class="wrap">
+  /* Header */
+  header { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top: 0; z-index: 10; }
+  .header-row { display: flex; align-items: center; gap: 18px; padding: 14px 0; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--green); white-space: nowrap; flex-shrink: 0; text-decoration: none; }
+  .logo .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--green); display:inline-block; flex-shrink:0; }
+  .logo small { font-weight: 400; color: var(--muted); font-size: 10px; display:block; white-space: nowrap; }
+  nav { display: flex; gap: 16px; flex: 1; font-size: 13.5px; color: #333; white-space: nowrap; }
+  nav a { text-decoration: none; color: inherit; white-space: nowrap; border-bottom: 2px solid transparent; padding-bottom: 4px; }
+  nav a:hover { color: var(--green); }
+  nav a.active { color: var(--green); font-weight: 600; border-bottom-color: var(--green); }
+  .header-actions { display: flex; align-items: center; gap: 10px; font-size: 14px; flex-shrink: 0; }
+  .btn { padding: 9px 16px; border-radius: 6px; font-size: 13.5px; font-weight: 600; cursor: pointer; border: 1px solid transparent; text-decoration:none; display:inline-block; white-space: nowrap; }
+  .btn-outline { border-color: #ccc; color: #333; background: #fff; }
+  .btn-outline:hover { border-color: var(--green); color: var(--green); }
+  .btn-primary { background: var(--green); color: #fff; }
+  .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+  /* Hero — ẢNH PHỦ TOÀN BỘ (full-bleed cả trái lẫn phải), chữ tiêu đề + card đều đè lên ảnh (đúng bản gốc PDF trang 21) */
+  .hero { position: relative; color: var(--text); overflow: hidden; min-height: 420px; display: flex; align-items: center; }
+  .hero-bg { position: absolute; inset: 0; z-index: 0; }
+  .hero-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-fade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.9) 26%, rgba(255,255,255,.42) 48%, rgba(255,255,255,0) 64%); }
+  .hero-row { position: relative; z-index: 1; display: flex; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; padding: 40px 20px; }
+  .hero-text { flex: 0 0 460px; }
+  .hero-eyebrow { font-weight: 800; font-size: 15px; letter-spacing: .04em; color: var(--green); }
+  .hero-title { font-size: 32px; font-weight: 800; line-height: 1.2; margin: 4px 0 14px; color: var(--green); }
+  .hero-desc { color: var(--muted); margin-bottom: 22px; max-width: 40ch; font-size: 14.5px; }
+  .hero-cta { display: flex; gap: 10px; }
+  .btn-white { background: var(--green); color: #fff; }
+  .btn-white:hover { background: var(--green-dark); transform: translateY(-1px); }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); background: transparent; }
+  .btn-ghost:hover { border-color: var(--green); color: var(--green); background: var(--bg); }
+  .hero-card { margin-left: auto; align-self: flex-start; margin-top: 8px; width: 250px; background: rgba(12,22,17,.6); backdrop-filter: blur(2px); color: #fff; border-radius: 10px; padding: 18px 20px; }
+  .hero-card h4 { font-size: 12.5px; letter-spacing: .05em; margin-bottom: 12px; color: var(--gold); }
+  .hero-card ul { list-style: none; display: grid; gap: 9px; font-size: 13px; }
+  .hero-card li::before { content: "✓ "; color: var(--gold); font-weight: 700; }
+  .hero-dots { position: absolute; z-index: 2; bottom: 16px; right: max(20px, calc((100% - 1200px) / 2 + 20px)); display: flex; gap: 6px; }
+  .hero-dots span { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.5); display: block; }
+  .hero-dots span.active { background: #fff; width: 16px; border-radius: 3px; }
+
+  /* Quick actions */
+  .quick { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: -1px; }
+  .quick a { background: #fff; padding: 16px 8px; text-align: center; text-decoration: none; color: var(--text); font-size: 12.5px; font-weight: 600; }
+  .quick a .ic { font-size: 20px; display: block; margin-bottom: 6px; transition: transform .18s ease; }
+  .quick a:hover { background: var(--bg); color: var(--green); }
+  .quick a:hover .ic { transform: scale(1.15); }
+
+  /* Search bar */
+  .search-bar { background: var(--green); padding: 18px 0 22px; }
+  .search-title { color: var(--gold); font-size: 12.5px; font-weight: 700; letter-spacing: .05em; margin-bottom: 12px; }
+  .search-fields { display: grid; grid-template-columns: repeat(5, 1fr) auto; gap: 10px; }
+  .field label { display: block; font-size: 11px; color: rgba(255,255,255,.7); margin-bottom: 4px; }
+  .field select, .field input { width: 100%; padding: 9px 10px; border-radius: 6px; border: none; font-size: 13px; }
+  .search-fields .btn-primary { background: var(--gold); color: var(--green-dark); align-self: end; padding: 9px 22px; }
+
+  /* Sections */
+  section.block { padding: 34px 0; }
+  .block-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .block-head h2 { font-size: 16px; letter-spacing: .03em; }
+  .block-head a { font-size: 12.5px; color: var(--green); text-decoration: none; font-weight: 600; }
+
+  .courses { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .course-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; text-decoration: none; color: inherit; display: block; }
+  .course-card:hover { box-shadow: 0 8px 22px rgba(28,75,58,.16); transform: translateY(-3px); border-color: var(--green); }
+  .course-card .thumb { width: 100%; height: 110px; object-fit: cover; display: block; }
+  .course-card .body { padding: 10px 12px; }
+  .course-card .name { font-weight: 700; font-size: 13.5px; }
+  .course-card .loc { font-size: 11.5px; color: var(--muted); margin-bottom: 6px; }
+  .course-card .price { color: var(--green); font-weight: 700; font-size: 13px; }
+  .course-card .meta { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--muted); }
+
+  .benefits-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .benefit { text-align: center; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 14px 6px; font-size: 11.5px; font-weight: 600; }
+  .benefit .ic { font-size: 20px; display: block; margin-bottom: 6px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .list-item { display: flex; gap: 10px; padding: 10px 6px; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; border-radius: 6px; }
+  .list-item:hover { background: var(--card); padding-left: 10px; }
+  .list-item .thumb { width: 56px; height: 44px; border-radius: 6px; flex-shrink: 0; object-fit: cover; }
+  .list-item .t { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .list-item .d { font-size: 11px; color: var(--muted); }
+
+  .logo-row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+  .logo-row .logo-chip { width: 90px; height: 40px; border: 1px solid var(--border); border-radius: 6px; font-size: 10px; display:flex;align-items:center;justify-content:center; transition: box-shadow .18s ease, transform .18s ease; }
+  .logo-row .logo-chip:hover { box-shadow: 0 6px 16px rgba(28,75,58,.14); transform: translateY(-2px); border-color: var(--green); }
+
+  .hotline { background: var(--green); color: #fff; border-radius: 10px; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
+  .hotline .num { font-size: 20px; font-weight: 800; color: var(--gold); }
+
+  footer { background: var(--green-dark); color: rgba(255,255,255,.75); padding: 40px 0 20px; margin-top: 20px; font-size: 12.5px; }
+  .footer-cols { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 24px; }
+  .footer-cols h5 { color: #fff; font-size: 12px; letter-spacing: .04em; margin-bottom: 12px; }
+  .footer-cols ul { list-style: none; display: grid; gap: 7px; }
+  .footer-bottom { text-align: center; margin-top: 30px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.12); font-size: 11.5px; }
+
+  .note {
+    background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px;
+    padding: 10px 16px; text-align: center;
+  }
+
+  /* ===== Responsive mobile (điện thoại) ===== */
+  @media (max-width: 860px) {
+    .wrap { padding: 0 14px; }
+
+    .header-row { flex-wrap: wrap; gap: 10px 14px; padding: 10px 0; }
+    nav { order: 3; width: 100%; overflow-x: auto; gap: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+    .header-actions { margin-left: auto; }
+    .header-actions span { display: none; }
+    .btn { padding: 8px 12px; font-size: 12.5px; }
+
+    .hero { min-height: 0; }
+    .hero-fade { background: linear-gradient(180deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.94) 42%, rgba(255,255,255,.55) 68%, rgba(255,255,255,.12) 100%); }
+    .hero-row { flex-direction: column; align-items: stretch; padding: 24px 14px 50px; }
+    .hero-text { padding: 0; flex: none; }
+    .hero-title { font-size: 26px; }
+    .hero-card { margin: 16px 0 0; align-self: stretch; width: auto; }
+    .hero-dots { right: 14px; }
+
+    .quick { grid-template-columns: repeat(3, 1fr); }
+    .quick a { font-size: 11.5px; padding: 12px 4px; }
+
+    .search-fields { grid-template-columns: 1fr; }
+    .search-fields .btn-primary { width: 100%; padding: 11px; }
+
+    .courses { grid-template-columns: repeat(2, 1fr); }
+
+    .benefits-row { grid-template-columns: repeat(3, 1fr); }
+    .benefit { font-size: 10.5px; padding: 10px 4px; }
+
+    .two-col { grid-template-columns: 1fr; gap: 28px; }
+
+    .hotline { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .hotline button { align-self: stretch; }
+
+    .footer-cols { grid-template-columns: 1fr 1fr; gap: 22px 16px; }
+    .footer-cols > div:first-child { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 420px) {
+    .quick { grid-template-columns: repeat(2, 1fr); }
+    .benefits-row { grid-template-columns: repeat(2, 1fr); }
+    .courses { grid-template-columns: 1fr; }
+    .footer-cols { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Bản mockup HTML dựng lại từ ảnh gốc trang 21 đề án PDF — mục đích: kiểm tra chất lượng chuyển đổi, dữ liệu là placeholder.</div>
+
+<header>
+  <div class="wrap header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGA <span class="dot"></span> VGAID<small>CỔNG HỘI VIÊN SỐ</small></a>
+    <nav>
+      <a href="golf-mockup-trangchu.html" class="active">Trang chủ</a>
+      <a href="#">Giới thiệu</a>
+      <a href="golf-mockup-hoso.html">Hội viên</a>
+      <a href="golf-mockup-timsan.html">Booking Golf</a>
+      <a href="golf-mockup-timsan.html">Sân golf</a>
+      <a href="#">Giải đấu</a>
+      <a href="#">Quyền lợi</a>
+      <a href="#">Tin tức</a>
+      <a href="#">CLB Golf</a>
+      <a href="#">Liên hệ</a>
+    </nav>
+    <div class="header-actions">
+      <span>🔍</span>
+      <span>VI ▾</span>
+      <a href="golf-mockup-dangnhap.html" class="btn btn-outline">Đăng nhập</a>
+      <a href="golf-mockup-dangnhap.html?mode=register" class="btn btn-primary">Đăng ký hội viên</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-bg">
+    <img class="hero-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/DZ6_2438_Sunrise_drive_over_the_water_-_taking_aim_on_the_perfect_tee_shot.jpg/1920px-DZ6_2438_Sunrise_drive_over_the_water_-_taking_aim_on_the_perfect_tee_shot.jpg" alt="Golfer đánh bóng trên sân golf">
+    <div class="hero-fade"></div>
+  </div>
+  <div class="hero-row">
     <div class="hero-text">
-      <div class="role">{{ site.authorTitle }}</div>
-      <h1>Xin chào, tôi là {{ site.authorName }}</h1>
-      <p>{{ site.tagline }}</p>
-      <a href="/bai-viet/" class="btn">Đọc bài viết</a>
-      <a href="/ve-toi/" class="btn outline">Về tôi</a>
+      <div class="hero-eyebrow">VGAID</div>
+      <div class="hero-title">CỔNG HỘI VIÊN SỐ VGA</div>
+      <p class="hero-desc">Kết nối golfer – CLB Golf – Sân Golf – Hiệp hội Golf Việt Nam trên nền tảng số hiện đại, minh bạch và bền vững.</p>
+      <div class="hero-cta">
+        <a href="golf-mockup-dangnhap.html?mode=register" class="btn btn-white">👤 Đăng ký hội viên</a>
+        <a href="#" class="btn btn-ghost">▶ Tìm hiểu thêm</a>
+      </div>
     </div>
-    <div class="avatar">{{ site.authorName | first }}</div>
+    <div class="hero-card">
+      <h4>HỘI VIÊN LIÊN KẾT VGA</h4>
+      <ul>
+        <li>Một mã định danh duy nhất (VGA ID)</li>
+        <li>Đặt sân golf ưu đãi toàn quốc</li>
+        <li>Quyền lợi đặc biệt từ đối tác VGA</li>
+        <li>Tham gia giải đấu phong trào &amp; chuyên nghiệp</li>
+        <li>Cập nhật Handicap &amp; Ranking chính thức</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hero-dots"><span class="active"></span><span></span><span></span></div>
+</div>
+
+<div class="quick wrap">
+  <a href="golf-mockup-dangnhap.html?mode=register"><span class="ic">👤</span>Đăng ký<br>Hội viên</a>
+  <a href="golf-mockup-timsan.html"><span class="ic">⛳</span>Đặt sân<br>golf</a>
+  <a href="golf-mockup-timsan.html"><span class="ic">🔍</span>Tìm sân<br>golf</a>
+  <a href="golf-mockup-hoso.html"><span class="ic">🏅</span>Tra cứu<br>quyền lợi</a>
+  <a href="#"><span class="ic">🏆</span>Giải đấu</a>
+  <a href="#"><span class="ic">🎧</span>Tổng đài<br>Golf Quốc gia</a>
+</div>
+
+<div class="search-bar">
+  <div class="wrap">
+    <div class="search-title">🔍 TÌM KIẾM &amp; ĐẶT SÂN GOLF</div>
+    <form class="search-fields" action="golf-mockup-timsan.html" method="get">
+      <div class="field"><label>Tỉnh / Thành phố</label><select><option>Chọn địa điểm</option></select></div>
+      <div class="field"><label>Sân golf</label><select><option>Chọn sân golf</option></select></div>
+      <div class="field"><label>Ngày chơi</label><input type="text" placeholder="Chọn ngày"></div>
+      <div class="field"><label>Tee Time</label><select><option>Chọn Tee Time</option></select></div>
+      <div class="field"><label>Số lượng golfer</label><select><option>1 golfer</option></select></div>
+      <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+    </form>
+  </div>
+</div>
+
+<section class="block wrap">
+  <div class="block-head"><h2>SÂN GOLF NỔI BẬT</h2><a href="golf-mockup-timsan.html">Xem tất cả →</a></div>
+  <div class="courses">
+    <a class="course-card" href="golf-mockup-timsan.html">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Ballybunion_Golf_Club_-_1st_hole.jpg/960px-Ballybunion_Golf_Club_-_1st_hole.jpg" alt="BRG Kings Island Golf Resort">
+      <div class="body">
+        <div class="name">BRG Kings Island Golf Resort</div>
+        <div class="loc">Đồng Mô, Sơn Tây, Hà Nội</div>
+        <div class="price">Từ 1.550.000 VND</div>
+        <div class="meta"><span>★ 4.8 (120)</span><span>Còn tee time</span></div>
+      </div>
+    </a>
+    <a class="course-card" href="golf-mockup-timsan.html">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ballybunion_Golf_Club_-_10th_hole.jpg/960px-Ballybunion_Golf_Club_-_10th_hole.jpg" alt="Ba Na Hills Golf Club">
+      <div class="body">
+        <div class="name">Ba Na Hills Golf Club</div>
+        <div class="loc">Hòa Vang, Đà Nẵng</div>
+        <div class="price">Từ 2.050.000 VND</div>
+        <div class="meta"><span>★ 4.7 (98)</span><span>Còn tee time</span></div>
+      </div>
+    </a>
+    <a class="course-card" href="golf-mockup-timsan.html">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Ballybunion_Golf_Club_-_7th_hole.jpg/960px-Ballybunion_Golf_Club_-_7th_hole.jpg" alt="FLC Golf Links Quy Nhơn">
+      <div class="body">
+        <div class="name">FLC Golf Links Quy Nhơn</div>
+        <div class="loc">Nhơn Lý, Quy Nhơn</div>
+        <div class="price">Từ 1.650.000 VND</div>
+        <div class="meta"><span>★ 4.6 (86)</span><span>Còn tee time</span></div>
+      </div>
+    </a>
+    <a class="course-card" href="golf-mockup-timsan.html">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Ballybunion_Golf_Club_-_11th_hole.jpg/960px-Ballybunion_Golf_Club_-_11th_hole.jpg" alt="Novaland Phan Thiết Golf Club">
+      <div class="body">
+        <div class="name">Novaland Phan Thiết Golf Club</div>
+        <div class="loc">Phan Thiết, Bình Thuận</div>
+        <div class="price">Từ 1.450.000 VND</div>
+        <div class="meta"><span>★ 4.5 (76)</span><span>Còn tee time</span></div>
+      </div>
+    </a>
   </div>
 </section>
 
-<!-- CHUYÊN MỤC -->
-<section>
-  <div class="wrap">
-    <h2 class="section-title">Chủ đề tôi viết</h2>
-    <p class="section-sub">Giao điểm giữa quản lý con người và năng lực công nghệ</p>
-    <div class="cat-grid">
-      <a class="cat-card" href="/bai-viet/?cat=quan-ly">
-        <div class="ico">🧭</div><h3>Quản lý & Lãnh đạo</h3>
-        <p>Quản lý đội nhóm, ra quyết định, xây quy trình và văn hóa.</p>
-      </a>
-      <a class="cat-card" href="/bai-viet/?cat=cong-nghe">
-        <div class="ico">💡</div><h3>Công nghệ cho người quản lý</h3>
-        <p>Hiểu công nghệ vừa đủ để dẫn dắt: AI, automation, công cụ.</p>
-      </a>
-      <a class="cat-card" href="/bai-viet/?cat=chuyen-doi-so">
-        <div class="ico">⚙️</div><h3>Chuyển đổi số & Vận hành</h3>
-        <p>Số hóa quy trình, tối ưu hiệu suất, case thực tế.</p>
-      </a>
-      <a class="cat-card" href="/bai-viet/?cat=su-nghiep">
-        <div class="ico">🌱</div><h3>Góc nhìn & Sự nghiệp</h3>
-        <p>Bài học, định hướng phát triển, review sách hay.</p>
-      </a>
+<section class="block wrap">
+  <div class="block-head"><h2>QUYỀN LỢI HỘI VIÊN</h2><a href="#">Xem tất cả →</a></div>
+  <div class="benefits-row">
+    <div class="benefit"><span class="ic">⛳</span>Ưu đãi sân golf</div>
+    <div class="benefit"><span class="ic">🏦</span>Ưu đãi ngân hàng</div>
+    <div class="benefit"><span class="ic">✈️</span>Hàng không</div>
+    <div class="benefit"><span class="ic">🏨</span>Khách sạn &amp; Resort</div>
+    <div class="benefit"><span class="ic">🛡️</span>Bảo hiểm HIO</div>
+    <div class="benefit"><span class="ic">🤝</span>Đối tác khác</div>
+  </div>
+</section>
+
+<section class="block wrap two-col">
+  <div>
+    <div class="block-head"><h2>TIN TỨC</h2><a href="#">Xem tất cả →</a></div>
+    <a class="list-item" href="#">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Golf_Trophy_-_geograph.org.uk_-_5264569.jpg/960px-Golf_Trophy_-_geograph.org.uk_-_5264569.jpg" alt="">
+      <div><div class="t">VGA tổ chức thành công Vô địch Nghiệp dư Quốc gia 2024</div><div class="d">20/06/2024</div></div>
+    </a>
+    <a class="list-item" href="#">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Junior_Golf_Lessons.jpg/960px-Junior_Golf_Lessons.jpg" alt="">
+      <div><div class="t">Chương trình ưu đãi đặc biệt dành cho hội viên VGAID</div><div class="d">16/06/2024</div></div>
+    </a>
+    <a class="list-item" href="#">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Womens_Golf_team%2C_Tulane_University_2009.jpg/960px-Womens_Golf_team%2C_Tulane_University_2009.jpg" alt="">
+      <div><div class="t">Đội tuyển Golf Việt Nam chuẩn bị tham dự SEA Games 33</div><div class="d">10/06/2024</div></div>
+    </a>
+  </div>
+  <div>
+    <div class="block-head"><h2>GIẢI ĐẤU NỔI BẬT</h2><a href="#">Xem tất cả →</a></div>
+    <a class="list-item" href="#">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Muirfield_Village_Golf_Club_1980_Memorial_Tournament_-_DPLA_-_c4aacd329251aeff79c62f077a2d0c2d.jpg/960px-Muirfield_Village_Golf_Club_1980_Memorial_Tournament_-_DPLA_-_c4aacd329251aeff79c62f077a2d0c2d.jpg" alt="">
+      <div><div class="t">VGA Championship 2024</div><div class="d">01/06/2024 – 03/06/2024 · Sân FLC Hạ Long Golf Club</div></div>
+    </a>
+    <a class="list-item" href="#">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Crowd_overlooking_practice_rounds_at_the_Canadian_Open_Golf%2C_Lambton_%28I0010973%29.jpg/960px-Crowd_overlooking_practice_rounds_at_the_Canadian_Open_Golf%2C_Lambton_%28I0010973%29.jpg" alt="">
+      <div><div class="t">VGA Junior Tour 2024</div><div class="d">15/06/2024 – 16/06/2024 · Sân NovaWorld Phan Thiết</div></div>
+    </a>
+    <a class="list-item" href="#">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Clubhouse_of_Royal_Liverpool_Golf_Club.jpg/960px-Clubhouse_of_Royal_Liverpool_Golf_Club.jpg" alt="">
+      <div><div class="t">Giải Vô địch các CLB Golf Toàn quốc</div><div class="d">25/06/2024 – 27/06/2024 · Sân BRG Kings Island</div></div>
+    </a>
+  </div>
+</section>
+
+<section class="block wrap two-col">
+  <div>
+    <div class="block-head"><h2>CLB GOLF</h2><a href="#">Xem tất cả →</a></div>
+    <div class="logo-row">
+      <div class="logo-chip ph">CLB 1</div>
+      <div class="logo-chip ph">CLB 2</div>
+      <div class="logo-chip ph">CLB 3</div>
+      <div class="logo-chip ph">CLB 4</div>
+    </div>
+  </div>
+  <div>
+    <div class="block-head"><h2>ĐỐI TÁC</h2><a href="#">Xem tất cả →</a></div>
+    <div class="logo-row">
+      <div class="logo-chip ph">VPBank</div>
+      <div class="logo-chip ph">BIDV</div>
+      <div class="logo-chip ph">Vietjet</div>
+      <div class="logo-chip ph">Bảo Minh</div>
     </div>
   </div>
 </section>
 
-<!-- BÀI VIẾT MỚI -->
-<section style="background:var(--bg-soft)">
-  <div class="wrap">
-    <h2 class="section-title">Bài viết mới nhất</h2>
-    <p class="section-sub">Những điều tôi đang nghĩ và học gần đây</p>
-    <div class="post-grid">
-      {% for post in collections.post | reverse %}
-        {% if loop.index <= 3 %}
-        <a class="post-card" href="{{ post.url }}">
-          <div class="thumb">{% if post.data.cover %}<img src="{{ post.data.cover }}" alt="" style="height:100%;width:100%;object-fit:cover">{% else %}📝{% endif %}</div>
-          <div class="body">
-            <span class="cat-pill">{{ post.data.category | catLabel }}</span>
-            <h3>{{ post.data.title }}</h3>
-            <div class="meta">🗓 {{ post.date | dateVi }} · ⏱ {{ post.templateContent | readingTime }} phút</div>
-            <p>{{ post.data.excerpt or (post.templateContent | excerptFallback) }}</p>
-            <span class="more">Đọc tiếp →</span>
-          </div>
-        </a>
-        {% endif %}
-      {% endfor %}
+<div class="wrap">
+  <div class="hotline">
+    <div>
+      <div style="font-size:12px;opacity:.8;">TỔNG ĐÀI GOLF QUỐC GIA</div>
+      <div class="num">1900 866 886</div>
+      <div style="font-size:11.5px;opacity:.7;">Hỗ trợ đặt sân · Tư vấn · Chăm sóc hội viên</div>
     </div>
-    <p class="center" style="margin-top:28px"><a href="/bai-viet/" class="btn">Xem tất cả bài viết</a></p>
+    <button class="btn btn-white">📞 Gọi ngay</button>
   </div>
-</section>
+</div>
+
+<footer>
+  <div class="wrap footer-cols">
+    <div>
+      <h5>VGA — HIỆP HỘI GOLF VIỆT NAM</h5>
+      <p style="max-width:32ch;">VGAID là cổng hội viên số chính thức của Hiệp hội Golf Việt Nam, kết nối cộng đồng golfer trên toàn quốc.</p>
+    </div>
+    <div><h5>VỀ CHÚNG TÔI</h5><ul><li>Giới thiệu VGA</li><li>Điều lệ hoạt động</li><li>Ban lãnh đạo</li><li>Liên hệ</li></ul></div>
+    <div><h5>HỘI VIÊN</h5><ul><li>Đăng ký hội viên</li><li>Quyền lợi hội viên</li><li>Hướng dẫn sử dụng</li><li>Câu hỏi thường gặp</li></ul></div>
+    <div><h5>BOOKING GOLF</h5><ul><li>Đặt sân golf</li><li>Tìm sân golf</li><li>Hướng dẫn đặt sân</li><li>Chính sách hủy/đổi</li></ul></div>
+    <div><h5>HỖ TRỢ</h5><ul><li>Tổng đài Golf Quốc gia</li><li>Hỗ trợ trực tuyến</li><li>Điều khoản sử dụng</li><li>Chính sách bảo mật</li></ul></div>
+  </div>
+  <div class="wrap footer-bottom">© 2026 Hiệp hội Golf Việt Nam. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
