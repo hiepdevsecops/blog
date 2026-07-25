@@ -110,6 +110,49 @@
     background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px;
     padding: 10px 16px; text-align: center;
   }
+
+  /* ===== Responsive mobile (điện thoại) ===== */
+  @media (max-width: 860px) {
+    .wrap { padding: 0 14px; }
+
+    .header-row { flex-wrap: wrap; gap: 10px 14px; padding: 10px 0; }
+    nav { order: 3; width: 100%; overflow-x: auto; gap: 14px; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+    .header-actions { margin-left: auto; }
+    .header-actions span { display: none; }
+    .btn { padding: 8px 12px; font-size: 12.5px; }
+
+    .hero { padding: 28px 0; }
+    .hero-row { flex-direction: column; align-items: stretch; }
+    .hero-title { font-size: 26px; }
+    .hero-photo { height: 160px !important; }
+    .hero-card { padding: 16px; }
+
+    .quick { grid-template-columns: repeat(3, 1fr); }
+    .quick a { font-size: 11.5px; padding: 12px 4px; }
+
+    .search-fields { grid-template-columns: 1fr; }
+    .search-fields .btn-primary { width: 100%; padding: 11px; }
+
+    .courses { grid-template-columns: repeat(2, 1fr); }
+
+    .benefits-row { grid-template-columns: repeat(3, 1fr); }
+    .benefit { font-size: 10.5px; padding: 10px 4px; }
+
+    .two-col { grid-template-columns: 1fr; gap: 28px; }
+
+    .hotline { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .hotline button { align-self: stretch; }
+
+    .footer-cols { grid-template-columns: 1fr 1fr; gap: 22px 16px; }
+    .footer-cols > div:first-child { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 420px) {
+    .quick { grid-template-columns: repeat(2, 1fr); }
+    .benefits-row { grid-template-columns: repeat(2, 1fr); }
+    .courses { grid-template-columns: 1fr; }
+    .footer-cols { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
