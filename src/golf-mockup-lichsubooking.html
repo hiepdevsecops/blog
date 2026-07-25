@@ -1,0 +1,197 @@
+---
+permalink: "golf-mockup-lichsubooking.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Lịch sử Booking (mockup)</title>
+<style>
+  :root {
+    --navy: #0f1f3d; --navy2: #16294f; --gold: #c9a44c; --green: #0a6a36;
+    --text: #1c2430; --muted: #6b7280; --bg: #f3f5f8; --card: #ffffff; --border: #e2e6ec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  header { background: var(--navy); color: #fff; }
+  .header-row { display: flex; align-items: center; gap: 16px; padding: 12px 20px; }
+  .logo { font-weight: 800; color: var(--gold); letter-spacing: .03em; text-decoration: none; }
+  .sys-name { font-size: 12px; color: rgba(255,255,255,.7); border-left: 1px solid rgba(255,255,255,.25); padding-left: 14px; }
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: 16px; font-size: 12.5px; color: rgba(255,255,255,.85); }
+  .header-actions .user { display: flex; align-items: center; gap: 8px; }
+  .header-actions .avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: var(--navy); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; }
+
+  .body-layout { display: grid; grid-template-columns: 200px 1fr; align-items: start; }
+  .side-nav { background: #fff; border-right: 1px solid var(--border); min-height: 100%; padding: 18px 10px; }
+  .side-nav a { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 7px; font-size: 12.5px; color: var(--text); text-decoration: none; margin-bottom: 2px; }
+  .side-nav a:hover { background: var(--bg); }
+  .side-nav a.active { background: var(--navy); color: #fff; }
+  .support-box { margin-top: 16px; background: #fff8e6; border: 1px solid #ffe08a; border-radius: 8px; padding: 12px; font-size: 11.5px; text-align: center; }
+
+  .main { padding: 20px; }
+  .crumbs { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  h1 { font-size: 19px; margin-bottom: 3px; }
+  .page-sub { font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+
+  .panel { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .filter-row { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr auto; gap: 10px; margin-bottom: 12px; }
+  .filter-row .f label { display: block; font-size: 10.5px; color: var(--muted); margin-bottom: 4px; }
+  .filter-row select, .filter-row input { width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border); font-size: 12px; }
+  .filter-row button { background: var(--navy); color: #fff; border: none; border-radius: 6px; padding: 0 16px; font-weight: 700; font-size: 12px; cursor: pointer; }
+
+  .status-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .status-tabs span { padding: 7px 14px; border-radius: 20px; border: 1px solid var(--border); font-size: 11.5px; font-weight: 600; color: var(--muted); cursor: pointer; }
+  .status-tabs span.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+  .layout2 { display: grid; grid-template-columns: 1fr 320px; gap: 16px; align-items: start; }
+
+  .bk-row { display: grid; grid-template-columns: 54px 1.6fr 1fr .8fr 1fr; gap: 12px; align-items: center; padding: 12px 6px; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; font-size: 12px; }
+  .bk-row:last-child { border: none; }
+  .bk-row:hover { background: #f7f9fc; }
+  .bk-row img { width: 54px; height: 40px; border-radius: 6px; object-fit: cover; }
+  .bk-row .code { font-weight: 700; color: var(--navy); }
+  .bk-row .sub { color: var(--muted); font-size: 10.5px; }
+  .bk-row .price { font-weight: 700; }
+  .st-chip { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 2px; }
+  .st-chip.ok { background: #eafaf0; color: #17703a; }
+  .st-chip.wait { background: #fff6e0; color: #8a6415; }
+  .st-chip.no { background: #fde3e3; color: #a13a3a; }
+
+  .side2 .kv { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px dashed var(--border); }
+  .side2 .kv:last-child { border: none; }
+  .side2 .kv span:first-child { color: var(--muted); }
+  .side2 h4 { font-size: 12.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; letter-spacing: .03em; }
+  .code-big { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 2px; }
+  .qr-mini2 { width: 100px; height: 100px; margin: 12px auto; background: repeating-linear-gradient(45deg,#1c2430 0 5px,#fff 5px 10px); border-radius: 6px; }
+  .tab-mini { display: flex; gap: 10px; font-size: 11px; color: var(--muted); border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+  .tab-mini span.active { color: var(--navy); font-weight: 700; border-bottom: 2px solid var(--gold); padding-bottom: 6px; }
+
+  @media (max-width: 900px) {
+    .body-layout { grid-template-columns: 1fr; }
+    .side-nav { display: flex; overflow-x: auto; gap: 4px; border-right: none; border-bottom: 1px solid var(--border); min-height: auto; align-items: center; }
+    .side-nav a { white-space: nowrap; }
+    .support-box { display: none; }
+    .filter-row { grid-template-columns: 1fr 1fr; }
+    .layout2 { grid-template-columns: 1fr; }
+    .bk-row { grid-template-columns: 40px 1fr; }
+    .bk-row .sub2, .bk-row .price, .bk-row .status2 { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 52 đề án PDF (Trang Lịch sử Booking) — dữ liệu là placeholder.</div>
+
+<header>
+  <div class="header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGAID</a>
+    <span class="sys-name">HỆ THỐNG BOOKING GOLF QUỐC GIA</span>
+    <div class="header-actions">
+      <span>📞 Tổng đài Golf Quốc gia · 1900 1234</span>
+      <span class="user"><span class="avatar">A</span> Nguyễn Văn A</span>
+    </div>
+  </div>
+</header>
+
+<div class="body-layout">
+  <div class="side-nav">
+    <a href="golf-mockup-trangchu.html">🏠 Tổng quan</a>
+    <a href="#">🗓 Booking của tôi</a>
+    <a href="golf-mockup-checkin.html">🔳 QR Booking &amp; Check-in</a>
+    <a href="golf-mockup-lichsubooking.html" class="active">📖 Lịch sử Booking</a>
+    <a href="golf-mockup-quyenloi.html">👤 Hội viên &amp; Ưu đãi</a>
+    <a href="golf-mockup-hoiphi.html">🧾 Hóa đơn &amp; Thanh toán</a>
+    <a href="#">🔔 Thông báo</a>
+    <a href="#">⚙️ Cài đặt tài khoản</a>
+    <div class="support-box">Tổng đài hỗ trợ 24/7<br><b>1900 1234</b></div>
+  </div>
+
+  <div class="main">
+    <div class="crumbs"><a href="golf-mockup-trangchu.html">Trang chủ</a> › Lịch sử Booking</div>
+    <h1>Lịch sử Booking</h1>
+    <div class="page-sub">Quản lý và theo dõi toàn bộ lịch sử đặt sân của bạn</div>
+
+    <div class="panel">
+      <div class="filter-row">
+        <div class="f"><label>Thời gian</label><input type="text" value="01/01/2026 - 25/07/2026"></div>
+        <div class="f"><label>Sân golf</label><select><option>Tất cả sân golf</option></select></div>
+        <div class="f"><label>Trạng thái</label><select><option>Tất cả trạng thái</option></select></div>
+        <div class="f"><label>Tìm kiếm</label><input type="text" placeholder="Mã booking, tên sân..."></div>
+        <button>🔍 Tìm kiếm</button>
+      </div>
+      <div class="status-tabs">
+        <span class="active">Tất cả 32</span>
+        <span>Sắp diễn ra 5</span>
+        <span>Đã hoàn thành 18</span>
+        <span>Chờ thanh toán 2</span>
+        <span>Chờ xác nhận 1</span>
+        <span>Đã hủy 3</span>
+        <span>Đã hoàn tiền 1</span>
+      </div>
+    </div>
+
+    <div class="layout2">
+      <div class="panel" style="padding:6px 12px;">
+        <a class="bk-row" href="golf-mockup-checkin.html">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/VictoriaGolfCourse10.18thFairwayCLubhouseAndPonds.jpg/960px-VictoriaGolfCourse10.18thFairwayCLubhouseAndPonds.jpg" alt="">
+          <div><div class="code">BK260525-001</div><div class="sub">BRG Kings Island Golf Resort</div></div>
+          <div><div>25/05/2026 · 07:00</div><div class="sub">12 người · 3 flight</div></div>
+          <div class="price">25.410.000đ</div>
+          <div><span class="st-chip ok">Đã xác nhận</span><br><span class="st-chip wait">Chưa check-in</span></div>
+        </a>
+        <a class="bk-row" href="golf-mockup-checkin.html">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ballybunion_Golf_Club_-_10th_hole.jpg/960px-Ballybunion_Golf_Club_-_10th_hole.jpg" alt="">
+          <div><div class="code">BK260518-012</div><div class="sub">FLC Hạ Long Golf Club</div></div>
+          <div><div>18/05/2026 · 11:30</div><div class="sub">8 người · 2 flight</div></div>
+          <div class="price">16.320.000đ</div>
+          <div><span class="st-chip ok">Đã hoàn thành</span><br><span class="st-chip ok">Đã check-in</span></div>
+        </a>
+        <a class="bk-row" href="golf-mockup-checkin.html">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/The_18th_green_at_North_Berwick_Golf_Course_-_geograph.org.uk_-_1523662.jpg" alt="">
+          <div><div class="code">BK260512-008</div><div class="sub">Sky Lake Resort &amp; Golf Club</div></div>
+          <div><div>12/05/2026 · 13:00</div><div class="sub">4 người · 1 flight</div></div>
+          <div class="price">8.250.000đ</div>
+          <div><span class="st-chip no">Đã hủy</span><br><span class="st-chip ok">Đã hoàn tiền</span></div>
+        </a>
+        <a class="bk-row" href="golf-mockup-checkin.html">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Ballybunion_Golf_Club_-_7th_hole.jpg/960px-Ballybunion_Golf_Club_-_7th_hole.jpg" alt="">
+          <div><div class="code">BK260505-003</div><div class="sub">Vinpearl Golf Nam Hội An</div></div>
+          <div><div>05/05/2026 · 06:30</div><div class="sub">16 người · 4 flight</div></div>
+          <div class="price">32.860.000đ</div>
+          <div><span class="st-chip ok">Đã hoàn thành</span><br><span class="st-chip ok">Đã check-in</span></div>
+        </a>
+        <a class="bk-row" href="golf-mockup-checkin.html">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Ballybunion_Golf_Club_-_11th_hole.jpg/960px-Ballybunion_Golf_Club_-_11th_hole.jpg" alt="">
+          <div><div class="code">BK260501-007</div><div class="sub">Montgomerie Links Việt Nam</div></div>
+          <div><div>01/05/2026 · 08:00</div><div class="sub">4 người · 1 flight</div></div>
+          <div class="price">7.980.000đ</div>
+          <div><span class="st-chip wait">Chờ xác nhận</span><br><span class="st-chip wait">Chưa thanh toán</span></div>
+        </a>
+      </div>
+
+      <div class="panel side2">
+        <h4>Chi tiết booking</h4>
+        <div class="code-big">BK260525-001</div>
+        <span class="st-chip ok">✓ Đã xác nhận</span>
+        <div class="qr-mini2"></div>
+        <div class="tab-mini"><span class="active">Thông tin</span><span>Danh sách golfer</span><span>Dịch vụ &amp; Giá</span></div>
+        <div class="kv"><span>Sân golf</span><span>BRG Kings Island Resort</span></div>
+        <div class="kv"><span>Người đại diện</span><span>Nguyễn Văn A</span></div>
+        <div class="kv"><span>Ngày chơi</span><span>25/05/2026</span></div>
+        <div class="kv"><span>Tee Time</span><span>07:00</span></div>
+        <div class="kv"><span>Số golfer</span><span>12 người · 3 flight</span></div>
+        <div class="kv"><span>Phương thức thanh toán</span><span>VNPay - QR Code</span></div>
+        <div class="kv"><span>Tổng tiền</span><span style="font-weight:800;color:var(--navy)">25.410.000đ</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

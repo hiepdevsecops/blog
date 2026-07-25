@@ -78,8 +78,9 @@ permalink: "golf-mockup-checkin.html"
 
   @media (max-width: 900px) {
     .body-layout { grid-template-columns: 1fr; }
-    .side-nav { display: flex; overflow-x: auto; gap: 4px; border-right: none; border-bottom: 1px solid var(--border); }
+    .side-nav { display: flex; overflow-x: auto; gap: 4px; border-right: none; border-bottom: 1px solid var(--border); min-height: auto; align-items: center; }
     .side-nav a { white-space: nowrap; }
+    .support-box { display: none; }
     .layout2 { grid-template-columns: 1fr; }
     .qr-panel { grid-template-columns: 1fr; justify-items: center; text-align: center; }
     table.golfers { display: block; overflow-x: auto; white-space: nowrap; }
@@ -105,12 +106,12 @@ permalink: "golf-mockup-checkin.html"
   <div class="side-nav">
     <a href="golf-mockup-trangchu.html">🏠 Tổng quan</a>
     <a href="#">🗓 Booking của tôi</a>
-    <a href="#" class="active">🔳 QR Booking &amp; Check-in</a>
-    <a href="#">📖 Lịch sử chơi</a>
-    <a href="golf-mockup-hoso.html">👤 Hội viên &amp; Ưu đãi</a>
-    <a href="#">🧾 Hóa đơn &amp; Thanh toán</a>
-    <a href="#">🔔 Thông báo</a>
-    <a href="#">⚙️ Cài đặt tài khoản</a>
+    <a href="golf-mockup-checkin.html" class="active">🔳 QR Booking &amp; Check-in</a>
+    <a href="golf-mockup-lichsubooking.html">📖 Lịch sử Booking</a>
+    <a href="golf-mockup-giaidau.html">🏆 Giải đấu</a>
+    <a href="golf-mockup-handicap.html">📈 Handicap &amp; Ranking</a>
+    <a href="golf-mockup-quyenloi.html">👤 Hội viên &amp; Ưu đãi</a>
+    <a href="golf-mockup-hoiphi.html">🧾 Hóa đơn &amp; Thanh toán</a>
     <div class="support-box">Tổng đài hỗ trợ 24/7<br><b>1900 1234</b></div>
   </div>
 

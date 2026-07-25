@@ -1,0 +1,184 @@
+---
+permalink: "golf-mockup-handicap.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Handicap &amp; Ranking (mockup)</title>
+<style>
+  :root {
+    --navy: #0f1f3d; --navy2: #16294f; --gold: #c9a44c; --green: #0a6a36;
+    --text: #1c2430; --muted: #6b7280; --bg: #f3f5f8; --card: #ffffff; --border: #e2e6ec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  header { background: var(--navy); color: #fff; }
+  .header-row { display: flex; align-items: center; gap: 16px; padding: 12px 20px; }
+  .logo { font-weight: 800; color: var(--gold); letter-spacing: .03em; text-decoration: none; }
+  .sys-name { font-size: 12px; color: rgba(255,255,255,.7); border-left: 1px solid rgba(255,255,255,.25); padding-left: 14px; }
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: 16px; font-size: 12.5px; color: rgba(255,255,255,.85); }
+  .header-actions .user { display: flex; align-items: center; gap: 8px; }
+  .header-actions .avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--gold); color: var(--navy); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; }
+
+  .body-layout { display: grid; grid-template-columns: 200px 1fr; align-items: start; }
+  .side-nav { background: #fff; border-right: 1px solid var(--border); min-height: 100%; padding: 18px 10px; }
+  .side-nav a { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 7px; font-size: 12.5px; color: var(--text); text-decoration: none; margin-bottom: 2px; }
+  .side-nav a:hover { background: var(--bg); }
+  .side-nav a.active { background: var(--navy); color: #fff; }
+  .support-box { margin-top: 16px; background: #fff8e6; border: 1px solid #ffe08a; border-radius: 8px; padding: 12px; font-size: 11.5px; text-align: center; }
+
+  .main { padding: 20px; }
+  .crumbs { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  h1 { font-size: 19px; margin-bottom: 3px; }
+  .page-sub { font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
+  .panel { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .panel h3 { font-size: 12.5px; text-transform: uppercase; color: var(--muted); letter-spacing: .03em; margin-bottom: 10px; display: flex; justify-content: space-between; }
+  .big-num { font-size: 30px; font-weight: 800; color: var(--navy); }
+  .big-num small { font-size: 11px; color: var(--muted); font-weight: 600; display: block; margin-top: 2px; }
+  .mini-row { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 8px; }
+
+  .chart-fake { display: flex; align-items: flex-end; gap: 6px; height: 80px; margin-top: 6px; }
+  .chart-fake span { flex: 1; background: linear-gradient(180deg, var(--gold), #e6c988); border-radius: 3px 3px 0 0; }
+  .chart-fake.green span { background: linear-gradient(180deg, var(--green), #3aa668); }
+  .chart-axis { display: flex; justify-content: space-between; font-size: 9px; color: var(--muted); margin-top: 4px; }
+
+  .two-col { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+  .tab-mini2 { display: flex; gap: 14px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--border); margin-bottom: 12px; flex-wrap: wrap; }
+  .tab-mini2 span.active { color: var(--navy); font-weight: 700; border-bottom: 2px solid var(--gold); padding-bottom: 8px; }
+
+  .achv { display: flex; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .achv:last-child { border: none; }
+  .achv .ic2 { font-size: 18px; }
+  .achv .d2 { color: var(--muted); font-size: 10.5px; }
+
+  table.rank { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.rank th { text-align: left; font-size: 10px; text-transform: uppercase; color: var(--muted); padding: 7px; border-bottom: 1px solid var(--border); }
+  table.rank td { padding: 8px 7px; border-bottom: 1px solid var(--border); }
+  table.rank tr.me { background: #fff8e6; }
+  .up { color: #17703a; font-size: 11px; } .down { color: #a13a3a; font-size: 11px; }
+
+  .other-rank { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .other-rank div { border: 1px solid var(--border); border-radius: 8px; padding: 10px; text-align: center; font-size: 11px; }
+  .other-rank .ic3 { font-size: 16px; display: block; margin-bottom: 4px; }
+  .other-rank b { display: block; font-size: 13px; color: var(--navy); margin-top: 2px; }
+
+  @media (max-width: 900px) {
+    .body-layout { grid-template-columns: 1fr; }
+    .side-nav { display: flex; overflow-x: auto; gap: 4px; border-right: none; border-bottom: 1px solid var(--border); min-height: auto; align-items: center; }
+    .side-nav a { white-space: nowrap; }
+    .support-box { display: none; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .other-rank { grid-template-columns: repeat(2, 1fr); }
+    table.rank { display: block; overflow-x: auto; white-space: nowrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 64 đề án PDF (Trang Handicap &amp; Ranking) — dữ liệu là placeholder.</div>
+
+<header>
+  <div class="header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGAID</a>
+    <span class="sys-name">HỆ THỐNG GOLF QUỐC GIA</span>
+    <div class="header-actions">
+      <span>📞 Tổng đài Golf Quốc gia · 1900 1234</span>
+      <span class="user"><span class="avatar">A</span> Nguyễn Văn A</span>
+    </div>
+  </div>
+</header>
+
+<div class="body-layout">
+  <div class="side-nav">
+    <a href="golf-mockup-trangchu.html">🏠 Tổng quan</a>
+    <a href="#">🗓 Booking của tôi</a>
+    <a href="golf-mockup-checkin.html">🔳 QR Booking &amp; Check-in</a>
+    <a href="golf-mockup-lichsubooking.html">📖 Lịch sử Booking</a>
+    <a href="golf-mockup-giaidau.html">🏆 Giải đấu</a>
+    <a href="golf-mockup-handicap.html" class="active">📈 Handicap &amp; Ranking</a>
+    <a href="golf-mockup-quyenloi.html">👤 Hội viên &amp; Ưu đãi</a>
+    <div class="support-box">Tổng đài hỗ trợ 24/7<br><b>1900 1234</b></div>
+  </div>
+
+  <div class="main">
+    <div class="crumbs"><a href="golf-mockup-trangchu.html">Trang chủ</a> › Handicap &amp; Ranking</div>
+    <h1>Handicap &amp; Ranking</h1>
+    <div class="page-sub">Theo dõi chỉ số Handicap, thứ hạng và thành tích thi đấu của bạn</div>
+
+    <div class="stat-grid">
+      <div class="panel">
+        <h3>Hồ sơ Handicap <span>🔄 Đồng bộ từ vHandicap</span></h3>
+        <div class="big-num">10.6<small>Handicap Index</small></div>
+        <div class="mini-row"><span>18 vòng đủ điều kiện</span><span>Cập nhật 20/05/2026</span></div>
+      </div>
+      <div class="panel">
+        <h3>Hồ sơ Ranking quốc gia</h3>
+        <div class="big-num">125<small>Thứ hạng quốc gia</small></div>
+        <div class="mini-row"><span>1.245,6 điểm Ranking</span><span>↑ 12 hạng · 5 giải/12 tháng</span></div>
+      </div>
+      <div class="panel">
+        <h3>Biểu đồ biến động Handicap</h3>
+        <div class="chart-fake"><span style="height:70%"></span><span style="height:60%"></span><span style="height:55%"></span><span style="height:50%"></span><span style="height:44%"></span><span style="height:38%"></span></div>
+        <div class="chart-axis"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span></div>
+      </div>
+      <div class="panel">
+        <h3>Biểu đồ biến động Ranking</h3>
+        <div class="chart-fake green"><span style="height:40%"></span><span style="height:55%"></span><span style="height:50%"></span><span style="height:68%"></span><span style="height:60%"></span><span style="height:78%"></span></div>
+        <div class="chart-axis"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="tab-mini2">
+          <span class="active">Thành tích thi đấu</span><span>Lịch sử vòng golf</span><span>Lịch sử giải đấu</span><span>Giải thưởng</span><span>Thống kê chuyên môn</span>
+        </div>
+        <div class="achv"><span class="ic2">🥇</span><div><b>Best Gross</b> — 72 gậy<div class="d2">BRG Kings Island Golf Resort · 18/05/2026</div></div></div>
+        <div class="achv"><span class="ic2">🎯</span><div><b>Best Net</b> — 68 gậy<div class="d2">FLC Hạ Long Golf Club · 10/05/2026</div></div></div>
+        <div class="achv"><span class="ic2">⛳</span><div><b>Hole-in-One</b> — Hố 8, 165 yards<div class="d2">Sky Lake Resort &amp; Golf Club · 12/04/2026</div></div></div>
+        <div class="achv"><span class="ic2">🦅</span><div><b>Eagle</b> — Hố 3<div class="d2">Montgomerie Links Việt Nam · 01/03/2026</div></div></div>
+        <div class="achv"><span class="ic2">🐦</span><div><b>Birdie</b> — 12 lần<div class="d2">Vinpearl Golf Nam Hội An · 05/02/2026</div></div></div>
+      </div>
+
+      <div class="panel">
+        <h3 style="margin-bottom:12px;">Bảng xếp hạng quốc gia (Top 5 + bạn)</h3>
+        <table class="rank">
+          <thead><tr><th>#</th><th>Golfer</th><th>Handicap</th><th>Ranking</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Lê Minh Hoàng</td><td>5.2</td><td>2.356,8</td><td>—</td></tr>
+            <tr><td>2</td><td>Trần Anh Tuấn</td><td>4.8</td><td>2.128,4</td><td class="up">↑1</td></tr>
+            <tr><td>3</td><td>Phạm Gia Hưng</td><td>6.1</td><td>1.987,2</td><td class="up">↑2</td></tr>
+            <tr><td>4</td><td>Nguyễn Hữu Phúc</td><td>7.0</td><td>1.856,0</td><td class="down">↓2</td></tr>
+            <tr><td>5</td><td>Đỗ Quang Huy</td><td>6.3</td><td>1.723,5</td><td>—</td></tr>
+            <tr class="me"><td>125</td><td><b>Nguyễn Văn A (bạn)</b></td><td>10.6</td><td>1.245,6</td><td class="up">↑12</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 style="margin-bottom:12px;">Bảng xếp hạng khác</h3>
+      <div class="other-rank">
+        <div><span class="ic3">📍</span>Theo tỉnh/thành<br><span style="color:var(--muted)">Hà Nội</span><b>Hạng 38</b></div>
+        <div><span class="ic3">👥</span>Theo CLB<br><span style="color:var(--muted)">CLB G&amp;L 92–95</span><b>Hạng 5</b></div>
+        <div><span class="ic3">🎂</span>Theo nhóm tuổi<br><span style="color:var(--muted)">Nam 30–39</span><b>Hạng 22</b></div>
+        <div><span class="ic3">🚻</span>Theo giới tính<br><span style="color:var(--muted)">Nam</span><b>Hạng 125</b></div>
+        <div><span class="ic3">📅</span>Theo mùa giải<br><span style="color:var(--muted)">Mùa 2026</span><b>Hạng 137</b></div>
+        <div><span class="ic3">📋</span>Tất cả bảng xếp hạng<br><span style="color:var(--muted)">&nbsp;</span><b>Xem đầy đủ →</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

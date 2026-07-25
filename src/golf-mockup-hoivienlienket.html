@@ -1,0 +1,139 @@
+---
+permalink: "golf-mockup-hoivienlienket.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Đăng ký Hội viên Liên kết (mockup)</title>
+<style>
+  :root {
+    --green: #0a6a36; --green-dark: #0f4a2c; --gold: #c9a44c;
+    --text: #1f2420; --muted: #6b7268; --bg: #f6f5f0; --card: #ffffff; --border: #e4e1d6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+  header { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top:0; z-index:10; }
+  .header-row { display: flex; align-items: center; gap: 18px; padding: 14px 0; max-width:860px; margin:0 auto; padding-left:20px; padding-right:20px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--green); text-decoration: none; white-space: nowrap; }
+  .logo .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--green); display:inline-block; }
+  .back { margin-left:auto; font-size: 13px; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--green); }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  .stepper { display: flex; justify-content: center; gap: 8px; padding: 26px 0 6px; }
+  .stepper .s { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .stepper .n { width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11.5px; }
+  .stepper .s.done .n { background: var(--green); }
+  .stepper .s.active .n { background: var(--green); }
+  .stepper .s.active { color: var(--green); font-weight: 700; }
+  .stepper .line { width: 34px; height: 2px; background: var(--border); }
+
+  h1.page-title { font-size: 19px; text-align: center; margin: 8px 0 2px; }
+  .page-sub { font-size: 12.5px; color: var(--muted); text-align: center; margin-bottom: 22px; }
+
+  .card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 40px; }
+  .card h3 { font-size: 14px; margin-bottom: 4px; }
+  .card .hint { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+
+  .pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .pkg-card { border: 2px solid var(--border); border-radius: 10px; padding: 18px; position: relative; cursor: pointer; }
+  .pkg-card.picked { border-color: var(--green); background: #f3f9f5; }
+  .pkg-card .check { position: absolute; top: 14px; right: 14px; width: 20px; height: 20px; border-radius: 50%; background: var(--border); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .pkg-card.picked .check { background: var(--green); }
+  .pkg-card .nm { font-weight: 800; font-size: 15px; margin-bottom: 2px; }
+  .pkg-card .pr { color: var(--green); font-weight: 700; font-size: 13px; margin-bottom: 14px; }
+  .pkg-card ul { list-style: none; font-size: 12px; display: grid; gap: 7px; color: var(--muted); }
+  .pkg-card ul li::before { content: "✓ "; color: var(--green); font-weight: 800; }
+  .pkg-card.kim .nm { color: #1a63c4; }
+  .pkg-card.vang .nm { color: #a17c1f; }
+  .pkg-card.bac .nm { color: #6b7280; }
+
+  .club-picked { display: flex; align-items: center; gap: 10px; background: var(--bg); border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; font-size: 12.5px; }
+  .club-picked b { color: var(--green); }
+
+  .btn-continue2 { display: block; width: 100%; text-align: center; background: var(--green); color: #fff; border: none; padding: 13px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; margin-top: 20px; text-decoration: none; }
+  .btn-continue2:hover { background: var(--green-dark); }
+
+  @media (max-width: 640px) {
+    .pkg-grid { grid-template-columns: 1fr; }
+    .stepper { flex-wrap: wrap; }
+    .stepper .line { width: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 28 đề án PDF (Đăng ký Hội viên Liên kết — bước Chọn gói hội viên) — dữ liệu là placeholder.</div>
+
+<header>
+  <div class="header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGA <span class="dot"></span> VGAID</a>
+    <a href="golf-mockup-trangchu.html" class="back">← Về trang chủ</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stepper">
+    <div class="s done"><span class="n">✓</span>Chọn CLB</div>
+    <div class="line"></div>
+    <div class="s done"><span class="n">✓</span>Thông tin</div>
+    <div class="line"></div>
+    <div class="s active"><span class="n">3</span>Gói hội viên</div>
+    <div class="line"></div>
+    <div class="s"><span class="n">4</span>Thanh toán</div>
+  </div>
+
+  <h1 class="page-title">Đăng ký Hội viên Liên kết</h1>
+  <div class="page-sub">Chọn gói hội viên phù hợp — ưu đãi áp dụng tại CLB đã chọn</div>
+
+  <div class="card">
+    <div class="club-picked">🏌️ CLB đã chọn: <b>Thăng Long Golf Club</b> — Hà Nội</div>
+
+    <div class="pkg-grid">
+      <div class="pkg-card kim picked">
+        <span class="check">✓</span>
+        <div class="nm">💎 Kim Cương</div>
+        <div class="pr">5.000.000 VND / năm</div>
+        <ul>
+          <li>Ưu đãi giảm đến 30% giá sân</li>
+          <li>Tham gia giải đấu VGA</li>
+          <li>Bảo hiểm HIO trị giá 1 tỷ VND</li>
+          <li>Quyền lợi từ đối tác cao cấp</li>
+          <li>Tặng 1.000.000 VND voucher</li>
+        </ul>
+      </div>
+      <div class="pkg-card vang">
+        <span class="check"></span>
+        <div class="nm">👑 Vàng</div>
+        <div class="pr">3.000.000 VND / năm</div>
+        <ul>
+          <li>Ưu đãi giảm đến 20% giá sân</li>
+          <li>Tham gia giải đấu VGA</li>
+          <li>Bảo hiểm HIO trị giá 500 triệu</li>
+          <li>Quyền lợi từ đối tác</li>
+        </ul>
+      </div>
+      <div class="pkg-card bac">
+        <span class="check"></span>
+        <div class="nm">🛡️ Bạc</div>
+        <div class="pr">1.500.000 VND / năm</div>
+        <ul>
+          <li>Ưu đãi giảm đến 10% giá sân</li>
+          <li>Tham gia giải đấu VGA</li>
+          <li>Quyền lợi cơ bản</li>
+        </ul>
+      </div>
+    </div>
+
+    <a class="btn-continue2" href="golf-mockup-thanhtoan.html">Tiếp tục →</a>
+  </div>
+</div>
+
+</body>
+</html>

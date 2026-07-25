@@ -1,0 +1,207 @@
+---
+permalink: "golf-mockup-hoiphi.html"
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VGAID — Quản lý hội phí (mockup)</title>
+<style>
+  :root {
+    --green: #0a6a36; --green-dark: #0f4a2c; --gold: #c9a44c;
+    --text: #1f2420; --muted: #6b7268; --bg: #f6f5f0; --card: #ffffff; --border: #e4e1d6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  a, button { transition: background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  header { border-bottom: 1px solid var(--border); background: #fff; position: sticky; top:0; z-index:10; }
+  .header-row { display: flex; align-items: center; gap: 18px; padding: 14px 0; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--green); text-decoration: none; white-space: nowrap; }
+  .logo .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--green); display:inline-block; }
+  nav { display: flex; gap: 16px; flex: 1; font-size: 13.5px; color: #333; white-space: nowrap; overflow-x:auto; }
+  nav a { text-decoration: none; color: inherit; }
+  nav a:hover { color: var(--green); }
+  .user-chip { margin-left:auto; display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; white-space:nowrap; }
+  .user-chip img { width:30px; height:30px; border-radius:50%; object-fit:cover; }
+
+  .note { background: #fff3cd; border: 1px solid #ffe08a; color: #7a5c00; font-size: 13px; padding: 10px 16px; text-align: center; }
+
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 24px 0 50px; align-items: start; }
+  .side { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 10px; position: sticky; top: 74px; }
+  .side a { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 7px; font-size: 13.5px; text-decoration: none; color: var(--text); margin-bottom: 2px; }
+  .side a:hover { background: var(--bg); }
+  .side a.active { background: var(--green); color: #fff; font-weight: 600; }
+
+  h1.page-title { font-size: 19px; margin-bottom: 16px; }
+
+  .top-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .mcard { background: linear-gradient(150deg, var(--green) 0%, var(--green-dark) 100%); border-radius: 12px; padding: 20px; color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+  .mcard .brand { font-size: 11px; letter-spacing: .05em; opacity: .85; margin-bottom: 4px; }
+  .mcard .pkg { font-size: 17px; font-weight: 800; color: var(--gold); }
+  .mcard .name { font-size: 15px; font-weight: 700; margin-top: 8px; }
+  .mcard .id { font-size: 11.5px; opacity: .8; }
+  .qr-mini { width: 60px; height: 60px; background: repeating-linear-gradient(45deg,#1c2430 0 5px,#fff 5px 10px); border-radius: 6px; flex-shrink: 0; }
+
+  .expire-card { background: #fff8e6; border: 1px solid #ffe08a; border-radius: 12px; padding: 18px; }
+  .expire-card .t { font-weight: 800; color: #8a6415; font-size: 13.5px; margin-bottom: 4px; }
+  .expire-card .s { font-size: 12px; color: #a17c1f; margin-bottom: 10px; }
+  .expire-card button { background: var(--green); color: #fff; border: none; padding: 9px 16px; border-radius: 7px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+
+  .validity-bar { height: 6px; background: rgba(255,255,255,.25); border-radius: 4px; overflow: hidden; margin-top: 10px; }
+  .validity-bar span { display: block; height: 100%; width: 82%; background: var(--gold); }
+
+  .stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .stat-card .lbl { font-size: 10.5px; color: var(--muted); letter-spacing:.04em; text-transform:uppercase; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+  .stat-card .val { font-size: 16px; font-weight: 800; }
+  .stat-card .sub { font-size: 11px; color: var(--muted); margin-top:2px; }
+
+  .two-col { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; }
+  .panel { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+  .panel h3 { font-size: 14px; margin-bottom: 14px; }
+
+  .pkg-option { border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .pkg-option.picked { border-color: var(--green); background: #f3f9f5; box-shadow: 0 0 0 1px var(--green) inset; }
+  .pkg-option .nm { font-weight: 700; font-size: 13.5px; }
+  .pkg-option .pr { font-size: 12px; color: var(--muted); }
+  .pkg-option .tag { font-size: 10px; background: var(--gold); color: #4a3a12; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+
+  .benefit-list { list-style: none; font-size: 12.5px; display: grid; gap: 8px; margin: 14px 0; }
+  .benefit-list li::before { content: "✓ "; color: var(--green); font-weight: 800; }
+
+  .pay-methods { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+  .pay-methods div { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; font-weight: 600; text-align: center; cursor: pointer; }
+  .pay-methods div.picked { border-color: var(--green); color: var(--green); background: #f3f9f5; }
+
+  .total-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 800; color: var(--green); padding: 12px 0; border-top: 1px dashed var(--border); margin-top: 4px; }
+  .btn-pay2 { display: block; width: 100%; text-align: center; background: var(--green); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 13.5px; cursor: pointer; text-decoration: none; }
+  .btn-pay2:hover { background: var(--green-dark); }
+
+  table.txn { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.txn th { text-align: left; font-size: 10.5px; text-transform: uppercase; color: var(--muted); padding: 8px; border-bottom: 1px solid var(--border); }
+  table.txn td { padding: 9px 8px; border-bottom: 1px solid var(--border); }
+  .status-ok2 { color: var(--green); font-weight: 700; font-size: 11.5px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .side { position: static; display:flex; overflow-x:auto; gap:4px; }
+    .side a { white-space:nowrap; margin-bottom:0; }
+    .top-grid, .two-col { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: repeat(2,1fr); }
+    nav { display: none; }
+    table.txn { display: block; overflow-x: auto; white-space: nowrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="note">Mockup dựng lại từ ảnh gốc trang 30 đề án PDF (Trang quản lý hội phí) — dữ liệu là placeholder.</div>
+
+<header>
+  <div class="wrap header-row">
+    <a href="golf-mockup-trangchu.html" class="logo">VGA <span class="dot"></span> VGAID</a>
+    <nav>
+      <a href="golf-mockup-trangchu.html">Trang chủ</a>
+      <a href="golf-mockup-timsan.html">Booking Golf</a>
+      <a href="golf-mockup-timsan.html">Sân golf</a>
+      <a href="golf-mockup-giaidau.html">Giải đấu</a>
+      <a href="golf-mockup-quyenloi.html">Quyền lợi</a>
+    </nav>
+    <a class="user-chip" href="golf-mockup-hoso.html">
+      <img src="https://i.pravatar.cc/60?img=12" alt="">
+      Nguyễn Văn A
+    </a>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <aside class="side">
+    <a href="golf-mockup-hoso.html">👤 Hồ sơ VGA ID</a>
+    <a href="golf-mockup-timsan.html">📅 Booking của tôi</a>
+    <a href="golf-mockup-giaidau.html">🏆 Giải đấu của tôi</a>
+    <a href="golf-mockup-quyenloi.html">🎖️ Quyền lợi của tôi</a>
+    <a href="golf-mockup-hoiphi.html" class="active">💳 Hội phí của tôi</a>
+    <a href="golf-mockup-lichsubooking.html">🧾 Lịch sử booking</a>
+    <a href="#">🔔 Thông báo</a>
+    <a href="golf-mockup-dangnhap.html">🚪 Đăng xuất</a>
+  </aside>
+
+  <div>
+    <h1 class="page-title">Quản lý hội phí</h1>
+
+    <div class="top-grid">
+      <div class="mcard">
+        <div>
+          <div class="brand">VGAID · HỘI VIÊN LIÊN KẾT</div>
+          <div class="name">Nguyễn Văn A</div>
+          <div class="id">VGA ID: VGAID123456</div>
+          <div class="pkg" style="margin-top:8px;">💎 Kim Cương</div>
+          <div class="validity-bar"><span></span></div>
+          <div class="id" style="margin-top:6px;">Hiệu lực: 01/06/2025 – 31/05/2026 · còn 62 ngày</div>
+        </div>
+        <div class="qr-mini"></div>
+      </div>
+      <div class="expire-card">
+        <div class="t">⏰ Sắp hết hạn</div>
+        <div class="s">Hội viên của bạn sẽ hết hạn sau 62 ngày. Vui lòng gia hạn để tiếp tục sử dụng quyền lợi.</div>
+        <button>Gia hạn ngay</button>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="lbl">Phí hội viên (1 năm)</div><div class="val">5.000.000đ</div><div class="sub">Đã bao gồm VAT</div></div>
+      <div class="stat-card"><div class="lbl">Trạng thái thanh toán</div><div class="val" style="color:var(--green)">✓ Đã thanh toán</div><div class="sub">Thanh toán ngày 01/06/2025</div></div>
+      <div class="stat-card"><div class="lbl">Phương thức</div><div class="val">Chuyển khoản</div><div class="sub">Vietcombank · 0387</div></div>
+      <div class="stat-card"><div class="lbl">Mã giao dịch</div><div class="val" style="font-size:13.5px">VCB2506018879</div><div class="sub"><a href="#" style="color:var(--green)">Xem chi tiết</a></div></div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <h3>Gia hạn hội viên</h3>
+        <div class="pkg-option picked"><div><div class="nm">💎 Kim Cương</div><div class="pr">5.000.000 VND / năm</div></div><span class="tag">Đang sử dụng</span></div>
+        <div class="pkg-option"><div><div class="nm">👑 Vàng</div><div class="pr">3.000.000 VND / năm</div></div></div>
+        <div class="pkg-option"><div><div class="nm">🛡️ Bạc</div><div class="pr">1.500.000 VND / năm</div></div></div>
+        <ul class="benefit-list">
+          <li>Ưu đãi giảm đến 30% giá sân</li>
+          <li>Tham gia giải đấu do VGA tổ chức</li>
+          <li>Bảo hiểm HIO trị giá 1 tỷ VND</li>
+          <li>Quyền lợi ưu tiên đặt sân</li>
+          <li>Tặng 1.000.000 VND voucher</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h3>Chọn phương thức thanh toán</h3>
+        <div class="pay-methods">
+          <div class="picked">▦ QR Code</div>
+          <div>🏦 Chuyển khoản</div>
+          <div>💳 Thẻ nội địa</div>
+          <div>💳 Thẻ quốc tế</div>
+          <div>📱 Ví điện tử</div>
+          <div>VNPay</div>
+        </div>
+        <div class="total-row"><span>Tổng thanh toán</span><span>5.000.000 VNĐ</span></div>
+        <a class="btn-pay2" href="golf-mockup-thanhtoan.html">Thanh toán ngay</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Lịch sử giao dịch</h3>
+      <table class="txn">
+        <thead><tr><th>Ngày thanh toán</th><th>Gói hội viên</th><th>Số tiền</th><th>Phương thức</th><th>Trạng thái</th><th>Mã giao dịch</th></tr></thead>
+        <tbody>
+          <tr><td>01/06/2025</td><td>Kim Cương</td><td>5.000.000 VND</td><td>Chuyển khoản</td><td><span class="status-ok2">✓ Thành công</span></td><td>VCB2506018879</td></tr>
+          <tr><td>01/06/2024</td><td>Kim Cương</td><td>5.000.000 VND</td><td>VNPay</td><td><span class="status-ok2">✓ Thành công</span></td><td>VNP2406012245</td></tr>
+          <tr><td>01/06/2023</td><td>Vàng</td><td>3.000.000 VND</td><td>Momo</td><td><span class="status-ok2">✓ Thành công</span></td><td>MOMO2306011133</td></tr>
+          <tr><td>01/06/2022</td><td>Vàng</td><td>3.000.000 VND</td><td>Chuyển khoản</td><td><span class="status-ok2">✓ Thành công</span></td><td>VCB2206019988</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
