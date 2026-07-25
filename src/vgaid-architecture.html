@@ -169,6 +169,27 @@ thead th {
 
 tbody tr:last-child td { border-bottom: none; }
 
+tr.total-row td { border-top: 2px solid var(--ink); background: var(--fairway-tint); font-weight: 600; }
+
+.sub-h { font-size: 1.05rem; margin: 26px 0 12px; color: var(--ink); }
+
+.note-callout {
+  background: var(--amber-tint);
+  border-left: 3px solid var(--amber);
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  border-radius: 0 8px 8px 0;
+  margin: 14px 0;
+}
+.note-callout strong { color: var(--ink); }
+
+.plain-list { list-style: none; display: grid; gap: 10px; font-size: 0.94rem; color: var(--ink-soft); }
+.plain-list > li::before { content: "—"; margin-right: 8px; color: var(--paper-border); }
+.plain-list strong { color: var(--ink); font-weight: 600; }
+.plain-list--nested { margin-top: 8px; padding-left: 20px; gap: 6px; }
+.plain-list--nested > li::before { content: "·"; }
+
 code, .mono {
   font-family: var(--font-mono);
   font-size: 0.88em;
@@ -855,6 +876,24 @@ ul.plain li, ol.plain li { margin-bottom: 8px; max-width: 64ch; }
 .diagram-svg .dg-bus { font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; fill: var(--amber); }
 .diagram-svg .dg-ext { font-size: 11px; fill: var(--ink-soft); }
 .diagram-svg .dg-legend { font-size: 10.5px; fill: var(--ink-soft); }
+.diagram-svg .dg-actor { font-size: 11.5px; font-weight: 700; fill: var(--ink); }
+.diagram-svg .dg-actor-note { font-size: 9px; font-style: italic; fill: var(--ink-soft); }
+
+/* ---- Core internal module breakdown ---- */
+.core-detail { margin: 6px 0 30px; }
+.core-detail-intro { color: var(--ink-soft); font-size: 0.94rem; margin-bottom: 16px; }
+.core-detail-intro strong { color: var(--ink); font-weight: 600; }
+.module-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.module-card {
+  background: var(--fairway-tint);
+  border: 1px solid var(--fairway);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.module-card h5 { margin: 0 0 6px; font-size: 0.95rem; color: var(--fairway-strong); }
+.module-card p { margin: 0; font-size: 0.87rem; color: var(--ink-soft); line-height: 1.55; }
+.module-card .mono { color: var(--ink); }
+@media (max-width: 620px) { .module-grid { grid-template-columns: 1fr; } }
 
 /* ---- Service cards (fuller detail below diagram) ---- */
 .service-list { display: grid; gap: 14px; margin-top: 30px; }
@@ -999,9 +1038,10 @@ footer.colophon .rule {
       <li><a href="#kien-truc"><span class="num">03</span> Kiến trúc 5 service</a></li>
       <li><a href="#rang-buoc"><span class="num">04</span> Ràng buộc thiết kế</a></li>
       <li><a href="#stack"><span class="num">05</span> Tech stack</a></li>
-      <li><a href="#lo-trinh"><span class="num">06</span> Lộ trình 5 giai đoạn</a></li>
-      <li><a href="#ra-soat"><span class="num">07</span> Quá trình rà soát</a></li>
-      <li><a href="#can-quyet"><span class="num">08</span> Cần khách hàng quyết định</a></li>
+      <li><a href="#sizing"><span class="num">06</span> Sizing &amp; nền tảng triển khai</a></li>
+      <li><a href="#lo-trinh"><span class="num">07</span> Lộ trình 5 giai đoạn</a></li>
+      <li><a href="#ra-soat"><span class="num">08</span> Quá trình rà soát</a></li>
+      <li><a href="#can-quyet"><span class="num">09</span> Cần khách hàng quyết định</a></li>
     </ol>
   </nav>
 
@@ -1059,13 +1099,26 @@ footer.colophon .rule {
     </div>
 
     <div class="diagram-svg-wrap">
-    <svg class="diagram-svg" viewBox="0 0 960 680" role="img" xmlns="http://www.w3.org/2000/svg"
-      aria-label="Sơ đồ kiến trúc: golfer vào qua nginx đến Core (dùng chung PostgreSQL); Core phát sự kiện bất đồng bộ qua RabbitMQ tới 4 service vệ tinh Payment, BookingBridge, Notification, Reconciliation, nằm trong ranh giới hạ tầng tự vận hành; mỗi service vệ tinh gọi ra một phụ thuộc bên ngoài ranh giới đó.">
+    <svg class="diagram-svg" viewBox="0 0 960 760" role="img" xmlns="http://www.w3.org/2000/svg"
+      aria-label="Sơ đồ kiến trúc: Golfer và Nhân viên vận hành VGA cùng vào qua nginx đến Core (dùng chung PostgreSQL); Core phát sự kiện bất đồng bộ qua RabbitMQ tới 4 service vệ tinh Payment, BookingBridge, Notification, Reconciliation, nằm trong ranh giới hạ tầng tự vận hành; mỗi service vệ tinh gọi ra một phụ thuộc bên ngoài ranh giới đó, một số phụ thuộc do con người xử lý thủ công.">
       <defs>
         <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"></path>
         </marker>
+        <marker id="arrow-brass" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--brass)"></path>
+        </marker>
       </defs>
+
+      <!-- Actors -->
+      <rect x="40" y="21" width="230" height="40" rx="20" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.3"></rect>
+      <text x="155" y="46" text-anchor="middle" class="dg-actor">👤 GOLFER (hội viên)</text>
+      <line x1="270" y1="41" x2="328" y2="41" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+
+      <rect x="690" y="21" width="230" height="40" rx="20" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.3"></rect>
+      <text x="805" y="41" text-anchor="middle" class="dg-actor">🛠️ NHÂN VIÊN VẬN HÀNH VGA</text>
+      <text x="805" y="54" text-anchor="middle" class="dg-s-tiny">role STAFF · VPN/IP allowlist</text>
+      <line x1="690" y1="41" x2="632" y2="41" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
 
       <!-- Client -->
       <rect x="330" y="16" width="300" height="50" rx="8" fill="var(--paper-raised)" stroke="var(--paper-border)"></rect>
@@ -1144,19 +1197,66 @@ footer.colophon .rule {
       <rect x="290" y="536" width="170" height="52" rx="8" fill="none" stroke="var(--paper-border)" stroke-dasharray="4 3"></rect>
       <text x="375" y="558" text-anchor="middle" class="dg-ext">wGroup</text>
       <text x="375" y="572" text-anchor="middle" class="dg-s-tiny">(email thủ công)</text>
+      <text x="375" y="602" text-anchor="middle" class="dg-actor-note">🧑‍💻 Nhân viên BookingBridge</text>
+      <text x="375" y="613" text-anchor="middle" class="dg-actor-note">xử lý thủ công qua email</text>
 
       <rect x="500" y="536" width="170" height="52" rx="8" fill="none" stroke="var(--paper-border)" stroke-dasharray="4 3"></rect>
       <text x="585" y="566" text-anchor="middle" class="dg-ext">SMS / email gateway</text>
 
       <rect x="710" y="536" width="170" height="52" rx="8" fill="none" stroke="var(--paper-border)" stroke-dasharray="4 3"></rect>
       <text x="795" y="566" text-anchor="middle" class="dg-ext">Export Excel</text>
+      <text x="795" y="602" text-anchor="middle" class="dg-actor-note">📊 Kế toán / Vận hành</text>
+      <text x="795" y="613" text-anchor="middle" class="dg-actor-note">đối chiếu định kỳ</text>
 
       <!-- legend -->
-      <line x1="590" y1="622" x2="626" y2="622" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
-      <text x="634" y="626" class="dg-s-tiny dg-legend">đồng bộ (HTTP/API, DB)</text>
-      <line x1="590" y1="644" x2="626" y2="644" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"></line>
-      <text x="634" y="648" class="dg-s-tiny dg-legend">bất đồng bộ (qua RabbitMQ)</text>
+      <line x1="60" y1="700" x2="96" y2="700" stroke="var(--ink-soft)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+      <text x="104" y="704" class="dg-s-tiny dg-legend">đồng bộ (HTTP/API, DB)</text>
+      <line x1="60" y1="722" x2="96" y2="722" stroke="var(--brass)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-brass)"></line>
+      <text x="104" y="726" class="dg-s-tiny dg-legend">bất đồng bộ (qua RabbitMQ)</text>
+      <rect x="340" y="688" width="26" height="18" rx="9" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.3"></rect>
+      <text x="374" y="704" class="dg-s-tiny dg-legend">tác nhân con người</text>
+      <rect x="540" y="688" width="26" height="18" rx="5" fill="none" stroke="var(--paper-border)" stroke-dasharray="3 2"></rect>
+      <text x="574" y="704" class="dg-s-tiny dg-legend">hệ thống/phụ thuộc ngoài</text>
+      <rect x="340" y="710" width="26" height="18" rx="4" fill="var(--fairway)" stroke="var(--fairway)"></rect>
+      <text x="374" y="726" class="dg-s-tiny dg-legend">Core (module lõi, ghi trạng thái hội viên)</text>
     </svg>
+    </div>
+
+    <div class="core-detail">
+      <p class="core-detail-intro"><strong>Core không phải 4 service riêng — đây là <u>một</u> service
+      Spring Boot duy nhất (modular monolith), triển khai như 1 tiến trình/container, chạy trên 1 bộ tài
+      nguyên (xem sizing ở mục 06). Bên trong được chia thành 4 module theo bounded context, mỗi module
+      có bảng dữ liệu và trách nhiệm riêng, nhưng cùng chia sẻ 1 transaction/connection pool nên đọc-ghi
+      chéo module vẫn nhất quán tức thời (không cần saga/event giữa các module này).</strong></p>
+      <div class="module-grid">
+        <div class="module-card">
+          <h5><span class="mono">identity</span></h5>
+          <p>Đăng nhập bằng OTP qua số điện thoại, phát hành/làm mới JWT, RBAC 2 vai trò
+          (<span class="mono">GOLFER</span> / <span class="mono">STAFF</span>). Gọi module <span class="mono">notification</span>
+          (service khác, qua RabbitMQ) để gửi OTP — không tự gửi SMS.</p>
+        </div>
+        <div class="module-card">
+          <h5><span class="mono">membership</span></h5>
+          <p>Hồ sơ hội viên: <span class="mono">member_code</span> nội bộ (tách biệt khỏi
+          <span class="mono">vga_id_ref</span> — mã tham chiếu sang vHandicap, không tự sinh). Là nơi
+          <u>duy nhất</u> trong toàn hệ thống được ghi <span class="mono">membership.status</span>
+          (active/expired) — kể cả khi Payment xác nhận thu tiền hay Admin duyệt tay, đều phải gọi qua
+          đúng 1 hàm ghi ở đây (ràng buộc #3b).</p>
+        </div>
+        <div class="module-card">
+          <h5><span class="mono">benefits</span></h5>
+          <p>Danh mục quyền lợi theo hạng hội viên (Kim Cương/Vàng/Bạc), điều kiện áp dụng, hạn sử
+          dụng. Đọc trạng thái từ <span class="mono">membership</span> trong cùng transaction để tránh
+          hiển thị quyền lợi cho hội viên đã hết hạn.</p>
+        </div>
+        <div class="module-card">
+          <h5><span class="mono">admin</span></h5>
+          <p>Duyệt hồ sơ đăng ký hội viên liên kết, quản lý danh mục sân/CLB liên kết. Route riêng,
+          <strong>giới hạn mạng qua VPN/IP allowlist</strong> ở tầng nginx — không cần tách service vì
+          vẫn dùng chung dữ liệu <span class="mono">membership</span> tức thời, nhưng bề mặt tấn công
+          phải hẹp hơn phần công khai.</p>
+        </div>
+      </div>
     </div>
 
     <div class="service-list">
@@ -1305,9 +1405,60 @@ footer.colophon .rule {
     </div>
   </section>
 
+  <section class="block" id="sizing">
+    <div class="block-head">
+      <h2><span class="num">06</span> Sizing &amp; nền tảng triển khai</h2>
+    </div>
+    <p>Toàn bộ 5 service + hạ tầng phụ trợ chạy trên <strong>1 VPS duy nhất</strong>, điều phối bằng
+    <span class="mono">docker compose</span> — không dùng Kubernetes ở quy mô 1 người vận hành. Bảng dưới
+    là ước lượng tài nguyên cho quy mô thí điểm (vài trăm hội viên hoạt động, booking rải rác trong ngày,
+    không phải hàng nghìn giao dịch đồng thời).</p>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Thành phần</th><th>vCPU đề xuất</th><th>RAM đề xuất</th><th>Ghi chú</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Core</td><td class="mono">1.0</td><td class="mono">2 GB</td><td>Tải cao nhất — nhận toàn bộ request public qua nginx</td></tr>
+          <tr><td>Payment</td><td class="mono">0.25</td><td class="mono">256 MB</td><td>Nhẹ, phần lớn thời gian chờ IPN</td></tr>
+          <tr><td>BookingBridge</td><td class="mono">0.25</td><td class="mono">256 MB</td><td>Nhẹ, worker xử lý email + slot_hold</td></tr>
+          <tr><td>Notification</td><td class="mono">0.25</td><td class="mono">256 MB</td><td>Nhẹ, chủ yếu gọi gateway ngoài</td></tr>
+          <tr><td>Reconciliation</td><td class="mono">0.25</td><td class="mono">256 MB</td><td>Chạy dạng batch — CPU tăng đột biến khi chạy job, nghỉ phần lớn thời gian</td></tr>
+          <tr><td>PostgreSQL</td><td class="mono">1.0</td><td class="mono">2.5 GB</td><td>Dùng chung nhiều schema — pool giới hạn riêng theo schema</td></tr>
+          <tr><td>RabbitMQ</td><td class="mono">0.5</td><td class="mono">512 MB</td><td>5 service publish/consume qua đây</td></tr>
+          <tr><td>Redis</td><td class="mono">0.25</td><td class="mono">256 MB</td><td>Chỉ rate-limit OTP + slot_hold, không cache chung</td></tr>
+          <tr><td>nginx</td><td class="mono">0.25</td><td class="mono">256 MB</td><td>Cửa ngõ public duy nhất</td></tr>
+          <tr><td>Dự phòng hệ điều hành/Docker</td><td class="mono">~0.3</td><td class="mono">~0.7 GB</td><td>Buffer cho OS, log, layer Docker</td></tr>
+          <tr class="total-row"><td><strong>Tổng đề xuất tối thiểu</strong></td><td class="mono"><strong>~4–5 vCPU</strong></td><td class="mono"><strong>~8 GB</strong></td><td>Mốc cần tính lại ngay khi có traffic thật hoặc thêm Giai đoạn 2</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note-callout">Ngưỡng nâng cấp trước tiên khi tải tăng: <strong>Postgres</strong> rồi đến
+    <strong>Core</strong> — 2 điểm này chịu tải chính; 4 service vệ tinh và RabbitMQ hiếm khi là nút thắt
+    ở quy mô thí điểm.</p>
+
+    <h3 class="sub-h">Nền tảng triển khai</h3>
+    <ul class="plain-list">
+      <li><strong>Orchestration:</strong> Docker Compose trên 1 VPS — không phải Kubernetes/multi-node,
+      phù hợp đội vận hành 1 người.</li>
+      <li><strong>CI/CD:</strong> GitHub Actions, dùng path-filter theo thư mục service trong monorepo —
+      chỉ build/test đúng service thay đổi, không rebuild cả 5 mỗi lần; deploy bằng SSH + <span class="mono">docker compose pull &amp;&amp; up -d</span>.</li>
+      <li><strong>Backup:</strong> PostgreSQL cần lịch backup + kế hoạch PITR (point-in-time recovery) —
+      đây là SPOF được ghi nhận có ý thức (ràng buộc #10), không né tránh.</li>
+      <li><strong>Nhà cung cấp VPS cụ thể: <span class="pill pill--muted">chưa chốt</span></strong> — đây
+      là quyết định mở (xem mục 09), phụ thuộc ngân sách và yêu cầu về nơi đặt dữ liệu cá nhân hội viên
+      theo Nghị định 13/2023. Vài phương án tham khảo để cân nhắc, không phải đề xuất cuối cùng:
+        <ul class="plain-list plain-list--nested">
+          <li>Trong nước (đáp ứng yêu cầu lưu trữ dữ liệu nội địa nếu có): Viettel IDC, VNPT Cloud, FPT Cloud.</li>
+          <li>Quốc tế (rẻ hơn, cần xác nhận vị trí máy chủ có chấp nhận được không): DigitalOcean, Vultr, Linode.</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
   <section class="block" id="lo-trinh">
     <div class="block-head">
-      <h2><span class="num">06</span> Lộ trình 5 giai đoạn</h2>
+      <h2><span class="num">07</span> Lộ trình 5 giai đoạn</h2>
     </div>
     <p>Kiến trúc Giai đoạn 1 được thiết kế để các giai đoạn sau cắm nối tiếp — không phải xây lại.</p>
     <div class="table-scroll">
@@ -1330,7 +1481,7 @@ footer.colophon .rule {
 
   <section class="block" id="ra-soat">
     <div class="block-head">
-      <h2><span class="num">07</span> Quá trình rà soát</h2>
+      <h2><span class="num">08</span> Quá trình rà soát</h2>
     </div>
     <p>Bản kiến trúc này không phải đề xuất một lần — đã qua 3 vòng rà soát độc lập, mỗi vòng
     phát hiện vấn đề thật trước khi đưa vào code.</p>
@@ -1348,7 +1499,7 @@ footer.colophon .rule {
 
   <section class="block" id="can-quyet">
     <div class="block-head">
-      <h2><span class="num">08</span> Cần khách hàng quyết định</h2>
+      <h2><span class="num">09</span> Cần khách hàng quyết định</h2>
     </div>
     <p>4 câu hỏi nằm ngoài phạm vi kỹ thuật — cần VGA xác nhận trước khi phụ thuộc sâu vào các
     quyết định tương ứng.</p>
@@ -1358,7 +1509,7 @@ footer.colophon .rule {
         <li><strong>Điều khoản với wGroup</strong><span>Hợp đồng có cam kết cung cấp dữ liệu/API lâu dài không? Toàn bộ kiến trúc tham chiếu (không sở hữu) đặt cược vào sự hợp tác này.</span></li>
         <li><strong>Tách bạch dòng tiền hội phí</strong><span>Hội phí (tiền của VGA) có đi qua chung tài khoản thanh toán với tiền booking (của các sân golf) không? Cần làm rõ để tránh rủi ro tài chính khi đối soát.</span></li>
         <li><strong>Kế hoạch bàn giao/duy trì</strong><span>VGA không có đội IT riêng — cần thống nhất kế hoạch vận hành/bàn giao khi mở rộng đội ngũ kỹ thuật.</span></li>
-        <li><strong>Hạ tầng tạm thời</strong><span>Giai đoạn 1 dùng máy chủ tự dựng để triển khai nhanh; có lộ trình chuyển lên nền tảng đám mây khi hệ thống được xác nhận vận hành ổn định.</span></li>
+        <li><strong>Chọn nhà cung cấp VPS</strong><span>Mục 06 mới chỉ đưa ra ước lượng tài nguyên (~4–5 vCPU/8GB) và vài phương án tham khảo — chưa chốt nhà cung cấp cụ thể. Cần xác nhận ngân sách và yêu cầu về nơi đặt dữ liệu cá nhân hội viên (Nghị định 13/2023) trước khi đặt mua.</span></li>
       </ol>
     </div>
   </section>
