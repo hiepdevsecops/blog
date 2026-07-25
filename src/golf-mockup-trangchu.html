@@ -45,20 +45,20 @@ permalink: "golf-mockup-trangchu.html"
   .btn-primary { background: var(--green); color: #fff; }
   .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
 
-  /* Hero */
-  .hero { background: linear-gradient(120deg, var(--green) 0%, var(--green-dark) 100%); color: #fff; padding: 46px 0; }
+  /* Hero — nền SÁNG (đúng bản gốc PDF), không phải nền xanh đậm */
+  .hero { background: #fff; color: var(--text); padding: 40px 0; }
   .hero-row { display: flex; gap: 32px; align-items: center; }
   .hero-text { flex: 1.1; }
-  .hero-eyebrow { font-weight: 800; font-size: 15px; letter-spacing: .04em; opacity: .85; }
-  .hero-title { font-size: 34px; font-weight: 800; line-height: 1.2; margin: 4px 0 14px; }
-  .hero-desc { opacity: .85; margin-bottom: 22px; max-width: 40ch; font-size: 14.5px; }
+  .hero-eyebrow { font-weight: 800; font-size: 15px; letter-spacing: .04em; color: var(--green); }
+  .hero-title { font-size: 32px; font-weight: 800; line-height: 1.2; margin: 4px 0 14px; color: var(--green); }
+  .hero-desc { color: var(--muted); margin-bottom: 22px; max-width: 40ch; font-size: 14.5px; }
   .hero-cta { display: flex; gap: 10px; }
-  .btn-white { background: #fff; color: var(--green); }
-  .btn-white:hover { background: var(--gold); color: var(--green-dark); }
-  .btn-ghost { border: 1px solid rgba(255,255,255,.5); color: #fff; background: transparent; }
-  .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,.12); }
+  .btn-white { background: var(--green); color: #fff; }
+  .btn-white:hover { background: var(--green-dark); transform: translateY(-1px); }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); background: transparent; }
+  .btn-ghost:hover { border-color: var(--green); color: var(--green); background: var(--bg); }
   .hero-photo { flex: 1; height: 230px; border-radius: 10px; }
-  .hero-card { flex: .8; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); border-radius: 10px; padding: 18px 20px; }
+  .hero-card { flex: .8; background: linear-gradient(150deg, var(--green) 0%, var(--green-dark) 100%); color: #fff; border-radius: 10px; padding: 18px 20px; }
   .hero-card h4 { font-size: 12.5px; letter-spacing: .05em; margin-bottom: 12px; color: var(--gold); }
   .hero-card ul { list-style: none; display: grid; gap: 9px; font-size: 13px; }
   .hero-card li::before { content: "✓ "; color: var(--gold); font-weight: 700; }
@@ -206,7 +206,7 @@ permalink: "golf-mockup-trangchu.html"
         <a href="#" class="btn btn-ghost">▶ Tìm hiểu thêm</a>
       </div>
     </div>
-    <img class="hero-photo" style="flex:1;width:100%;height:230px;border-radius:10px;object-fit:cover;" src="https://picsum.photos/seed/vgagolfer/800/500" alt="Golfer đánh bóng">
+    <img class="hero-photo" style="flex:1;width:100%;height:230px;border-radius:10px;object-fit:cover;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Golfer_in_Golf_Links_1.jpg/960px-Golfer_in_Golf_Links_1.jpg" alt="Golfer đánh bóng">
     <div class="hero-card">
       <h4>HỘI VIÊN LIÊN KẾT VGA</h4>
       <ul>
@@ -247,7 +247,7 @@ permalink: "golf-mockup-trangchu.html"
   <div class="block-head"><h2>SÂN GOLF NỔI BẬT</h2><a href="golf-mockup-timsan.html">Xem tất cả →</a></div>
   <div class="courses">
     <a class="course-card" href="golf-mockup-timsan.html">
-      <img class="thumb" src="https://picsum.photos/seed/golf1/400/300" alt="BRG Kings Island Golf Resort">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Ballybunion_Golf_Club_-_1st_hole.jpg/960px-Ballybunion_Golf_Club_-_1st_hole.jpg" alt="BRG Kings Island Golf Resort">
       <div class="body">
         <div class="name">BRG Kings Island Golf Resort</div>
         <div class="loc">Đồng Mô, Sơn Tây, Hà Nội</div>
@@ -256,7 +256,7 @@ permalink: "golf-mockup-trangchu.html"
       </div>
     </a>
     <a class="course-card" href="golf-mockup-timsan.html">
-      <img class="thumb" src="https://picsum.photos/seed/golf2/400/300" alt="Ba Na Hills Golf Club">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Ballybunion_Golf_Club_-_10th_hole.jpg/960px-Ballybunion_Golf_Club_-_10th_hole.jpg" alt="Ba Na Hills Golf Club">
       <div class="body">
         <div class="name">Ba Na Hills Golf Club</div>
         <div class="loc">Hòa Vang, Đà Nẵng</div>
@@ -265,7 +265,7 @@ permalink: "golf-mockup-trangchu.html"
       </div>
     </a>
     <a class="course-card" href="golf-mockup-timsan.html">
-      <img class="thumb" src="https://picsum.photos/seed/golf3/400/300" alt="FLC Golf Links Quy Nhơn">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Ballybunion_Golf_Club_-_7th_hole.jpg/960px-Ballybunion_Golf_Club_-_7th_hole.jpg" alt="FLC Golf Links Quy Nhơn">
       <div class="body">
         <div class="name">FLC Golf Links Quy Nhơn</div>
         <div class="loc">Nhơn Lý, Quy Nhơn</div>
@@ -274,7 +274,7 @@ permalink: "golf-mockup-trangchu.html"
       </div>
     </a>
     <a class="course-card" href="golf-mockup-timsan.html">
-      <img class="thumb" src="https://picsum.photos/seed/golf4/400/300" alt="Novaland Phan Thiết Golf Club">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Ballybunion_Golf_Club_-_11th_hole.jpg/960px-Ballybunion_Golf_Club_-_11th_hole.jpg" alt="Novaland Phan Thiết Golf Club">
       <div class="body">
         <div class="name">Novaland Phan Thiết Golf Club</div>
         <div class="loc">Phan Thiết, Bình Thuận</div>
@@ -301,30 +301,30 @@ permalink: "golf-mockup-trangchu.html"
   <div>
     <div class="block-head"><h2>TIN TỨC</h2><a href="#">Xem tất cả →</a></div>
     <a class="list-item" href="#">
-      <img class="thumb" src="https://picsum.photos/seed/news1/120/96" alt="">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Golf_Trophy_-_geograph.org.uk_-_5264569.jpg/960px-Golf_Trophy_-_geograph.org.uk_-_5264569.jpg" alt="">
       <div><div class="t">VGA tổ chức thành công Vô địch Nghiệp dư Quốc gia 2024</div><div class="d">20/06/2024</div></div>
     </a>
     <a class="list-item" href="#">
-      <img class="thumb" src="https://picsum.photos/seed/news2/120/96" alt="">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Junior_Golf_Lessons.jpg/960px-Junior_Golf_Lessons.jpg" alt="">
       <div><div class="t">Chương trình ưu đãi đặc biệt dành cho hội viên VGAID</div><div class="d">16/06/2024</div></div>
     </a>
     <a class="list-item" href="#">
-      <img class="thumb" src="https://picsum.photos/seed/news3/120/96" alt="">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Womens_Golf_team%2C_Tulane_University_2009.jpg/960px-Womens_Golf_team%2C_Tulane_University_2009.jpg" alt="">
       <div><div class="t">Đội tuyển Golf Việt Nam chuẩn bị tham dự SEA Games 33</div><div class="d">10/06/2024</div></div>
     </a>
   </div>
   <div>
     <div class="block-head"><h2>GIẢI ĐẤU NỔI BẬT</h2><a href="#">Xem tất cả →</a></div>
     <a class="list-item" href="#">
-      <img class="thumb" src="https://picsum.photos/seed/tour1/120/96" alt="">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Muirfield_Village_Golf_Club_1980_Memorial_Tournament_-_DPLA_-_c4aacd329251aeff79c62f077a2d0c2d.jpg/960px-Muirfield_Village_Golf_Club_1980_Memorial_Tournament_-_DPLA_-_c4aacd329251aeff79c62f077a2d0c2d.jpg" alt="">
       <div><div class="t">VGA Championship 2024</div><div class="d">01/06/2024 – 03/06/2024 · Sân FLC Hạ Long Golf Club</div></div>
     </a>
     <a class="list-item" href="#">
-      <img class="thumb" src="https://picsum.photos/seed/tour2/120/96" alt="">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Crowd_overlooking_practice_rounds_at_the_Canadian_Open_Golf%2C_Lambton_%28I0010973%29.jpg/960px-Crowd_overlooking_practice_rounds_at_the_Canadian_Open_Golf%2C_Lambton_%28I0010973%29.jpg" alt="">
       <div><div class="t">VGA Junior Tour 2024</div><div class="d">15/06/2024 – 16/06/2024 · Sân NovaWorld Phan Thiết</div></div>
     </a>
     <a class="list-item" href="#">
-      <img class="thumb" src="https://picsum.photos/seed/tour3/120/96" alt="">
+      <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Clubhouse_of_Royal_Liverpool_Golf_Club.jpg/960px-Clubhouse_of_Royal_Liverpool_Golf_Club.jpg" alt="">
       <div><div class="t">Giải Vô địch các CLB Golf Toàn quốc</div><div class="d">25/06/2024 – 27/06/2024 · Sân BRG Kings Island</div></div>
     </a>
   </div>
